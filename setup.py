@@ -20,7 +20,6 @@ setup(
     classifiers=classifiers,
     install_requires=[
         'requests', 
-        'json',
         'pandas'
     ],
     keywords=['Power BI', 'Azure', 'Data']

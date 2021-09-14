@@ -1,9 +1,8 @@
 import json
-import pandas as pd
 import requests
 
 
-class SimplePBI():
+class admin():
     """Simple library to use the Power BI api and obtain datasets from it.
     """
 
@@ -77,3 +76,8 @@ class SimplePBI():
                 self.token = access_token
             except requests.exceptions.HTTPError as ex:
                 print(ex)
+    
+
+    def get_activity_events():
+        """Dummy description
+        """
