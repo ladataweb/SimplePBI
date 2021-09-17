@@ -77,7 +77,115 @@ class admin():
             except requests.exceptions.HTTPError as ex:
                 print(ex)
     
-
+    def get_dataset(auth_token):
+        """Returns a list of datasets for the organization..
+        ### Parameters
+        ----
+        auth_token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the datasets in the tenant.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/datasets"
+            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(auth_token)})
+            return response
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            
+    def get_datasets_in_group(auth_token, workspace_id):
+        """Returns a list of datasets from the specified workspace.
+        ### Parameters
+        ----
+        auth_token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        workspace_id:
+            The Power Bi workspace id. You can take it from PBI Service URL
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the datasets in the workspace.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/groups/{}/datasets".format(workspace_id)
+            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(auth_token)})
+            return response
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            
+    def get_dataset_users(auth_token, dataset_id):
+        """Returns a list of users that have access to the specified dataset (Preview).
+        ### Parameters
+        ----
+        auth_token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        dataset_id:
+            The Power Bi Dataset id. You can take it from PBI Service URL
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the users in the dataset.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/datasets/{}/users".format(dataset)
+            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(auth_token)})
+            return response
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            
+    def get_datasources(auth_token, dataset_id):
+        """Returns a list of datasources for the specified dataset.
+        ### Parameters
+        ----
+        auth_token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        dataset_id:
+            The Power Bi Dataset id. You can take it from PBI Service URL
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the datasources in the dataset.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/datasets/{}/datasources".format(dataset_id)
+            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(auth_token)})
+            return response
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            
+    def get_dataset_to_dataflows_links_in_group(auth_token, workspace_id):
+        """Returns a list of upstream dataflows for datasets from the specified workspace.
+        ### Parameters
+        ----
+        auth_token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        workspace_id:
+            The Power Bi workspace id. You can take it from PBI Service URL
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the datasources in the dataset.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/groups/{}/datasets/upstreamDataflows".format(workspace_id)
+            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(auth_token)})
+            return response
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+        
     def get_activity_events():
         """Dummy description
         """
+    
