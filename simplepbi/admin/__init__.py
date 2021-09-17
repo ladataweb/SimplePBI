@@ -37,7 +37,6 @@ class admin():
 
         POWER_BI_RESOURCE_ENDPOINT = "https://analysis.windows.net/powerbi/api"
         MICROSOFT_OAUTH2_API_ENDPOINT = "https://login.microsoftonline.com/" + tenant_id + "/oauth2/token/"
-        MICROSOFT_OAUTH2_API_ENDPOINT_SP = ''
         if not use_service_principal:
             try:
                 url = MICROSOFT_OAUTH2_API_ENDPOINT
@@ -77,7 +76,7 @@ class admin():
             except requests.exceptions.HTTPError as ex:
                 print(ex)
     
-    def get_dataset(auth_token):
+    def get_datasets(auth_token):
         """Returns a list of datasets for the organization..
         ### Parameters
         ----
@@ -185,6 +184,70 @@ class admin():
         except requests.exceptions.RequestException as e:
             print(e)
         
+    def get_reports(auth_token):
+        """Returns a list of reports for the organization.
+        ### Parameters
+        ----
+        auth_token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the reports in the tenant.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/reports"
+            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(auth_token)})
+            return response
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            
+    def get_reports_in_group(auth_token, workspace_id):
+        """Returns a list of reports from the specified workspace.
+        ### Parameters
+        ----
+        auth_token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        workspace_id:
+            The Power Bi workspace id. You can take it from PBI Service URL
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the reports in the workspace.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/groups/{}/reports".format(workspace_id)
+            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(auth_token)})
+            return response
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            
+    def get_reports_users(auth_token, report_id):
+        """Returns a list of users that have access to the specified report (Preview).
+        ### Parameters
+        ----
+        auth_token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        dataset_id:
+            The Power Bi Report id. You can take it from PBI Service URL
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the users in the report.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/reports/{}/users".format(report_id)
+            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(auth_token)})
+            return response
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+
     def get_activity_events():
         """Dummy description
         """
