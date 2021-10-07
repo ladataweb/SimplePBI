@@ -238,7 +238,7 @@ class Admin():
         except requests.exceptions.RequestException as e:
             print(e)
             
-    def get_groups(self, top=None, expand=None, filter=None, skip=None):
+    def get_groups(self, top, expand=None, filter=None, skip=None):
         """Returns a workspace for the organization.
         ### Parameters
         ----
@@ -258,13 +258,11 @@ class Admin():
             A dictionary containing all the workspaces in the organization.
         """
         try:
-            url = "https://api.powerbi.com/v1.0/myorg/admin/groups?"
+            url = "https://api.powerbi.com/v1.0/myorg/admin/groups?$top={}".format(top)
             if expand != None:
-                url = url + "$expand={}".format(expand)
+                url = url + "&$expand={}".format(expand)
             if filter != None:
                 url = url + "&$filter={}".format(filter)
-            if top != None:
-                url = url + "&$top={}".format(top)
             if skip != None:
                 url = url + "&$skip={}".format(skip)                
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
@@ -623,7 +621,7 @@ class Admin():
         self.token: str
             The Bearer Token to authenticate with Power Bi Rest API requests.
         capacity_id:
-            The Power Bi capacitie id. You can take it from PBI Service URL
+            The Power Bi capacity id. You can take it from PBI Service URL
         ### Returns
         ----
         Dict:
@@ -631,6 +629,70 @@ class Admin():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/capacities/{}/users".format(capacity_id)
+            response = requests.get(url, headers={'Content-Type': 'capacitielication/json', "Authorization": "Bearer {}".format(self.token)})
+            return response
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            
+    def get_refreshable_capacity(self, capacity_id, refreshable_id, expand=None):
+        """Returns a list of users that have access to the specified capacitie (Preview).
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        capacity_id:
+            The Power Bi capacity id. You can take it from PBI Service URL
+        refreshable_id
+            The Power Bi refreshable id in the capacity.
+        expand: int
+            Expands related entities inline, receives a comma-separated list of data types. Supported: capacities and groups
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the refreshables in the capacity.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/capacities/{}/refreshables/{}?".format(capacity_id, refreshable_id)
+            if expand != None:
+                url = url + "$expand={}".format(expand)
+            response = requests.get(url, headers={'Content-Type': 'capacitielication/json', "Authorization": "Bearer {}".format(self.token)})
+            return response
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            
+    def get_refreshables_capacity(self, capacity_id, top, expand=None, filter=None, skip=None):
+        """Returns a list of users that have access to the specified capacitie (Preview).
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        capacity_id:
+            The Power Bi capacitie id. You can take it from PBI Service URL
+        top: int
+            Returns only the first n results. This parameter is mandatory and must be in the range of 1-5000.
+        expand: string
+            Expands related entities inline, receives a comma-separated list of data types. Supported: users, reports, dashboards, datasets, dataflows, workbooks
+        filter: string
+            Filters the results based on a boolean condition
+        skip: int 
+            Skips the first n results. Use with top to fetch results beyond the first 5000.
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the users in the capacity.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/capacities/{}/refreshables?$top={}".format(capacity_id, top) 
+            if expand != None:
+                url = url + "&$expand={}".format(expand)
+            if filter != None:
+                url = url + "&$filter={}".format(filter)
+            if skip != None:
+                url = url + "&$skip={}".format(skip) 
             response = requests.get(url, headers={'Content-Type': 'capacitielication/json', "Authorization": "Bearer {}".format(self.token)})
             return response
         except requests.exceptions.HTTPError as ex:
