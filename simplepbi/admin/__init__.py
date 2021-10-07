@@ -14,19 +14,31 @@ class Admin():
         """
         self.token = token
     
-    def get_datasets(self):
+    def get_datasets(self, filter=None, skip=None, top=None)):
         """Returns a list of datasets for the organization..
         ### Parameters
         ----
         self.token: str
             The Bearer Token to authenticate with Power Bi Rest API requests.
+        filter: string
+            Filters the results based on a boolean condition
+        skip: int 
+            Skips the first n results. Use with top to fetch results beyond the first 5000.
+        top: int
+            Returns only the first n results. This parameter is mandatory and must be in the range of 1-5000.
         ### Returns
         ----
         Dict:
             A dictionary containing all the datasets in the tenant.
         """
         try:
-            url = "https://api.powerbi.com/v1.0/myorg/admin/datasets"
+            url = "https://api.powerbi.com/v1.0/myorg/admin/datasets?"
+            if filter != None:
+                url = url + "$filter={}".format(filter)
+            if top != None:
+                url = url + "&$top={}".format(top)
+            if skip != None:
+                url = url + "&$skip={}".format(skip) 
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response
         except requests.exceptions.HTTPError as ex:
@@ -34,7 +46,7 @@ class Admin():
         except requests.exceptions.RequestException as e:
             print(e)
             
-    def get_datasets_in_group(self, workspace_id):
+    def get_datasets_in_group(self, workspace_id, expand=None, filter=None, skip=None, top=None):
         """Returns a list of datasets from the specified workspace.
         ### Parameters
         ----
@@ -42,13 +54,29 @@ class Admin():
             The Bearer Token to authenticate with Power Bi Rest API requests.
         workspace_id:
             The Power Bi workspace id. You can take it from PBI Service URL
+        expand: string
+            Expands related entities inline, receives a comma-separated list of data types. Supported: users, reports, dashboards, datasets, dataflows, workbooks
+        filter: string
+            Filters the results based on a boolean condition
+        skip: int 
+            Skips the first n results. Use with top to fetch results beyond the first 5000.
+        top: int
+            Returns only the first n results. This parameter is mandatory and must be in the range of 1-5000.
         ### Returns
         ----
         Dict:
             A dictionary containing all the datasets in the workspace.
         """
         try:
-            url = "https://api.powerbi.com/v1.0/myorg/admin/groups/{}/datasets".format(workspace_id)
+            url = "https://api.powerbi.com/v1.0/myorg/admin/groups/{}/datasets?".format(workspace_id)
+            if expand != None:
+                url = url + "$expand={}".format(expand)
+            if filter != None:
+                url = url + "&$filter={}".format(filter)
+            if skip != None:
+                url = url + "&$skip={}".format(skip)   
+            if top != None:
+                url = url + "&$top={}".format(top)
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response
         except requests.exceptions.HTTPError as ex:
@@ -122,19 +150,31 @@ class Admin():
         except requests.exceptions.RequestException as e:
             print(e)
         
-    def get_reports(self):
+    def get_reports(self, filter=None, skip=None, top=None):
         """Returns a list of reports for the organization.
         ### Parameters
         ----
         self.token: str
             The Bearer Token to authenticate with Power Bi Rest API requests.
+        filter: string
+            Filters the results based on a boolean condition
+        skip: int 
+            Skips the first n results. Use with top to fetch results beyond the first 5000.
+        top: int
+            Returns only the first n results. This parameter is mandatory and must be in the range of 1-5000.
         ### Returns
         ----
         Dict:
             A dictionary containing all the reports in the tenant.
         """
         try:
-            url = "https://api.powerbi.com/v1.0/myorg/admin/reports"
+            url = "https://api.powerbi.com/v1.0/myorg/admin/reports?"
+            if filter != None:
+                url = url + "$filter={}".format(filter)
+            if top != None:
+                url = url + "&$top={}".format(top)
+            if skip != None:
+                url = url + "&$skip={}".format(skip)  
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response
         except requests.exceptions.HTTPError as ex:
@@ -142,7 +182,7 @@ class Admin():
         except requests.exceptions.RequestException as e:
             print(e)
             
-    def get_reports_in_group(self, workspace_id):
+    def get_reports_in_group(self, workspace_id, filter=None, skip=None, top=None):
         """Returns a list of reports from the specified workspace.
         ### Parameters
         ----
@@ -150,13 +190,25 @@ class Admin():
             The Bearer Token to authenticate with Power Bi Rest API requests.
         workspace_id:
             The Power Bi workspace id. You can take it from PBI Service URL
+        filter: string
+            Filters the results based on a boolean condition
+        skip: int 
+            Skips the first n results. Use with top to fetch results beyond the first 5000.
+        top: int
+            Returns only the first n results. This parameter is mandatory and must be in the range of 1-5000.
         ### Returns
         ----
         Dict:
             A dictionary containing all the reports in the workspace.
         """
         try:
-            url = "https://api.powerbi.com/v1.0/myorg/admin/groups/{}/reports".format(workspace_id)
+            url = "https://api.powerbi.com/v1.0/myorg/admin/groups/{}/reports?".format(workspace_id)
+            if filter != None:
+                url = url + "$filter={}".format(filter)
+            if top != None:
+                url = url + "&$top={}".format(top)
+            if skip != None:
+                url = url + "&$skip={}".format(skip) 
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response
         except requests.exceptions.HTTPError as ex:
@@ -170,7 +222,7 @@ class Admin():
         ----
         self.token: str
             The Bearer Token to authenticate with Power Bi Rest API requests.
-        dataset_id:
+        report_id:
             The Power Bi Report id. You can take it from PBI Service URL
         ### Returns
         ----
@@ -179,6 +231,90 @@ class Admin():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/reports/{}/users".format(report_id)
+            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            return response
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            
+    def get_groups(self, top=None, expand=None, filter=None, skip=None):
+        """Returns a workspace for the organization.
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        top: int
+            Returns only the first n results. This parameter is mandatory and must be in the range of 1-5000.
+        expand: string
+            Expands related entities inline, receives a comma-separated list of data types. Supported: users, reports, dashboards, datasets, dataflows, workbooks
+        filter: string
+            Filters the results based on a boolean condition
+        skip: int 
+            Skips the first n results. Use with top to fetch results beyond the first 5000.
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the workspaces in the organization.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/groups?"
+            if expand != None:
+                url = url + "$expand={}".format(expand)
+            if filter != None:
+                url = url + "&$filter={}".format(filter)
+            if top != None:
+                url = url + "&$top={}".format(top)
+            if skip != None:
+                url = url + "&$skip={}".format(skip)                
+            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            return response
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            
+    def get_group(self, group_id, expand=None):
+        """Returns a workspace for the organization.
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        group_id: str
+            The Power Bi Workspace id. You can take it from PBI Service URL
+        expand: string
+            Expands related entities inline, receives a comma-separated list of data types. Supported: users, reports, dashboards, datasets, dataflows, workbooks
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the workspaces in the organization.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/groups/{}".format(group_id)
+            if expand != None:
+                url = url + "?$expand={}".format(expand)              
+            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            return response
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            
+    def get_groups_users(self, group_id):
+        """Returns a list of users that have access to the specified workspace. This is a preview API call.
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        group_id: str
+            The Power Bi Workspace id. You can take it from PBI Service URL.
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the users in the workspace.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/groups/{}/users".format(group_id)
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response
         except requests.exceptions.HTTPError as ex:
