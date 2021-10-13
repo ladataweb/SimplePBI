@@ -700,6 +700,29 @@ class Admin():
         except requests.exceptions.RequestException as e:
             print(e)
             
+    def get_unused_artifacts(self, workspace_id):
+        """Returns a list of artifacts from the specified workspace with last used date.
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        workspace_id:
+            The Power Bi workspace id. You can take it from PBI Service URL
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the artifacts in the workspace.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/groups/{}/unused".format(workspace_id)
+            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            return response
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)        
+            
+            
     def get_activity_events():
         """Dummy description
         """
