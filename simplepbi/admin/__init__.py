@@ -333,7 +333,7 @@ class Admin():
         skip: int 
             Skips the first n results. Use with top to fetch results beyond the first 5000.
         top: int
-            Returns only the first n results. This parameter is mandatory and must be in the range of 1-5000.
+            Returns only the first n results. 
         ### Returns
         ----
         Dict:
@@ -543,6 +543,30 @@ class Admin():
             print(ex)
         except requests.exceptions.RequestException as e:
             print(e)
+            
+    def get_upstream_dataflows_in_group(self, workspace_id, dataflow_id):
+        """Returns a list of upstream dataflows for the specified dataflow.
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        workspace_id:
+            The Power Bi workspace id. You can take it from PBI Service URL
+        dataflow_id:
+            The Power Bi Dataflow id. You can take it from PBI Service URL
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the dataflows in the workspace.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/groups/{}/dataflows/{}/upstreamDataflows".format(workspace_id, dataflow_id)
+            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            return response.json()
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)    
             
     def get_apps(self, top=None):
         """Returns a list of apps for the organization.
@@ -780,6 +804,96 @@ class Admin():
         except requests.exceptions.RequestException as e:
             print(e)    
         
+    def get_imports(self, expand=None, filter=None, skip=None, top=None):
+        """Returns a list of imports for the organization.
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        expand: string
+            Expands related entities inline, receives a comma-separated list of data types. Supported: users, reports, imports, datasets, dataflows, workbooks
+        filter: string
+            Filters the results based on a boolean condition
+        skip: int 
+            Skips the first n results. Use with top to fetch results beyond the first 5000.
+        top: int
+            Returns only the first n results. This parameter is mandatory and must be in the range of 1-5000.
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the imports in the tenant.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/imports?"
+            if expand != None:
+                url = url + "$expand={}".format(expand)
+            if filter != None:
+                url = url + "&$filter={}".format(filter)
+            if top != None:
+                url = url + "&$top={}".format(top)
+            if skip != None:
+                url = url + "&$skip={}".format(skip)  
+            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            return response.json()
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+    
+    def get_refreshables(self, expand=None, filter=None, skip=None, top=None):
+        """Returns a list of refreshables for the organization.
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        top: int
+            Returns only the first n results. This parameter is mandatory and must be in the range of 1-5000.
+        expand: string
+            Expands related entities inline, receives a comma-separated list of data types. Supported: users, reports, refreshables, datasets, dataflows, workbooks
+        filter: string
+            Filters the results based on a boolean condition
+        skip: int 
+            Skips the first n results. Use with top to fetch results beyond the first 5000.
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the refreshables in the tenant.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/refreshables?$top={}".format(top)
+            if expand != None:
+                url = url + "&$expand={}".format(expand)
+            if filter != None:
+                url = url + "&$filter={}".format(filter)            
+            if skip != None:
+                url = url + "&$skip={}".format(skip)  
+            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            return response.json()
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+        
+    def get_encryption_keys(self, expand=None, filter=None, skip=None, top=None):
+        """Returns the encryption keys for the tenant.
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the refreshables in the tenant.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/tenantKeys"
+            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            return response.json()
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+    
     def get_activity_events():
         """Dummy description
         """
