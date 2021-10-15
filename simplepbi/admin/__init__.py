@@ -40,7 +40,7 @@ class Admin():
             if skip != None:
                 url = url + "&$skip={}".format(skip) 
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -78,7 +78,7 @@ class Admin():
             if top != None:
                 url = url + "&$top={}".format(top)
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -100,7 +100,7 @@ class Admin():
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/datasets/{}/users".format(dataset)
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -122,7 +122,7 @@ class Admin():
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/datasets/{}/datasources".format(dataset_id)
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -144,7 +144,7 @@ class Admin():
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/groups/{}/datasets/upstreamDataflows".format(workspace_id)
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -176,7 +176,7 @@ class Admin():
             if skip != None:
                 url = url + "&$skip={}".format(skip)  
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -210,7 +210,7 @@ class Admin():
             if skip != None:
                 url = url + "&$skip={}".format(skip) 
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -232,7 +232,7 @@ class Admin():
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/reports/{}/users".format(report_id)
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -266,7 +266,7 @@ class Admin():
             if skip != None:
                 url = url + "&$skip={}".format(skip)                
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -292,7 +292,7 @@ class Admin():
             if expand != None:
                 url = url + "?$expand={}".format(expand)              
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -314,7 +314,7 @@ class Admin():
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/groups/{}/users".format(group_id)
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -350,7 +350,7 @@ class Admin():
             if skip != None:
                 url = url + "&$skip={}".format(skip)  
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -384,7 +384,7 @@ class Admin():
             if skip != None:
                 url = url + "&$skip={}".format(skip) 
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -406,7 +406,7 @@ class Admin():
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/dashboards/{}/users".format(dashboard_id)
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -428,7 +428,7 @@ class Admin():
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/dashboards/{}/tiles".format(dashboard_id)
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -460,7 +460,7 @@ class Admin():
             if skip != None:
                 url = url + "&$skip={}".format(skip)  
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -494,7 +494,7 @@ class Admin():
             if skip != None:
                 url = url + "&$skip={}".format(skip) 
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -516,7 +516,7 @@ class Admin():
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/dataflows/{}/users".format(dataflow_id)
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -538,7 +538,7 @@ class Admin():
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/dataflows/{}/datasources".format(dataflow_id)
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -562,7 +562,7 @@ class Admin():
             if top != None:
                 url = url + "$top={}".format(top)
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -584,7 +584,7 @@ class Admin():
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/apps/{}/users".format(app_id)
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -608,7 +608,7 @@ class Admin():
             if expand != None:
                 url = url + "$expand={}".format(expand)
             response = requests.get(url, headers={'Content-Type': 'capacitielication/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -630,7 +630,7 @@ class Admin():
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/capacities/{}/users".format(capacity_id)
             response = requests.get(url, headers={'Content-Type': 'capacitielication/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -658,7 +658,7 @@ class Admin():
             if expand != None:
                 url = url + "$expand={}".format(expand)
             response = requests.get(url, headers={'Content-Type': 'capacitielication/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -694,7 +694,7 @@ class Admin():
             if skip != None:
                 url = url + "&$skip={}".format(skip) 
             response = requests.get(url, headers={'Content-Type': 'capacitielication/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
@@ -716,7 +716,7 @@ class Admin():
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/groups/{}/unused".format(workspace_id)
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response
+            return response.json()
         except requests.exceptions.HTTPError as ex:
             print(ex)
         except requests.exceptions.RequestException as e:
