@@ -46,7 +46,7 @@ Once we create our Object like admin, we can start using the requests adding the
 
 All_Datasets = ad.get_datasets()
 
-Datasets_In_Groups = get_datasets_in_group(workspace_id)
+Datasets_In_Groups = ad.get_datasets_in_group(workspace_id)
 ```
 
 The library get requests will return a response object .json() that python reads it as a Dict.
