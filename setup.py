@@ -15,7 +15,7 @@ setup(
     description='Simplify usage of Power Bi Admin API',
     long_description=open('README.md').read() + '\n\n' + open('CHANGELOG.txt').read(),
     long_description_content_type="text/markdown",
-    author='Martin Zurita <martinzurita1@gmail.com>, Ignacio Barrau <ignabarrau@gmail.com>',
+    author='Martin Zurita <martinzurita1@gmail.com>, Ignacio Barrau <igna_barrau@hotmail.com>',
     license='MIT',
     classifiers=classifiers,
     install_requires=[
