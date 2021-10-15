@@ -14,7 +14,7 @@ class Admin():
         """
         self.token = token
     
-    def get_datasets(self, filter=None, skip=None, top=None)):
+    def get_datasets(self, filter=None, skip=None, top=None):
         """Returns a list of datasets for the organization..
         ### Parameters
         ----
@@ -320,7 +320,7 @@ class Admin():
         except requests.exceptions.RequestException as e:
             print(e)
 
-    def get_dashboards(self, expand=None filter=None, skip=None, top=None):
+    def get_dashboards(self, expand=None, filter=None, skip=None, top=None):
         """Returns a list of dashboards for the organization.
         ### Parameters
         ----
