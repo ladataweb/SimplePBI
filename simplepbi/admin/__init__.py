@@ -722,7 +722,64 @@ class Admin():
         except requests.exceptions.RequestException as e:
             print(e)        
             
-            
+    def get_pipelines(self, expand=None, filter=None, skip=None, top=None):
+        """Returns a list of pipelines for the organization.
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        expand: string
+            Expands related entities inline, receives a comma-separated list of data types. Supported: users, reports, pipelines, datasets, dataflows, workbooks
+        filter: string
+            Filters the results based on a boolean condition
+        skip: int 
+            Skips the first n results. Use with top to fetch results beyond the first 5000.
+        top: int
+            Returns only the first n results. This parameter is mandatory and must be in the range of 1-5000.
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the pipelines in the tenant.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/pipelines?"
+            if expand != None:
+                url = url + "$expand={}".format(expand)
+            if filter != None:
+                url = url + "&$filter={}".format(filter)
+            if top != None:
+                url = url + "&$top={}".format(top)
+            if skip != None:
+                url = url + "&$skip={}".format(skip)  
+            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            return response.json()
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+			
+    def get_pipelines_users(self, pipeline_id):
+        """Returns a list of users that have access to the specified pipeline (Preview).
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        pipeline_id:
+            The Power Bi pipeline id. You can take it from PBI Service URL
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the users in the pipeline.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/pipelines/{}/users".format(pipeline_id)
+            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            return response.json()
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)    
+        
     def get_activity_events():
         """Dummy description
         """
