@@ -894,6 +894,84 @@ class Admin():
         except requests.exceptions.RequestException as e:
             print(e)
     
+    def add_user_to_group(self, workspace_id, groupUserAccessRight, emailAddress, displayName=None, graphId=None, identifier=None, principalType=None):
+        """Grants user permissions to the specified workspace.
+        This API call only supports updating workspaces in the new workspace experience and adding a user principle.
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        workspace_id:
+            The Power Bi workspace id. You can take it from PBI Service URL
+        ### Request Body
+        ----
+        groupUserAccessRight: GroupUserAccessRight
+            Access rights user has for the workspace (Permission level: Admin, Contributor, Member, Viewer or None). This is mandatory
+        emailAddress: str
+            Email address of the user. This is mandatory.
+        displayName: str
+            Display name of the principal
+        graphId: str
+            Identifier of the principal in Microsoft Graph. Only available for admin APIs
+        identifier: str
+            Object ID of the principal
+        principalType: principalType
+            The principal type (App, Gorup, User or None)
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/admin/groups/{}/users".format(workspace_id)
+            body = {
+                "groupUserAccessRight": groupUserAccessRight, 
+                "emailAddress": emailAddress 
+            }
+            if displayName != None:
+                body["diplayName"]=displayName
+            if graphId != None:
+                body["graphId"] = graphId
+            if identifier != None:
+                body["identifier"] = identifier
+            if principalType != None:
+                body["principalType"] = principalType
+                
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            
+            res = requests.post(url, data = json.dumps(body), headers = headers)
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            
+    def delete_user_to_group(self, workspace_id, user):
+        """Removes user permissions from the specified workspace.
+        This API call only supports updating workspaces in the new workspace experience and adding a user principle.
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        workspace_id: str uuid
+            The Power Bi workspace id. You can take it from PBI Service URL
+        user: str
+            The user principal name (UPN) of the user to remove (usually the user's email).
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/admin/groups/{}/users/{}".format(workspace_id, user)   
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.delete(url, headers=headers)
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+                                                                                         
     def get_activity_events():
         """Dummy description
         """
