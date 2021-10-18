@@ -50,3 +50,27 @@ Datasets_In_Groups = ad.get_datasets_in_group(workspace_id)
 ```
 
 The library get requests will return a response object .json() that python reads it as a Dict.
+
+## Current Categories
+Right now the library is only consuming endpoints from Admin category.
+
+## Missing endpoints
+We are still developing the library. The following endpoints from admin are still missing
+- GetScanStatus
+- PostWorkspaceInfo
+- GetScanResult
+- GetModifiedWorkspace
+- GetUserArtifactAccessAsAdmin
+- RotatePowerBiEncryptionKey
+- PatchCapacityAsAdmin
+- Set and Remove LabelsAsAdmin
+- ExportDataflowAsAdmin
+- AddPowerBiEncryptionkey
+
+## Working in progress
+- GetActivityEvents
+- RestoreDeletedGroupAsAdmin
+- UpdateGroupAsAdmin
+- UnassignWorkspacesFromCapacity
+- AssignWorkspacesToCapacity
+- Update and Delete UserAsAdmin
