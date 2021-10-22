@@ -786,6 +786,66 @@ class Admin():
             print(ex)
         except requests.exceptions.RequestException as e:
             print(e)
+           
+    def get_user_artifact_access_preview(auth_token, userGraphId, return_pandas=False):
+        '''Returns a dict of pandas dataframe of audit activity events for a tenant.
+        *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
+        The continuation token is automtaically used to get all the results in the date.
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        activity_date: str "yyyy-mm-dd"
+            The Single date to get events from the whole day.
+            If the date is not specify it will return yesterday events by default.
+        return_pandas: bool
+            Flag to specify if you want to return a dict response or a pandas dataframe of events.
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        '''        
+        columnas = ['artifactId', 'displayName', 'artifactType', 'accessRight']
+        df_total = pd.DataFrame(columns=columnas)
+        dict_total = {'ArtifactAccessEntities': [] }
+        url = "https://api.powerbi.com/v1.0/myorg/admin/users/{}/artifactAccess".format(userGraphId)
+        headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(auth_token)}
+        ban = True   
+        contar = 0    
+        try:
+            while(ban):        
+                response = requests.get(url, headers=headers)
+                if return_pandas:
+                    js = json.dumps(response.json()["ArtifactAccessEntities"])
+                    df = pd.read_json(js)
+                    df_total = df_total.append(df, sort=True, ignore_index=True)
+                    print(df_total.head())
+                else:
+                    if response.json()["ArtifactAccessEntities"]:
+                        append_value(dict_total, "ArtifactAccessEntities", response.json()["ArtifactAccessEntities"])
+                        print(dict_total)
+                print(response.status_code)
+                contar = contar +1
+                print(contar)            
+                if "continuationUri" not in response.json():
+                    ban=False
+                else:
+                    url = response.json()["continuationUri"]                   
+                    print(response.json()["continuationUri"])    
+            if return_pandas:
+                print(df_total.tail())
+                return df_total
+            else:
+                print(dict_total)
+                return dict_total
+        except requests.exceptions.Timeout:
+            print("ERROR: The request method has exceeded the Timeout")
+        except requests.exceptions.TooManyRedirects:
+            print("ERROR: Bad URL try a different one")
+        except requests.exceptions.RequestException as e:
+            print("Catastrophic error.")
+            raise SystemExit(e)
+        except Exception as ex:
+            print("ERROR: ", ex)
             
     def get_unused_artifacts(self, workspace_id):
         """Returns a list of artifacts from the specified workspace with last used date.
@@ -1342,8 +1402,9 @@ class Admin():
         except requests.exceptions.RequestException as e:
             print(e)
                                                                                          
-    def get_activity_events(self, activity_date=None, return_pandas=False):
+    def get_activity_events_preview(self, activity_date=None, return_pandas=False):
         '''Returns a dict of pandas dataframe of audit activity events for a tenant.
+        *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
         The continuation token is automtaically used to get all the results in the date.
         ### Parameters
         ----
