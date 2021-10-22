@@ -60,17 +60,10 @@ We are still developing the library. The following endpoints from admin are stil
 - PostWorkspaceInfo
 - GetScanResult
 - GetModifiedWorkspace
-- GetUserArtifactAccessAsAdmin
-- RotatePowerBiEncryptionKey
-- PatchCapacityAsAdmin
 - Set and Remove LabelsAsAdmin
-- ExportDataflowAsAdmin
-- AddPowerBiEncryptionkey
 
-## Working in progress
-- GetActivityEvents
-- RestoreDeletedGroupAsAdmin
-- UpdateGroupAsAdmin
-- UnassignWorkspacesFromCapacity
-- AssignWorkspacesToCapacity
-- Update and Delete UserAsAdmin
+## Preview methods
+There are some methods in the classes that still need more testing. Those will have a "preview" at the end of the name. Please let us know if something goes wrong with those.
+
+
+
