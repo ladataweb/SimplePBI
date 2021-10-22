@@ -321,6 +321,45 @@ class Admin():
             print(ex)
         except requests.exceptions.RequestException as e:
             print(e)
+            
+    def restore_deleted_group(self, workspace_id, emailAddress, name=None):
+        """Restores a deleted workspace.
+        This API call only supports restoring workspaces in the new workspace experience.
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        workspace_id:
+            The Power Bi workspace id. You can take it from PBI Service URL
+        ### Request Body
+        ----
+        groupUserAccessRight: GroupUserAccessRight
+            Access rights user has for the workspace (Permission level: Admin, Contributor, Member, Viewer or None). This is mandatory
+        emailAddress: str
+            Email address of the user. This is mandatory.
+        name: str
+            The name of the group to be restored.
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/admin/groups/{}/restore".format(workspace_id)
+            body = {
+                "emailAddress": emailAddress 
+            }
+            if name != None:
+                body["name"]=displayName            
+                
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            
+            res = requests.post(url, data = json.dumps(body), headers = headers)
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
 
     def get_dashboards(self, expand=None, filter=None, skip=None, top=None):
         """Returns a list of dashboards for the organization.
@@ -569,6 +608,28 @@ class Admin():
             print(ex)
         except requests.exceptions.RequestException as e:
             print(e)    
+            
+    def export_dataflow(self, dataflow_id):
+        """Exports the definition for the specified dataflow to a JSON file.
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        dataflow_id:
+            The Power Bi Dataflow id. You can take it from PBI Service URL
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the metadata built in the dataflow.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/dataflows/{}/export".format(dataflow_id)
+            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            return response.json()
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
             
     def get_apps(self, top=None):
         """Returns a list of apps for the organization.
@@ -895,6 +956,80 @@ class Admin():
             print(ex)
         except requests.exceptions.RequestException as e:
             print(e)
+            
+    def add_encryption_key_preview(self, activate, isDefault, keyVaultKeyIdentifier, name):
+        """Adds an encryption key for Power BI workspaces assigned to a capacity.
+        *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        ### Request Body
+        ----
+        All the keys are requested for the body
+        activate: bool
+            Indicates to activate any inactivated capacities to use this key for its encryption.
+        isDefault: bool
+            Whether an encryption key is the default key for the entire tenant. Any newly created capacity inherits the default key.
+        keyVaultKeyIdentifier: str
+            The URI that uniquely specifies an encryption key in Azure Key Vault.
+        name:
+            The name of the encryption key        
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/admin/tenantKeys"
+            body = {
+                "activate": activate, 
+                "isDefault": isDefault,
+                "keyVaultKeyIdentifier":keyVaultKeyIdentifier,
+                "name":name
+            }
+                
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            
+            res = requests.post(url, data = json.dumps(body), headers = headers)
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            
+    def rotate_encryption_key_preview(self, tenantKeyId, keyVaultKeyIdentifier):
+        """Adds an encryption key for Power BI workspaces assigned to a capacity.
+        *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        tenantKeyId: str uuid
+            The tenant key ID
+        ### Request Body
+        ----        
+        keyVaultKeyIdentifier: str
+            The URI that uniquely specifies an encryption key in Azure Key Vault.
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/admin/tenantKeys/{}/Default.Rotate".format(tenantKeyId)
+            body = {
+                "keyVaultKeyIdentifier":keyVaultKeyIdentifier
+            }
+                
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            
+            res = requests.post(url, data = json.dumps(body), headers = headers)
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
     
     def add_user_to_group(self, workspace_id, groupUserAccessRight, emailAddress, displayName=None, graphId=None, identifier=None, principalType=None):
         """Grants user permissions to the specified workspace.
@@ -918,7 +1053,7 @@ class Admin():
         identifier: str
             Object ID of the principal
         principalType: principalType
-            The principal type (App, Gorup, User or None)
+            The principal type (App, Group, User or None)
         ### Returns
         ----
         Response object from requests library. 200 OK
@@ -948,7 +1083,7 @@ class Admin():
         except requests.exceptions.RequestException as e:
             print(e)
             
-    def delete_user_to_group(self, workspace_id, user):
+    def delete_user_from_group(self, workspace_id, user):
         """Removes user permissions from the specified workspace.
         This API call only supports updating workspaces in the new workspace experience and adding a user principle.
         ### Parameters
@@ -968,6 +1103,239 @@ class Admin():
             url= "https://api.powerbi.com/v1.0/myorg/admin/groups/{}/users/{}".format(workspace_id, user)   
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             res = requests.delete(url, headers=headers)
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            
+    def update_group_preview(self, workspace_id, capacityId=None, dashboards=None, dataflowStorageId=None, dataflows=None, datasets=None, description=None, isOnDedicatedCapacity=None, isReadOnly=None, name=None, pipelineId=None, reports=None, state=None, typee=None, users=None, workbooks=None):    
+        """Updates the properties of the specified workspace.
+        *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
+        This API call call only updates workspaces in the new workspace experience. Only the name and description can be updated. The name must be unique inside an organization.
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        workspace_id:
+            The Power Bi workspace id. You can take it from PBI Service URL
+        ### Request Body
+        ----
+        id: string
+            The workspace ID
+        capacityId: string
+            The capacity ID
+        dashboards: str[]
+            List of the dashboards ids that belong to the group. Available only for admin API calls.
+        dataflowStorageId: string
+            The Power BI dataflow storage account ID
+        dataflows: str[]
+            List of the dataflows ids that belong to the group. Available only for admin API calls.
+        datasets: str[]
+            List of the datasets ids that belong to the group. Available only for admin API calls.
+        description: string
+            The group description. Available only for admin API calls.
+        isOnDedicatedCapacity: bool
+            Is the group on dedicated capacity
+        isReadOnly: bool
+            Is the group read only
+        name: string
+            The group name
+        pipelineId: string
+            The deployment pipeline ID that the workspace is assigned to. Available only for workspaces in the new workspace experience and only for admin API calls.
+        reports: str[]
+            List of the reports ids that belong to the group. Available only for admin API calls.
+        state: string
+            The group state. Available only for admin API calls.
+        typee: string
+            The type of group. Available only for admin API calls.
+        users: GroupUser[]
+            List of the users that belong to the group, and their access rights. This value will be empty. It will be removed from the payload response in an upcoming release. To retrieve user information on an artifact, please consider using the Get Group User APIs, or the PostWorkspaceInfo API with the getArtifactUser parameter.
+        workbooks: str[]
+            List of the workbooks ids that belong to the group. Available only for admin API calls.
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/admin/groups/{}".format(workspace_id)
+            body = {
+                "id": workspace_id
+            }
+            
+            if capacityId != None:
+                body["capacityId"]=capacityId
+            if dashboards != None:
+                body["dashboards"] = dashboards
+            if dataflowStorageId != None:
+                body["dataflowStorageId"] = dataflowStorageId
+            if dataflows != None:
+                body["dataflows"] = dataflows
+            if datasets != None:
+                body["datasets"]=datasets
+            if description != None:
+                body["description"] = description
+            if isOnDedicatedCapacity != None:
+                body["isOnDedicatedCapacity"] = isOnDedicatedCapacity
+            if isReadOnly != None:
+                body["isReadOnly"] = isReadOnly
+            if name != None:
+                body["name"]=name
+            if pipelineId != None:
+                body["pipelineId"] = pipelineId
+            if reports != None:
+                body["reports"] = reports
+            if state != None:
+                body["state"] = state
+            if typee != None:
+                body["type"] = typee
+            if users != None:
+                body["users"] = users
+            if workbooks != None:
+                body["workbooks"] = workbooks
+                
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            
+            res = requests.patch(url, json.dumps(body), headers = headers)
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            
+    def update_user_in_pipeline(self, pipeline_id, identifier, principalType, accessRight):
+        """Grants user permissions to a specified deployment pipeline.
+        
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        pipeline_id:
+            The Power Bi Deployment Pipeline id. You can take it from PBI Service URL
+        ### Request Body
+        ----
+        identifier: str
+            For Principal type 'User' provide UPN , otherwise provide Object ID of the principal. This is mandatory
+        principalType: principalType
+            The principal type (App, Group, User or None). This is mandatory.
+        accessRight: GroupUserAccessRight
+            accessRequired - Access rights a user has for the deployment pipeline. (Permission level: Admin). This is mandatory
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/admin/pipelines/{}/users".format(pipeline_id)
+            body = {
+                "identifier": identifier ,
+                "principalType": principalType ,
+                "accessRight": accessRight
+            }
+                
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            
+            res = requests.post(url, data = json.dumps(body), headers = headers)
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            
+    def delete_user_from_pipeline(self, pipeline_id, identifier):
+        """Removes user permissions from a specified deployment pipeline.
+        
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        pipeline_id: str uuid
+            The deployment pipeline ID
+        identifier: str
+            For Principal type 'User' provide UPN , otherwise provide Object ID of the principal
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/admin/pipelines/{}/users/{}".format(pipeline_id, identifier)   
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.delete(url, headers=headers)
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            
+    def assign_workspaces_to_capacity_preview(self, tagetCapacityObjectId, workspacesToAssign):
+        """Assigns the specified workspaces to the specified Premium capacity.
+        *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        ### Request Body
+        ----
+        capacityMigrationAssignments: Assignment contract for migrating workspaces to premium capacity as tenant admin
+        
+        targetCapacityObjectId: str
+            The premium capacity ID
+        workspacesToAssign: str[]
+            List of the workspace IDs to be migrated to premium capacity
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/admin/capacities/AssignWorkspaces"
+            body ={
+                "tagetCapacityObjectId":tagetCapacityObjectId,
+                "workspacesToAssign":workspacesToAssign
+            }
+            body_option2 ={
+                "capacityMigrationAssignments":[{
+                    "tagetCapacityObjectId":tagetCapacityObjectId,
+                    "workspacesToAssign":workspacesToAssign
+                }]
+            }
+                
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            
+            res = requests.post(url, data = json.dumps(body), headers = headers)
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            
+    def unassign_workspaces_from_capacity_preview(self, workspacesToAssign):
+        """Unassigns the specified workspaces from capacity.
+        *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        ### Request Body
+        ----        
+        workspacesToAssign: str[]
+            List of the workspace IDs to be migrated to premium capacity
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/admin/capacities/UnassignWorkspaces"
+            body ={
+                "workspacesToAssign":workspacesToAssign
+            }
+                
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            
+            res = requests.post(url, data = json.dumps(body), headers = headers)
             return res
         except requests.exceptions.HTTPError as ex:
             print(ex)
