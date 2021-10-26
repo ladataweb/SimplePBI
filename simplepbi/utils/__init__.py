@@ -66,5 +66,25 @@ def to_pandas(response_dict, father_node):
     df = pd.read_json(js)
     return df 
 
-def test(asd):
-    print(asd)
+def get_artifact_from_scan_preview(scan_result, artifact):
+    """Get a table of an specific artifact
+    ### Parameters
+    ----
+    scan_result: dict
+        The scan result response from get_scan_result_preview
+    artifact: str
+        The type of artifact. Types: 'reports', 'dashboards', 'datasets', 'dataflows', 'users'
+    ### Returns
+    ----
+    str:
+        Returns the status of the scan. Succeeded means you are ready to request scans.
+    """
+    df_total = pd.DataFrame()
+    try:        
+        for group in scan_result["workspaces"]:
+            df = pd.read_json(json.dumps(group[artifact]))
+            df["workspaceId"] = group["id"]
+            df_total = df_total.append(df, sort=True, ignore_index=True)
+        return df_total
+    except Exception as e:
+        print("ERROR: ", e)

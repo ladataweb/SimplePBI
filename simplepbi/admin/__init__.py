@@ -1470,3 +1470,120 @@ class Admin():
             raise SystemExit(e)
         except Exception as ex:
             print(ex)
+            
+    def get_modified_workspaces_preview(self, excludePersonalWorkspaces=True, modifiedSince=None):
+        """Gets a list of workspace IDs in the organization. This is a preview API call.
+        *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        excludePersonalWorkspaces: bool
+            Whether to exclude personal workspaces
+        modifiedSince: str-datetime
+            format %Y-%m-%dT%H:%M:00.000Z
+            
+        ### Returns
+        ----
+        Dict:
+            Returns a list of list that contains groups of maximum 100 workspaces.
+        """
+        lista_total = []
+        contador = 100
+        #datetime.strptime("2021-01-01 01:55:19", "%Y-%m-%d %H:%M:%S")
+        #modify_date = modifiedSince.strftime("'%Y-%m-%dT%H:%M:00.000Z'")
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/workspaces/modified?excludePersonalWorkspaces={}".format(excludePersonalWorkspaces)
+            if modifiedSince != None:
+                url = url + "&modifiedSince={}".format(modifiedSince)
+            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res = response.json()
+            lista = [res[i]['Id'] for i in range(len(res))]
+            for item in range(len(lista)):
+                if lista[item*100:item*100+100] != []:
+                    lista_total.append(lista[item*100:item*100+100])
+                else:
+                    break
+            return lista_total 
+        
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+        
+    def post_workspace_info(self, workspaces, lineage=True, datasourceDetails=True, datasetSchema=True, datasetExpressions=True, getArtifactUsers=True):
+        """Initiates a call to receive metadata for the requested list of workspaces. This is a preview API call.
+        *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        ### Request Body
+        ----        
+        workspaces: str[]
+            List of the workspace IDs to ask for scan (it can't contain more than 100 workspaces)
+        ### Returns
+        ----
+        Scan id in uuid format. 202 OK
+        
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/admin/workspaces/getInfo?lineage={}&datasourceDetails={}&datasetSchema={}&datasetExpressions={}&getArtifactUsers={}".format(lineage, datasourceDetails, datasetSchema, datasetExpressions, getArtifactUsers)
+            body ={
+                "workspaces":workspaces
+            }
+                
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            
+            res = requests.post(url, data = json.dumps(body), headers = headers)
+            return res.json()["id"]
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)            
+            
+    def get_scan_status_preview(self, scan_id):
+        """Gets a list of workspace IDs in the organization. This is a preview API call.
+            *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        scan_id: str uui
+            The scan id obtained from posting workspaces info        
+        ### Returns
+        ----
+        str:
+            Returns the status of the scan. Succeeded means you are ready to request scans.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/workspaces/scanStatus/{}".format(scan_id)
+            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            return response.json()["status"]
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)            
+            
+    def get_scan_result_preview(self, scan_id):
+        """Gets a list of workspace IDs in the organization. This is a preview API call.
+            *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
+        ### Parameters
+        ----
+        self.token: str
+            The Bearer Token to authenticate with Power Bi Rest API requests.
+        scan_id: str uui
+            The scan id obtained from posting workspaces info        
+        ### Returns
+        ----
+        str:
+            Returns the status of the scan. Succeeded means you are ready to request scans.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/workspaces/scanResult/{}".format(scan_id)
+            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            return response.json()
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
