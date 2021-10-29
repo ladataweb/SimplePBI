@@ -56,10 +56,6 @@ Right now the library is only consuming endpoints from Admin category.
 
 ## Missing endpoints
 We are still developing the library. The following endpoints from admin are still missing
-- GetScanStatus
-- PostWorkspaceInfo
-- GetScanResult
-- GetModifiedWorkspace
 - Set and Remove LabelsAsAdmin
 
 ## Preview methods

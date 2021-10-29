@@ -4,3 +4,7 @@ Change Log
 0.0.1 (04/12/2020)
 -------------------
 - First Commit
+
+0.0.2 (29/10/2021
+-------------------
+- Second build: completing almost all the requests in Admin Section
