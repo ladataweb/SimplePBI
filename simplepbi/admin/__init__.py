@@ -141,7 +141,7 @@ class Admin():
         ### Returns
         ----
         Dict:
-            A dictionary containing all the datasources in the dataset.
+            A dictionary containing all the upstream dataflows in the dataset from a workspace
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/groups/{}/datasets/upstreamDataflows".format(workspace_id)
@@ -787,7 +787,7 @@ class Admin():
         except requests.exceptions.RequestException as e:
             print(e)
            
-    def get_user_artifact_access_preview(auth_token, userGraphId, return_pandas=True):
+    def get_user_artifact_access_preview(self, userGraphId, return_pandas=True):
         '''Returns a list of artifacts that the given user have access to (Preview).
         *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
         
@@ -805,9 +805,10 @@ class Admin():
         '''        
         columnas = ['artifactId', 'displayName', 'artifactType', 'accessRight']
         df_total = pd.DataFrame(columns=columnas)
-        dict_total = {'ArtifactAccessEntities': [] }
+        dict_total = {}
+        list_total = []
         url = "https://api.powerbi.com/v1.0/myorg/admin/users/{}/artifactAccess".format(userGraphId)
-        headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(auth_token)}
+        headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
         ban = True   
         contar = 0    
         try:
@@ -817,14 +818,14 @@ class Admin():
                     js = json.dumps(response.json()["ArtifactAccessEntities"])
                     df = pd.read_json(js)
                     df_total = df_total.append(df, sort=True, ignore_index=True)
-                    print(df_total.head())
+                    print("Building dataframe iteration: ", str(contar))
                 else:
                     if response.json()["ArtifactAccessEntities"]:
-                        append_value(dict_total, "ArtifactAccessEntities", response.json()["ArtifactAccessEntities"])
-                        print(dict_total)
+                        list_total.extend(response.json()["ArtifactAccessEntities"])
+                        #append_value(dict_total, "ArtifactAccessEntities", response.json()["ArtifactAccessEntities"])
+                        print("Building dict iteration: ", str(contar))
                 print(response.status_code)
-                contar = contar +1
-                print(contar)            
+                contar = contar +1    
                 if "continuationUri" not in response.json():
                     ban=False
                 else:
@@ -834,7 +835,7 @@ class Admin():
                 print(df_total.tail())
                 return df_total
             else:
-                print(dict_total)
+                dict_total = {'ArtifactAccessEntities': list_total }
                 return dict_total
         except requests.exceptions.Timeout:
             print("ERROR: The request method has exceeded the Timeout")
@@ -1425,10 +1426,11 @@ class Admin():
            'RequestId', 'ActivityId', 'TableName', 'LastRefreshTime']
         df_total = pd.DataFrame(columns=columnas)
         dict_total = {'activityEventEntities': [] }
+        list_total = []
         if activity_date == None:
             activity_date = date.today()- timedelta(days=1)
         else:
-            date(int(activity_date.split("-")[0]),int(activity_date.split("-")[1]),int(activity_date.split("-")[2]))
+            activity_date = date(int(activity_date.split("-")[0]),int(activity_date.split("-")[1]),int(activity_date.split("-")[2]))
         start = activity_date.strftime("'%Y-%m-%dT%H:%M:00.000Z'")
         end = activity_date.strftime("'%Y-%m-%dT23:59:59.000Z'")
         url = "https://api.powerbi.com/v1.0/myorg/admin/activityevents?startDateTime={}&endDateTime={}".format(start, end)
@@ -1444,14 +1446,16 @@ class Admin():
                     df = pd.read_json(js)
                     #print(df.head())
                     df_total = df_total.append(df, sort=True, ignore_index=True)
+                    print("Building dataframe iteration: ", str(contar))
                     #print(df_total.head())
                 else:
                     if response.json()["activityEventEntities"]:                
-                        append_value(dict_total, "activityEventEntities", response.json()["activityEventEntities"][0])
+                        #append_value(dict_total, "activityEventEntities", response.json()["activityEventEntities"][0])
+                        list_total.extend(response.json()["activityEventEntities"])
+                        print("Building dict iteration: ", str(contar))
                     
                 print(response.status_code)
                 contar = contar +1
-                print(contar)            
                 print(response.json()["continuationUri"])
                 
                 if response.json()["continuationUri"] == None:
@@ -1460,6 +1464,7 @@ class Admin():
             if return_pandas:
                 return df_total
             else:
+                dict_total = {'activityEventEntities': list_total }
                 return dict_total
         except requests.exceptions.Timeout:
             print("ERROR: The request method has exceeded the Timeout")
