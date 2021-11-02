@@ -9,7 +9,7 @@ classifiers = [
 setup(
     name='SimplePBI',
     packages=find_packages(),
-    version='0.0.1',
+    version='0.0.2',
     download_url='',
     url='',
     description='Simplify usage of Power Bi Admin API',
