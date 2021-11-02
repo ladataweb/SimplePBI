@@ -20,8 +20,6 @@ class Datasets():
         """Returns the specified dataset from My workspace.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         dataset_id:
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Returns
@@ -42,8 +40,6 @@ class Datasets():
         """Returns the specified dataset from the specified workspace.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         workspace_id:
             The Power Bi workspace id. You can take it from PBI Service URL
         dataset_id:
@@ -66,8 +62,7 @@ class Datasets():
         """Returns a list of datasets from My workspace.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
+        None
         ### Returns
         ----
         Dict:
@@ -86,8 +81,6 @@ class Datasets():
         """Returns a list of datasets from the specified workspace.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         workspace_id:
             The Power Bi workspace id. You can take it from PBI Service URL
         ### Returns
@@ -108,8 +101,6 @@ class Datasets():
         """Returns a list of data sources for the specified dataset from My workspace.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         dataset_id:
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Returns
@@ -130,8 +121,6 @@ class Datasets():
         """Returns a list of data sources for the specified dataset from the specified workspace
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         workspace_id:
             The Power Bi workspace id. You can take it from PBI Service URL
         dataset_id:
@@ -154,8 +143,6 @@ class Datasets():
         """Returns a list of upstream dataflows for datasets from the specified workspace.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         workspace_id:
             The Power Bi workspace id. You can take it from PBI Service URL
         ### Returns
@@ -176,8 +163,6 @@ class Datasets():
         """Returns the refresh schedule for a specified DirectQuery or LiveConnection dataset from My workspace.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         dataset_id:
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Returns
@@ -198,8 +183,6 @@ class Datasets():
         """Returns the refresh schedule for a specified DirectQuery or LiveConnection dataset from the specified workspace.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         workspace_id:
             The Power Bi workspace id. You can take it from PBI Service URL
         dataset_id:
@@ -222,8 +205,6 @@ class Datasets():
         """This API is deprecated, use Get Datasources instead.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         dataset_id:
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Returns
@@ -233,8 +214,6 @@ class Datasets():
         """This API is deprecated, use Get Datasources In Group instead.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         dataset_id:
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Returns
@@ -245,8 +224,6 @@ class Datasets():
         """Returns a list of parameters for the specified dataset from My workspace.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         dataset_id:
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Returns
@@ -267,8 +244,6 @@ class Datasets():
         """Returns a list of parameters for the specified dataset from the specified workspace.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         workspace_id:
             The Power Bi workspace id. You can take it from PBI Service URL
         dataset_id:
@@ -291,10 +266,10 @@ class Datasets():
         """Returns the refresh history for the specified dataset from My workspace.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
-        dataset_id:
+        dataset_id: str uuid
             The Power Bi Dataset id. You can take it from PBI Service URL
+        top: int
+            The requested number of entries in the refresh history. If not provided, the default is all available entries.
         ### Returns
         ----
         Dict:
@@ -311,16 +286,16 @@ class Datasets():
         except requests.exceptions.RequestException as e:
             print(e)
             
-    def get_refresh_history_in_group(self, workspace_id, dataset_id):
+    def get_refresh_history_in_group(self, workspace_id, dataset_id, top=None):
         """Returns the refresh history for the specified dataset from the specified workspace.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         workspace_id:
             The Power Bi workspace id. You can take it from PBI Service URL
         dataset_id:
             The Power Bi Dataset id. You can take it from PBI Service URL
+        top: int
+            The requested number of entries in the refresh history. If not provided, the default is all available entries.
         ### Returns
         ----
         Dict:
@@ -341,8 +316,6 @@ class Datasets():
         """Returns the refresh schedule for the specified dataset from My workspace.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         dataset_id:
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Returns
@@ -363,8 +336,6 @@ class Datasets():
         """Returns the refresh schedule for the specified dataset from the specified workspace.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         workspace_id:
             The Power Bi workspace id. You can take it from PBI Service URL
         dataset_id:
@@ -387,9 +358,7 @@ class Datasets():
         """Triggers a refresh for the specified dataset from My workspace.
         For Shared capacities, a maximum of eight requests per day, which includes refreshes executed using a scheduled refresh.
         ### Parameters
-        ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.      
+        ----    
         dataset_id:
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Request Body
@@ -419,8 +388,6 @@ class Datasets():
         For Shared capacities, a maximum of eight requests per day, which includes refreshes executed using a scheduled refresh.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         workspace_id:
             The Power Bi workspace id. You can take it from PBI Service URL        
         dataset_id:
@@ -451,8 +418,6 @@ class Datasets():
         """Transfers ownership over the specified dataset to the current authorized user.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         workspace_id:
             The Power Bi workspace id. You can take it from PBI Service URL        
         dataset_id:
@@ -480,8 +445,6 @@ class Datasets():
         This API call is only relevant to datasets that have at least one on-premises connection. For datasets with cloud-only connections, this API call returns an empty list.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         dataset_id:
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Returns
@@ -503,8 +466,6 @@ class Datasets():
         This API call is only relevant to datasets that have at least one on-premises connection. For datasets with cloud-only connections, this API call returns an empty list.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         workspace_id:
             The Power Bi workspace id. You can take it from PBI Service URL
         dataset_id:
