@@ -20,8 +20,6 @@ class Admin():
         """Returns a list of datasets for the organization..
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         filter: string
             Filters the results based on a boolean condition
         skip: int 
@@ -52,8 +50,6 @@ class Admin():
         """Returns a list of datasets from the specified workspace.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         workspace_id:
             The Power Bi workspace id. You can take it from PBI Service URL
         expand: string
@@ -90,8 +86,6 @@ class Admin():
         """Returns a list of users that have access to the specified dataset (Preview).
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         dataset_id:
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Returns
@@ -112,8 +106,6 @@ class Admin():
         """Returns a list of datasources for the specified dataset.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         dataset_id:
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Returns
@@ -134,8 +126,6 @@ class Admin():
         """Returns a list of upstream dataflows for datasets from the specified workspace.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         workspace_id:
             The Power Bi workspace id. You can take it from PBI Service URL
         ### Returns
@@ -156,8 +146,6 @@ class Admin():
         """Returns a list of reports for the organization.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         filter: string
             Filters the results based on a boolean condition
         skip: int 
@@ -188,8 +176,6 @@ class Admin():
         """Returns a list of reports from the specified workspace.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         workspace_id:
             The Power Bi workspace id. You can take it from PBI Service URL
         filter: string
@@ -222,8 +208,6 @@ class Admin():
         """Returns a list of users that have access to the specified report (Preview).
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         report_id:
             The Power Bi Report id. You can take it from PBI Service URL
         ### Returns
@@ -244,8 +228,6 @@ class Admin():
         """Returns a workspace for the organization.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         top: int
             Returns only the first n results. This parameter is mandatory and must be in the range of 1-5000.
         expand: string
@@ -278,8 +260,6 @@ class Admin():
         """Returns a workspace for the organization.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         group_id: str
             The Power Bi Workspace id. You can take it from PBI Service URL
         expand: string
@@ -304,8 +284,6 @@ class Admin():
         """Returns a list of users that have access to the specified workspace. This is a preview API call.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         group_id: str
             The Power Bi Workspace id. You can take it from PBI Service URL.
         ### Returns
@@ -327,8 +305,6 @@ class Admin():
         This API call only supports restoring workspaces in the new workspace experience.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         workspace_id:
             The Power Bi workspace id. You can take it from PBI Service URL
         ### Request Body
@@ -365,8 +341,6 @@ class Admin():
         """Returns a list of dashboards for the organization.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         expand: string
             Expands related entities inline, receives a comma-separated list of data types. Supported: users, reports, dashboards, datasets, dataflows, workbooks
         filter: string
@@ -401,8 +375,6 @@ class Admin():
         """Returns a list of dashboards from the specified workspace.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         workspace_id:
             The Power Bi workspace id. You can take it from PBI Service URL
         filter: string
@@ -435,8 +407,6 @@ class Admin():
         """Returns a list of users that have access to the specified dashboard (Preview).
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         dashboard_id:
             The Power Bi dashboard id. You can take it from PBI Service URL
         ### Returns
@@ -457,8 +427,6 @@ class Admin():
         """Returns a list of tiles within the specified dashboard.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         dashboard_id:
             The Power Bi dashboard id. You can take it from PBI Service URL
         ### Returns
@@ -479,8 +447,6 @@ class Admin():
         """Returns a list of dataflows for the organization.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         filter: string
             Filters the results based on a boolean condition
         skip: int 
@@ -511,8 +477,6 @@ class Admin():
         """Returns a list of dataflows from the specified workspace.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         workspace_id:
             The Power Bi workspace id. You can take it from PBI Service URL
         filter: string
@@ -545,8 +509,6 @@ class Admin():
         """Returns a list of users that have access to the specified dataflow (Preview).
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         dataflow_id:
             The Power Bi dataflow id. You can take it from PBI Service URL
         ### Returns
@@ -567,8 +529,6 @@ class Admin():
         """Returns a list of datasources for the specified dataflow.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         dataflow_id:
             The Power Bi Dataflow id. You can take it from PBI Service URL
         ### Returns
@@ -589,8 +549,6 @@ class Admin():
         """Returns a list of upstream dataflows for the specified dataflow.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         workspace_id:
             The Power Bi workspace id. You can take it from PBI Service URL
         dataflow_id:
@@ -613,8 +571,6 @@ class Admin():
         """Exports the definition for the specified dataflow to a JSON file.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         dataflow_id:
             The Power Bi Dataflow id. You can take it from PBI Service URL
         ### Returns
@@ -635,8 +591,6 @@ class Admin():
         """Returns a list of apps for the organization.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         top: int
             Returns only the first n results. This parameter is mandatory and must be in the range of 1-5000.
         ### Returns
@@ -659,8 +613,6 @@ class Admin():
         """Returns a list of users that have access to the specified app (Preview).
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         app_id:
             The Power Bi app id. You can take it from PBI Service URL
         ### Returns
@@ -681,8 +633,6 @@ class Admin():
         """Returns a list of capacities for the organization.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         expand: int
             Expands related entities inline
         ### Returns
@@ -705,8 +655,6 @@ class Admin():
         """Returns a list of users that have access to the specified capacitie (Preview).
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         capacity_id:
             The Power Bi capacity id. You can take it from PBI Service URL
         ### Returns
@@ -727,8 +675,6 @@ class Admin():
         """Returns a list of users that have access to the specified capacitie (Preview).
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         capacity_id:
             The Power Bi capacity id. You can take it from PBI Service URL
         refreshable_id
@@ -755,8 +701,6 @@ class Admin():
         """Returns a list of users that have access to the specified capacitie (Preview).
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         capacity_id:
             The Power Bi capacitie id. You can take it from PBI Service URL
         top: int
@@ -793,8 +737,6 @@ class Admin():
         
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         userGraphId: str uuid
             The graph ID of user
         return_pandas: bool
@@ -851,8 +793,6 @@ class Admin():
         """Returns a list of artifacts from the specified workspace with last used date.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         workspace_id:
             The Power Bi workspace id. You can take it from PBI Service URL
         ### Returns
@@ -873,8 +813,6 @@ class Admin():
         """Returns a list of pipelines for the organization.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         expand: string
             Expands related entities inline, receives a comma-separated list of data types. Supported: users, reports, pipelines, datasets, dataflows, workbooks
         filter: string
@@ -909,8 +847,6 @@ class Admin():
         """Returns a list of users that have access to the specified pipeline (Preview).
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         pipeline_id:
             The Power Bi pipeline id. You can take it from PBI Service URL
         ### Returns
@@ -931,8 +867,6 @@ class Admin():
         """Returns a list of imports for the organization.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         expand: string
             Expands related entities inline, receives a comma-separated list of data types. Supported: users, reports, imports, datasets, dataflows, workbooks
         filter: string
@@ -967,8 +901,6 @@ class Admin():
         """Returns a list of refreshables for the organization.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         top: int
             Returns only the first n results. This parameter is mandatory and must be in the range of 1-5000.
         expand: string
@@ -1001,8 +933,6 @@ class Admin():
         """Returns the encryption keys for the tenant.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         ### Returns
         ----
         Dict:
@@ -1022,8 +952,6 @@ class Admin():
         *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         ### Request Body
         ----
         All the keys are requested for the body
@@ -1063,8 +991,6 @@ class Admin():
         *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         tenantKeyId: str uuid
             The tenant key ID
         ### Request Body
@@ -1096,8 +1022,6 @@ class Admin():
         This API call only supports updating workspaces in the new workspace experience and adding a user principle.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         workspace_id:
             The Power Bi workspace id. You can take it from PBI Service URL
         ### Request Body
@@ -1148,8 +1072,6 @@ class Admin():
         This API call only supports updating workspaces in the new workspace experience and adding a user principle.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         workspace_id: str uuid
             The Power Bi workspace id. You can take it from PBI Service URL
         user: str
@@ -1175,8 +1097,6 @@ class Admin():
         This API call call only updates workspaces in the new workspace experience. Only the name and description can be updated. The name must be unique inside an organization.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         workspace_id:
             The Power Bi workspace id. You can take it from PBI Service URL
         ### Request Body
@@ -1269,8 +1189,6 @@ class Admin():
         
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         pipeline_id:
             The Power Bi Deployment Pipeline id. You can take it from PBI Service URL
         ### Request Body
@@ -1308,8 +1226,6 @@ class Admin():
         
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         pipeline_id: str uuid
             The deployment pipeline ID
         identifier: str
@@ -1334,8 +1250,6 @@ class Admin():
         *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         ### Request Body
         ----
         capacityMigrationAssignments: Assignment contract for migrating workspaces to premium capacity as tenant admin
@@ -1376,8 +1290,6 @@ class Admin():
         *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         ### Request Body
         ----        
         workspacesToAssign: str[]
@@ -1408,8 +1320,6 @@ class Admin():
         The continuation token is automtaically used to get all the results in the date.
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         activity_date: str "yyyy-mm-dd"
             The Single date to get events from the whole day.
             If the date is not specify it will return yesterday events by default.
@@ -1481,8 +1391,6 @@ class Admin():
         *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         excludePersonalWorkspaces: bool
             Whether to exclude personal workspaces
         modifiedSince: str-datetime
@@ -1521,8 +1429,6 @@ class Admin():
         *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         ### Request Body
         ----        
         workspaces: str[]
@@ -1552,8 +1458,6 @@ class Admin():
             *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         scan_id: str uui
             The scan id obtained from posting workspaces info        
         ### Returns
@@ -1575,8 +1479,6 @@ class Admin():
             *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
         ### Parameters
         ----
-        self.token: str
-            The Bearer Token to authenticate with Power Bi Rest API requests.
         scan_id: str uui
             The scan id obtained from posting workspaces info        
         ### Returns
