@@ -731,7 +731,7 @@ class Admin():
         except requests.exceptions.RequestException as e:
             print(e)
            
-    def get_user_artifact_access_preview(self, userGraphId, return_pandas=True):
+    def get_user_artifact_access_preview(self, userGraphId, return_pandas=False):
         '''Returns a list of artifacts that the given user have access to (Preview).
         *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
         
@@ -743,7 +743,7 @@ class Admin():
             Flag to specify if you want to return a dict response or a pandas dataframe of events. By default pandas
         ### Returns
         ----
-        Pandas dataframe concatenating iterations unless you change return_pandas to false, then it changes to dict
+        If return_pandas = True returns a Pandas dataframe concatenating iterations otherwise it returns a dict of the response
         '''        
         columnas = ['artifactId', 'displayName', 'artifactType', 'accessRight']
         df_total = pd.DataFrame(columns=columnas)
@@ -1314,7 +1314,7 @@ class Admin():
         except requests.exceptions.RequestException as e:
             print(e)
                                                                                          
-    def get_activity_events_preview(self, activity_date=None, return_pandas=True):
+    def get_activity_events_preview(self, activity_date=None, return_pandas=False):
         '''Returns a dict of pandas dataframe of audit activity events for a tenant.
         *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
         The continuation token is automtaically used to get all the results in the date.
@@ -1327,7 +1327,7 @@ class Admin():
             Flag to specify if you want to return a dict response or a pandas dataframe of events.
         ### Returns
         ----
-        Pandas dataframe concatenating iterations unless you change return_pandas to false, then it changes to dict
+        If return_pandas = True returns a Pandas dataframe concatenating iterations otherwise it returns a dict of the response
         '''        
         columnas = ['Id', 'RecordType', 'CreationTime', 'Operation', 'OrganizationId',
            'UserType', 'UserKey', 'Workload', 'UserId', 'ClientIP', 'UserAgent',

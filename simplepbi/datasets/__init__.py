@@ -20,7 +20,7 @@ class Datasets():
         """Returns the specified dataset from My workspace.
         ### Parameters
         ----
-        dataset_id:
+        dataset_id: str uuid
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Returns
         ----
@@ -40,9 +40,9 @@ class Datasets():
         """Returns the specified dataset from the specified workspace.
         ### Parameters
         ----
-        workspace_id:
+        workspace_id: str uuid
             The Power Bi workspace id. You can take it from PBI Service URL
-        dataset_id:
+        dataset_id: str uuid
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Returns
         ----
@@ -81,7 +81,7 @@ class Datasets():
         """Returns a list of datasets from the specified workspace.
         ### Parameters
         ----
-        workspace_id:
+        workspace_id: str uuid
             The Power Bi workspace id. You can take it from PBI Service URL
         ### Returns
         ----
@@ -101,7 +101,7 @@ class Datasets():
         """Returns a list of data sources for the specified dataset from My workspace.
         ### Parameters
         ----
-        dataset_id:
+        dataset_id: str uuid
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Returns
         ----
@@ -121,9 +121,9 @@ class Datasets():
         """Returns a list of data sources for the specified dataset from the specified workspace
         ### Parameters
         ----
-        workspace_id:
+        workspace_id: str uuid
             The Power Bi workspace id. You can take it from PBI Service URL
-        dataset_id:
+        dataset_id: str uuid
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Returns
         ----
@@ -143,7 +143,7 @@ class Datasets():
         """Returns a list of upstream dataflows for datasets from the specified workspace.
         ### Parameters
         ----
-        workspace_id:
+        workspace_id: str uuid
             The Power Bi workspace id. You can take it from PBI Service URL
         ### Returns
         ----
@@ -163,7 +163,7 @@ class Datasets():
         """Returns the refresh schedule for a specified DirectQuery or LiveConnection dataset from My workspace.
         ### Parameters
         ----
-        dataset_id:
+        dataset_id: str uuid
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Returns
         ----
@@ -183,9 +183,9 @@ class Datasets():
         """Returns the refresh schedule for a specified DirectQuery or LiveConnection dataset from the specified workspace.
         ### Parameters
         ----
-        workspace_id:
+        workspace_id: str uuid
             The Power Bi workspace id. You can take it from PBI Service URL
-        dataset_id:
+        dataset_id: str uuid
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Returns
         ----
@@ -205,7 +205,7 @@ class Datasets():
         """This API is deprecated, use Get Datasources instead.
         ### Parameters
         ----
-        dataset_id:
+        dataset_id: str uuid
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Returns
         """
@@ -214,7 +214,7 @@ class Datasets():
         """This API is deprecated, use Get Datasources In Group instead.
         ### Parameters
         ----
-        dataset_id:
+        dataset_id: str uuid
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Returns
         """
@@ -224,7 +224,7 @@ class Datasets():
         """Returns a list of parameters for the specified dataset from My workspace.
         ### Parameters
         ----
-        dataset_id:
+        dataset_id: str uuid
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Returns
         ----
@@ -244,9 +244,9 @@ class Datasets():
         """Returns a list of parameters for the specified dataset from the specified workspace.
         ### Parameters
         ----
-        workspace_id:
+        workspace_id: str uuid
             The Power Bi workspace id. You can take it from PBI Service URL
-        dataset_id:
+        dataset_id: str uuid
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Returns
         ----
@@ -290,9 +290,9 @@ class Datasets():
         """Returns the refresh history for the specified dataset from the specified workspace.
         ### Parameters
         ----
-        workspace_id:
+        workspace_id: str uuid
             The Power Bi workspace id. You can take it from PBI Service URL
-        dataset_id:
+        dataset_id: str uuid
             The Power Bi Dataset id. You can take it from PBI Service URL
         top: int
             The requested number of entries in the refresh history. If not provided, the default is all available entries.
@@ -316,7 +316,7 @@ class Datasets():
         """Returns the refresh schedule for the specified dataset from My workspace.
         ### Parameters
         ----
-        dataset_id:
+        dataset_id: str uuid
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Returns
         ----
@@ -336,9 +336,9 @@ class Datasets():
         """Returns the refresh schedule for the specified dataset from the specified workspace.
         ### Parameters
         ----
-        workspace_id:
+        workspace_id: str uuid
             The Power Bi workspace id. You can take it from PBI Service URL
-        dataset_id:
+        dataset_id: str uuid
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Returns
         ----
@@ -359,7 +359,7 @@ class Datasets():
         For Shared capacities, a maximum of eight requests per day, which includes refreshes executed using a scheduled refresh.
         ### Parameters
         ----    
-        dataset_id:
+        dataset_id: str uuid
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Request Body
         ----
@@ -388,9 +388,9 @@ class Datasets():
         For Shared capacities, a maximum of eight requests per day, which includes refreshes executed using a scheduled refresh.
         ### Parameters
         ----
-        workspace_id:
+        workspace_id: str uuid
             The Power Bi workspace id. You can take it from PBI Service URL        
-        dataset_id:
+        dataset_id: str uuid
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Request Body
         ----
@@ -418,9 +418,9 @@ class Datasets():
         """Transfers ownership over the specified dataset to the current authorized user.
         ### Parameters
         ----
-        workspace_id:
+        workspace_id: str uuid
             The Power Bi workspace id. You can take it from PBI Service URL        
-        dataset_id:
+        dataset_id: str uuid
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Request Body
         ----
@@ -445,7 +445,7 @@ class Datasets():
         This API call is only relevant to datasets that have at least one on-premises connection. For datasets with cloud-only connections, this API call returns an empty list.
         ### Parameters
         ----
-        dataset_id:
+        dataset_id: str uuid
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Returns
         ----
@@ -466,7 +466,7 @@ class Datasets():
         This API call is only relevant to datasets that have at least one on-premises connection. For datasets with cloud-only connections, this API call returns an empty list.
         ### Parameters
         ----
-        workspace_id:
+        workspace_id: str uuid
             The Power Bi workspace id. You can take it from PBI Service URL
         dataset_id:
             The Power Bi Dataset id. You can take it from PBI Service URL
@@ -483,3 +483,86 @@ class Datasets():
             print(ex)
         except requests.exceptions.RequestException as e:
             print(e)
+            
+    def delete_dataset(self, dataset_id):
+        """Deletes the specified dataset from My workspace.
+        ### Parameters
+        ----
+        dataset_id: str uuid
+            The Power Bi Dataset id. You can take it from PBI Service URL
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/datasets/{}".format(dataset_id)   
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.delete(url, headers=headers)
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            
+    def delete_dataset_in_group(self, workspace_id dataset_id):
+        """Deletes the specified dataset from the specified workspace.
+        ### Parameters
+        ----
+        dataset_id: str uuid
+            The Power Bi Dataset id. You can take it from PBI Service URL
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/groups/{}/datasets/{}".format(workspace_id, dataset_id)   
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.delete(url, headers=headers)
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            
+    def post_dax_query(self, dataset_id, query, return_pandas=False):
+        """Executes Data Analysis Expressions (DAX) queries against the provided dataset. The dataset must reside in My workspace or another new workspace experience workspace.
+        DAX query errors will result in: A response error, such as DAX query failure. A failure HTTP status code (400).
+        Limitation: A query that requests more than one table, or more than 100,000 table rows, will result in Error.
+        ### Parameters
+        ----
+        dataset_id: str uuid
+            The Power Bi Dataset id. You can take it from PBI Service URL
+        query: str
+            DAX query returning a Table. Starts with EVALUATE
+        return_pandas: bool
+            Flag to specify if you want to return a dict response or a pandas dataframe of events.
+        ### Returns
+        ----
+        If return_pandas = True returns a Pandas dataframe concatenating iterations otherwise it returns a dict of the response
+        Response object from requests library. 200 OK
+        
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/datasets/{}/executeQueries".format(dataset_id)
+            body = {"queries": [{"query": query}], "serializerSettings": {"incudeNulls": "true"}}
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.post(url, data = json.dumps(body), headers = headers)            
+            if return_pandas:
+                #get columns from json response - keys from dict
+                columnas = list(res.json()['results'][0]['tables'][0]['rows'][0].keys())
+                #get the number of rows to loop data
+                rows = len(res.json()['results'][0]['tables'][0]['rows'])        
+                #get data from json response - values from dict
+                datos = [list(res.json()['results'][0]['tables'][0]['rows'][n].values()) for n in range(rows-1)]
+                #build a dataframe from the collected data
+                df = pd.DataFrame(data=datos, columns=columnas)
+                print(df.head())
+                return df
+            else:
+                return res.json()
+        except requests.exceptions.HTTPError as ex:
+            print("ERROR ", ex)
+        except Exception as e:
+            print("ERROR ", e)
