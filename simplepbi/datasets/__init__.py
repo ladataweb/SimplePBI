@@ -505,7 +505,7 @@ class Datasets():
         except requests.exceptions.RequestException as e:
             print(e)
             
-    def delete_dataset_in_group(self, workspace_id dataset_id):
+    def delete_dataset_in_group(self, workspace_id, dataset_id):
         """Deletes the specified dataset from the specified workspace.
         ### Parameters
         ----
@@ -703,19 +703,19 @@ class Datasets():
         try: 
             url= "https://api.powerbi.com/v1.0/myorg/datasets/{}/refreshSchedule".format(dataset_id)
             body = {
-                "values": {}
+                "value": {}
             }
             
-            if capacityId != None:
-                body["values"]["NotifyOption"]=NotifyOption
-            if dashboards != None:
-                body["values"]["days"] = days
-            if dataflowStorageId != None:
-                body["values"]["enabled"] = enabled
-            if dataflows != None:
-                body["values"]["localTimeZoneId"] = localTimeZoneId
-            if datasets != None:
-                body["values"]["times"]=times
+            if NotifyOption != None:
+                body["value"]["NotifyOption"]=NotifyOption
+            if days != None:
+                body["value"]["days"] = days
+            if enabled != None:
+                body["value"]["enabled"] = enabled
+            if localTimeZoneId != None:
+                body["value"]["localTimeZoneId"] = localTimeZoneId
+            if times != None:
+                body["value"]["times"]=times
                 
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             
@@ -726,7 +726,7 @@ class Datasets():
         except requests.exceptions.RequestException as e:
             print(e)
             
-    def update_refresh_schedule_in_gorup(self, workspace_id, dataset_id, NotifyOption=None, days=None, enabled=None, localTimeZoneId=None, times=None):
+    def update_refresh_schedule_in_group(self, workspace_id, dataset_id, NotifyOption=None, days=None, enabled=None, localTimeZoneId=None, times=None):
         """Updates the refresh schedule for the specified dataset from the specified workspace.
         A request that disables the refresh schedule should contain no other changes.
         At least one day must be specified. If no times are specified, then Power BI will use a default single time per day.       
@@ -758,19 +758,19 @@ class Datasets():
         try: 
             url= "https://api.powerbi.com/v1.0/myorg/groups/{}/datasets/{}/refreshSchedule".format(workspace_id, dataset_id)
             body = {
-                "values": {}
+                "value": {}
             }
             
-            if capacityId != None:
-                body["values"]["NotifyOption"]=NotifyOption
-            if dashboards != None:
-                body["values"]["days"] = days
-            if dataflowStorageId != None:
-                body["values"]["enabled"] = enabled
-            if dataflows != None:
-                body["values"]["localTimeZoneId"] = localTimeZoneId
-            if datasets != None:
-                body["values"]["times"]=times
+            if NotifyOption != None:
+                body["value"]["NotifyOption"]=NotifyOption
+            if days != None:
+                body["value"]["days"] = days
+            if enabled != None:
+                body["value"]["enabled"] = enabled
+            if localTimeZoneId != None:
+                body["value"]["localTimeZoneId"] = localTimeZoneId
+            if times != None:
+                body["value"]["times"]=times
                 
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             
