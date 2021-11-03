@@ -566,3 +566,219 @@ class Datasets():
             print("ERROR ", ex)
         except Exception as e:
             print("ERROR ", e)
+            
+    def update_parameters(self, dataset_id, updateDetails):
+        """Updates the parameters values for the specified dataset from My workspace.
+        If you're using enhanced dataset metadata, refresh the dataset to apply the new parameter values.
+        If you're not using enhanced dataset metadata, wait 30 minutes for the update data sources operation to complete, and then refresh the dataset.
+        ### Parameters
+        ----
+        dataset_id: str uuid
+            The Power Bi Dataset id. You can take it from PBI Service URL
+        ### Request Body
+        ----
+        updateDetails: UpdateMashupParameterDetails [] str
+            The dataset parameter list to update. Example:
+            [
+                {
+                    "name": "ParameterName1",
+                    "newValue": "NewDB"
+                },
+                {
+                    "name": "ParameterName2",
+                    "newValue": "5678"
+                }
+            ]
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        ### Limitations
+        ----
+        Datasets created using the public XMLA endpoint aren't supported. To make changes to those data sources, the admin must use the Azure Analysis Services client library for Tabular Object Model.
+        DirectQuery connections are only supported with enhanced dataset metadata.
+        Datasets with Azure Analysis Services live connections aren't supported.
+        Maximum of 100 parameters per request.
+        All specified parameters must exist in the dataset.
+        Parameters values should be of the expected type.
+        The parameter list cannot be empty or include duplicate parameters.
+        Parameters names are case-sensitive.
+        Parameter IsRequired must have a non-empty value.
+        The parameter types Any and Binary cannot be updated.
+        
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/datasets/{}/Default.UpdateParameters".format(dataset_id)
+            body = {
+                "updateDetails": updateDetails
+            }               
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.post(url, data = json.dumps(body), headers = headers)
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            
+    def update_parameters_in_group(self, workspace_id, dataset_id, updateDetails):
+        """Updates the parameters values for the specified dataset from the specified workspace.
+        If you're using enhanced dataset metadata, refresh the dataset to apply the new parameter values.
+        If you're not using enhanced dataset metadata, wait 30 minutes for the update data sources operation to complete, and then refresh the dataset.
+        ### Parameters
+        ----
+        workspace_id: str uuid
+            The Power Bi workspace id. You can take it from PBI Service URL        
+        dataset_id: str uuid
+            The Power Bi Dataset id. You can take it from PBI Service URL
+        ### Request Body
+        ----
+        updateDetails: UpdateMashupParameterDetails [] str
+            The dataset parameter list to update. Example:
+            [
+                {
+                    "name": "ParameterName1",
+                    "newValue": "NewDB"
+                },
+                {
+                    "name": "ParameterName2",
+                    "newValue": "5678"
+                }
+            ]
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        ### Limitations
+        ----
+        Datasets created using the public XMLA endpoint aren't supported. To make changes to those data sources, the admin must use the Azure Analysis Services client library for Tabular Object Model.
+        DirectQuery connections are only supported with enhanced dataset metadata.
+        Datasets with Azure Analysis Services live connections aren't supported.
+        Maximum of 100 parameters per request.
+        All specified parameters must exist in the dataset.
+        Parameters values should be of the expected type.
+        The parameter list cannot be empty or include duplicate parameters.
+        Parameters names are case-sensitive.
+        Parameter IsRequired must have a non-empty value.
+        The parameter types Any and Binary cannot be updated.
+        
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/groups/{}/datasets/{}/Default.UpdateParameters".format(workspace_id, dataset_id)
+            body = {
+                "updateDetails": updateDetails
+            }               
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.post(url, data = json.dumps(body), headers = headers)
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            
+    def update_refresh_schedule(self, dataset_id, NotifyOption=None, days=None, enabled=None, localTimeZoneId=None, times=None):
+        """Updates the refresh schedule for the specified dataset from My workspace.
+        A request that disables the refresh schedule should contain no other changes.
+        At least one day must be specified. If no times are specified, then Power BI will use a default single time per day.        
+        ### Parameters
+        ----
+        dataset_id: str uuid
+            The Power Bi Dataset id. You can take it from PBI Service URL
+        ### Request Body
+        ----
+        NotifyOption: ShceduleNotifyOption str
+            Notification option at scheduled refresh termination. Example MailOnFailure or NoNotification.
+        days: str []
+            Days to execute the refresh. Example: ["Sunday", "Tuesday"]
+        enabled: bool
+            is the refresh enabled
+        localTimeZoneId: str
+            The ID of the timezone to use. See TimeZone Info. Example "UTC"
+        times: str []
+            Times to execute the refresh within each day. Example: ["07:00", "16:00"]
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        ### Limitations
+        ----
+        The limit on the number of time slots per day depends on whether a Premium or Shared capacity is used.
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/datasets/{}/refreshSchedule".format(dataset_id)
+            body = {
+                "values": {}
+            }
+            
+            if capacityId != None:
+                body["values"]["NotifyOption"]=NotifyOption
+            if dashboards != None:
+                body["values"]["days"] = days
+            if dataflowStorageId != None:
+                body["values"]["enabled"] = enabled
+            if dataflows != None:
+                body["values"]["localTimeZoneId"] = localTimeZoneId
+            if datasets != None:
+                body["values"]["times"]=times
+                
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            
+            res = requests.patch(url, json.dumps(body), headers = headers)
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            
+    def update_refresh_schedule_in_gorup(self, workspace_id, dataset_id, NotifyOption=None, days=None, enabled=None, localTimeZoneId=None, times=None):
+        """Updates the refresh schedule for the specified dataset from the specified workspace.
+        A request that disables the refresh schedule should contain no other changes.
+        At least one day must be specified. If no times are specified, then Power BI will use a default single time per day.       
+        ### Parameters
+        ----
+        workspace_id: str uuid
+            The Power Bi workspace id. You can take it from PBI Service URL
+        dataset_id: str uuid
+            The Power Bi Dataset id. You can take it from PBI Service URL
+        ### Request Body
+        ----
+        NotifyOption: ShceduleNotifyOption str
+            Notification option at scheduled refresh termination. Example MailOnFailure or NoNotification.
+        days: str []
+            Days to execute the refresh. Example: ["Sunday", "Tuesday"]
+        enabled: bool
+            is the refresh enabled
+        localTimeZoneId: str
+            The ID of the timezone to use. See TimeZone Info. Example "UTC"
+        times: str []
+            Times to execute the refresh within each day. Example: ["07:00", "16:00"]
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        ### Limitations
+        ----
+        The limit on the number of time slots per day depends on whether a Premium or Shared capacity is used.
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/groups/{}/datasets/{}/refreshSchedule".format(workspace_id, dataset_id)
+            body = {
+                "values": {}
+            }
+            
+            if capacityId != None:
+                body["values"]["NotifyOption"]=NotifyOption
+            if dashboards != None:
+                body["values"]["days"] = days
+            if dataflowStorageId != None:
+                body["values"]["enabled"] = enabled
+            if dataflows != None:
+                body["values"]["localTimeZoneId"] = localTimeZoneId
+            if datasets != None:
+                body["values"]["times"]=times
+                
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            
+            res = requests.patch(url, json.dumps(body), headers = headers)
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print(ex)
+        except requests.exceptions.RequestException as e:
+            print(e)
+            
+            
