@@ -42,9 +42,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_datasets_in_group(self, workspace_id, expand=None, filter=None, skip=None, top=None):
         """Returns a list of datasets from the specified workspace.
@@ -78,9 +78,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_dataset_users(self, dataset_id):
         """Returns a list of users that have access to the specified dataset (Preview).
@@ -98,9 +98,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_datasources(self, dataset_id):
         """Returns a list of datasources for the specified dataset.
@@ -118,9 +118,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_dataset_to_dataflows_links_in_group(self, workspace_id):
         """Returns a list of upstream dataflows for datasets from the specified workspace.
@@ -138,9 +138,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
         
     def get_reports(self, filter=None, skip=None, top=None):
         """Returns a list of reports for the organization.
@@ -168,9 +168,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_reports_in_group(self, workspace_id, filter=None, skip=None, top=None):
         """Returns a list of reports from the specified workspace.
@@ -200,9 +200,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_reports_users(self, report_id):
         """Returns a list of users that have access to the specified report (Preview).
@@ -220,9 +220,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_groups(self, top, expand=None, filter=None, skip=None):
         """Returns a workspace for the organization.
@@ -252,9 +252,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_group(self, group_id, expand=None):
         """Returns a workspace for the organization.
@@ -276,9 +276,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_groups_users(self, group_id):
         """Returns a list of users that have access to the specified workspace. This is a preview API call.
@@ -296,9 +296,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def restore_deleted_group(self, workspace_id, emailAddress, name=None):
         """Restores a deleted workspace.
@@ -333,9 +333,9 @@ class Admin():
             res = requests.post(url, data = json.dumps(body), headers = headers)
             return res
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
 
     def get_dashboards(self, expand=None, filter=None, skip=None, top=None):
         """Returns a list of dashboards for the organization.
@@ -367,9 +367,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_dashboards_in_group(self, workspace_id, filter=None, skip=None, top=None):
         """Returns a list of dashboards from the specified workspace.
@@ -399,9 +399,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_dashboards_users(self, dashboard_id):
         """Returns a list of users that have access to the specified dashboard (Preview).
@@ -419,9 +419,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
            
     def get_tiles(self, dashboard_id):
         """Returns a list of tiles within the specified dashboard.
@@ -439,9 +439,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
     
     def get_dataflows(self, filter=None, skip=None, top=None):
         """Returns a list of dataflows for the organization.
@@ -469,9 +469,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_dataflows_in_group(self, workspace_id, filter=None, skip=None, top=None):
         """Returns a list of dataflows from the specified workspace.
@@ -501,9 +501,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_dataflows_users(self, dataflow_id):
         """Returns a list of users that have access to the specified dataflow (Preview).
@@ -521,9 +521,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
         
     def get_dataflow_datasources(self, dataflow_id):
         """Returns a list of datasources for the specified dataflow.
@@ -541,9 +541,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_upstream_dataflows_in_group(self, workspace_id, dataflow_id):
         """Returns a list of upstream dataflows for the specified dataflow.
@@ -563,9 +563,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)    
+            print("Request exception: ", e)    
             
     def export_dataflow(self, dataflow_id):
         """Exports the definition for the specified dataflow to a JSON file.
@@ -583,9 +583,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_apps(self, top=None):
         """Returns a list of apps for the organization.
@@ -605,9 +605,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_apps_users(self, app_id):
         """Returns a list of users that have access to the specified app (Preview).
@@ -625,9 +625,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_capacities(self, expand=None):
         """Returns a list of capacities for the organization.
@@ -647,9 +647,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'capacitielication/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_capacities_users(self, capacity_id):
         """Returns a list of users that have access to the specified capacitie (Preview).
@@ -667,9 +667,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'capacitielication/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_refreshable_capacity(self, capacity_id, refreshable_id, expand=None):
         """Returns a list of users that have access to the specified capacitie (Preview).
@@ -693,9 +693,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'capacitielication/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_refreshables_capacity(self, capacity_id, top, expand=None, filter=None, skip=None):
         """Returns a list of users that have access to the specified capacitie (Preview).
@@ -727,9 +727,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'capacitielication/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
            
     def get_user_artifact_access_preview(self, userGraphId, return_pandas=False):
         '''Returns a list of artifacts that the given user have access to (Preview).
@@ -805,9 +805,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)        
+            print("Request exception: ", e)        
             
     def get_pipelines(self, expand=None, filter=None, skip=None, top=None):
         """Returns a list of pipelines for the organization.
@@ -839,9 +839,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
 			
     def get_pipelines_users(self, pipeline_id):
         """Returns a list of users that have access to the specified pipeline (Preview).
@@ -859,9 +859,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)    
+            print("Request exception: ", e)    
         
     def get_imports(self, expand=None, filter=None, skip=None, top=None):
         """Returns a list of imports for the organization.
@@ -893,9 +893,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
     
     def get_refreshables(self, expand=None, filter=None, skip=None, top=None):
         """Returns a list of refreshables for the organization.
@@ -925,9 +925,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
         
     def get_encryption_keys(self, expand=None, filter=None, skip=None, top=None):
         """Returns the encryption keys for the tenant.
@@ -943,9 +943,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def add_encryption_key_preview(self, activate, isDefault, keyVaultKeyIdentifier, name):
         """Adds an encryption key for Power BI workspaces assigned to a capacity.
@@ -982,9 +982,9 @@ class Admin():
             res = requests.post(url, data = json.dumps(body), headers = headers)
             return res
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def rotate_encryption_key_preview(self, tenantKeyId, keyVaultKeyIdentifier):
         """Adds an encryption key for Power BI workspaces assigned to a capacity.
@@ -1013,9 +1013,9 @@ class Admin():
             res = requests.post(url, data = json.dumps(body), headers = headers)
             return res
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
     
     def add_user_to_group(self, workspace_id, groupUserAccessRight, emailAddress, displayName=None, graphId=None, identifier=None, principalType=None):
         """Grants user permissions to the specified workspace.
@@ -1063,9 +1063,9 @@ class Admin():
             res = requests.post(url, data = json.dumps(body), headers = headers)
             return res
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def delete_user_from_group(self, workspace_id, user):
         """Removes user permissions from the specified workspace.
@@ -1087,9 +1087,9 @@ class Admin():
             res = requests.delete(url, headers=headers)
             return res
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def update_group_preview(self, workspace_id, capacityId=None, dashboards=None, dataflowStorageId=None, dataflows=None, datasets=None, description=None, isOnDedicatedCapacity=None, isReadOnly=None, name=None, pipelineId=None, reports=None, state=None, typee=None, users=None, workbooks=None):    
         """Updates the properties of the specified workspace.
@@ -1180,9 +1180,9 @@ class Admin():
             res = requests.patch(url, json.dumps(body), headers = headers)
             return res
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def update_user_in_pipeline(self, pipeline_id, identifier, principalType, accessRight):
         """Grants user permissions to a specified deployment pipeline.
@@ -1217,9 +1217,9 @@ class Admin():
             res = requests.post(url, data = json.dumps(body), headers = headers)
             return res
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def delete_user_from_pipeline(self, pipeline_id, identifier):
         """Removes user permissions from a specified deployment pipeline.
@@ -1241,9 +1241,9 @@ class Admin():
             res = requests.delete(url, headers=headers)
             return res
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def assign_workspaces_to_capacity_preview(self, tagetCapacityObjectId, workspacesToAssign):
         """Assigns the specified workspaces to the specified Premium capacity.
@@ -1281,9 +1281,9 @@ class Admin():
             res = requests.post(url, data = json.dumps(body), headers = headers)
             return res
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def unassign_workspaces_from_capacity_preview(self, workspacesToAssign):
         """Unassigns the specified workspaces from capacity.
@@ -1310,9 +1310,9 @@ class Admin():
             res = requests.post(url, data = json.dumps(body), headers = headers)
             return res
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
                                                                                          
     def get_activity_events_preview(self, activity_date=None, return_pandas=False):
         '''Returns a dict of pandas dataframe of audit activity events for a tenant.
@@ -1384,7 +1384,7 @@ class Admin():
             print("Catastrophic error.")
             raise SystemExit(e)
         except Exception as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
             
     def get_modified_workspaces_preview(self, excludePersonalWorkspaces=True, modifiedSince=None):
         """Gets a list of workspace IDs in the organization. This is a preview API call.
@@ -1420,9 +1420,9 @@ class Admin():
             return lista_total 
         
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
         
     def post_workspace_info(self, workspaces, lineage=True, datasourceDetails=True, datasetSchema=True, datasetExpressions=True, getArtifactUsers=True):
         """Initiates a call to receive metadata for the requested list of workspaces. This is a preview API call.
@@ -1449,9 +1449,9 @@ class Admin():
             res = requests.post(url, data = json.dumps(body), headers = headers)
             return res.json()["id"]
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)            
+            print("Request exception: ", e)            
             
     def get_scan_status_preview(self, scan_id):
         """Gets a list of workspace IDs in the organization. This is a preview API call.
@@ -1470,9 +1470,9 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()["status"]
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)            
+            print("Request exception: ", e)            
             
     def get_scan_result_preview(self, scan_id):
         """Gets a list of workspace IDs in the organization. This is a preview API call.
@@ -1491,6 +1491,16 @@ class Admin():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
+            
+    def get_available_features(self):
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/availableFeatures"
+            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            return response.json()
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)  
