@@ -32,9 +32,9 @@ class Datasets():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_dataset_in_group(self, workspace_id, dataset_id):
         """Returns the specified dataset from the specified workspace.
@@ -54,9 +54,9 @@ class Datasets():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_datasets(self):
         """Returns a list of datasets from My workspace.
@@ -73,9 +73,9 @@ class Datasets():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_datasets_in_group(self, workspace_id):
         """Returns a list of datasets from the specified workspace.
@@ -93,9 +93,9 @@ class Datasets():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
 
     def get_datasources(self, dataset_id):
         """Returns a list of data sources for the specified dataset from My workspace.
@@ -113,9 +113,9 @@ class Datasets():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_datasources_in_group(self, workspace_id, dataset_id):
         """Returns a list of data sources for the specified dataset from the specified workspace
@@ -135,9 +135,9 @@ class Datasets():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_dataset_to_dataflows_links_in_group(self, workspace_id):
         """Returns a list of upstream dataflows for datasets from the specified workspace.
@@ -155,9 +155,9 @@ class Datasets():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
 
     def get_direct_query_refresh_schedule(self, dataset_id):
         """Returns the refresh schedule for a specified DirectQuery or LiveConnection dataset from My workspace.
@@ -175,9 +175,9 @@ class Datasets():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_direct_query_refresh_schedule_in_group(self, workspace_id, dataset_id):
         """Returns the refresh schedule for a specified DirectQuery or LiveConnection dataset from the specified workspace.
@@ -197,9 +197,9 @@ class Datasets():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_gateway_datasources(self, dataset_id):
         """This API is deprecated, use Get Datasources instead.
@@ -236,9 +236,9 @@ class Datasets():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_parameters_in_group(self, workspace_id, dataset_id):
         """Returns a list of parameters for the specified dataset from the specified workspace.
@@ -258,9 +258,9 @@ class Datasets():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
     
     def get_refresh_history(self, dataset_id, top=None):
         """Returns the refresh history for the specified dataset from My workspace.
@@ -282,9 +282,9 @@ class Datasets():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_refresh_history_in_group(self, workspace_id, dataset_id, top=None):
         """Returns the refresh history for the specified dataset from the specified workspace.
@@ -308,9 +308,9 @@ class Datasets():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_refresh_schedule(self, dataset_id):
         """Returns the refresh schedule for the specified dataset from My workspace.
@@ -328,9 +328,9 @@ class Datasets():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def get_refresh_schedule_in_group(self, workspace_id, dataset_id):
         """Returns the refresh schedule for the specified dataset from the specified workspace.
@@ -350,9 +350,9 @@ class Datasets():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def refresh_dataset(self, dataset_id, notifyOption):
         """Triggers a refresh for the specified dataset from My workspace.
@@ -379,9 +379,9 @@ class Datasets():
             res = requests.post(url, data = json.dumps(body), headers = headers)
             return res
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def refresh_dataset_in_group(self, workspace_id, dataset_id, notifyOption):
         """Triggers a refresh for the specified dataset from the specified workspace.
@@ -410,9 +410,9 @@ class Datasets():
             res = requests.post(url, data = json.dumps(body), headers = headers)
             return res
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def take_over_dataset_in_group(self, workspace_id, dataset_id):
         """Transfers ownership over the specified dataset to the current authorized user.
@@ -436,9 +436,9 @@ class Datasets():
             res = requests.post(url, headers = headers)
             return res
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def discover_gateways(self, dataset_id):
         """Returns a list of gateways that the specified dataset from My workspace can be bound to.
@@ -457,9 +457,9 @@ class Datasets():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def discover_gateways_in_group(self, workspace_id, dataset_id):
         """Returns a list of gateways that the specified dataset from the specified workspace can be bound to.
@@ -480,9 +480,9 @@ class Datasets():
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             return response.json()
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def delete_dataset(self, dataset_id):
         """Deletes the specified dataset from My workspace.
@@ -501,9 +501,9 @@ class Datasets():
             res = requests.delete(url, headers=headers)
             return res
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def delete_dataset_in_group(self, workspace_id, dataset_id):
         """Deletes the specified dataset from the specified workspace.
@@ -522,9 +522,9 @@ class Datasets():
             res = requests.delete(url, headers=headers)
             return res
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def post_dax_query(self, dataset_id, query, return_pandas=False):
         """Executes Data Analysis Expressions (DAX) queries against the provided dataset. The dataset must reside in My workspace or another new workspace experience workspace.
@@ -615,9 +615,9 @@ class Datasets():
             res = requests.post(url, data = json.dumps(body), headers = headers)
             return res
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def update_parameters_in_group(self, workspace_id, dataset_id, updateDetails):
         """Updates the parameters values for the specified dataset from the specified workspace.
@@ -669,9 +669,9 @@ class Datasets():
             res = requests.post(url, data = json.dumps(body), headers = headers)
             return res
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def update_refresh_schedule(self, dataset_id, NotifyOption=None, days=None, enabled=None, localTimeZoneId=None, times=None):
         """Updates the refresh schedule for the specified dataset from My workspace.
@@ -722,9 +722,9 @@ class Datasets():
             res = requests.patch(url, json.dumps(body), headers = headers)
             return res
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
     def update_refresh_schedule_in_group(self, workspace_id, dataset_id, NotifyOption=None, days=None, enabled=None, localTimeZoneId=None, times=None):
         """Updates the refresh schedule for the specified dataset from the specified workspace.
@@ -777,8 +777,8 @@ class Datasets():
             res = requests.patch(url, json.dumps(body), headers = headers)
             return res
         except requests.exceptions.HTTPError as ex:
-            print(ex)
+            print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
-            print(e)
+            print("Request exception: ", e)
             
             
