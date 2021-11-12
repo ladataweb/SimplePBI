@@ -1411,7 +1411,7 @@ class Admin():
                 url = url + "&modifiedSince={}".format(modifiedSince)
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res = response.json()
-            lista = [res[i]['Id'] for i in range(len(res))]
+            lista = [res[i]['id'] for i in range(len(res))]
             for item in range(len(lista)):
                 if lista[item*100:item*100+100] != []:
                     lista_total.append(lista[item*100:item*100+100])
@@ -1504,3 +1504,44 @@ class Admin():
             print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)  
+            
+    def get_orphan_dataflows_preview(self):
+        """Returns a list of all dataflows that are not used by a dataset.
+            *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
+        ### Limitations
+        ----
+        It can only be used for organizations with less than 200 workspaces. The PBI Rest API won't allow more than 200 requests in an hour.
+        ### Returns
+        ----
+        List:
+            A list containing all the dataflows without a dataset connected.
+        """
+        try:
+            url_wp = "https://api.powerbi.com/v1.0/myorg/admin/workspaces/modified?excludePersonalWorkspaces=True"
+            res_wp= requests.get(url_wp, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            workspaces = [res_wp.json()[i]["id"] for i in range(len(res_wp.json()))]
+            
+            url_df = "https://api.powerbi.com/v1.0/myorg/admin/dataflows"
+            res_df = requests.get(url_df, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            dataflows = [res_df.json()["value"][i]["objectId"] for i in range(len(res_df.json()["value"]))]
+            
+            actives = []
+            orphans = []
+            
+            for wp in workspaces:
+                url = "https://api.powerbi.com/v1.0/myorg/admin/groups/{}/datasets/upstreamDataflows".format(wp)
+                res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+                if res.text != '' or res.status_code != 200:
+                    actives.extend( [res.json()["value"][i]["dataflowObjectId"] for i in range(len(res.json()["value"])) ] )
+                
+            for df in dataflows:
+                if df not in actives:
+                    orphans.append(df)
+            
+            return orphans
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+        except Exception as ee:
+            print("Exception: ", ee)        

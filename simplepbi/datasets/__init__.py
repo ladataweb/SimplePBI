@@ -153,7 +153,10 @@ class Datasets():
         try:
             url = "https://api.powerbi.com/v1.0/myorg/groups/{}/datasets/upstreamDataflows".format(workspace_id)
             response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            if response.text == '':
+                return response
+            else:
+                return response.json()
         except requests.exceptions.HTTPError as ex:
             print("HTTP Error: ", ex)
         except requests.exceptions.RequestException as e:
