@@ -22,10 +22,10 @@ classifiers = [
 setup(
     name='SimplePBI',
     packages=find_packages(),
-    version='0.0.2',
+    version='0.0.3',
     download_url='',
     url='',
-    description='Simplify usage of Power Bi Admin API',
+    description='Simplify usage of Power Bi Rest API',
     long_description=open('README.md').read() + '\n\n' + open('CHANGELOG.txt').read(),
     long_description_content_type="text/markdown",
     author='Martin Zurita <martinzurita1@gmail.com>, Ignacio Barrau <igna_barrau@hotmail.com>',
