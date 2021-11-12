@@ -29,12 +29,12 @@ The artifacts are paginated by the original API. The request will handle the pag
 There is a big limitation for this method. There is a maximum of 200 requests per hour. If you are getting that reach, it will send a 429 Error. Please notify the issue so we can take a look on how to handle this.
 Finally there is an special param to adjust the response. You can check return_pandas to True if you want a complete dataframe ready to be inserted somewhere or to be analyzed. By default it is in False returning a dict in case you want to handle it by yourself.
 
-## Scanner API.
+## Scanner API
 This sections is dedicated to review how to get the values of Power Bi Tenant as a single big dict response. 
 Be sure to read this realease notes to configure what you need to start with this: https://powerbi.microsoft.com/en-my/blog/announcing-scanner-api-admin-rest-apis-enhancements-to-include-dataset-tables-columns-measures-dax-expressions-and-mashup-queries/
 Let's start with the order of the requests we have created to make it the easier we can.
 
-### 1- Get the workspaces you want to track.
+### 1- Get the workspaces you want to track
 ```python
 get_modified_workspaces_preview(excludePersonalWorkspaces=True, modifiedSince=None)
 ```
@@ -48,7 +48,7 @@ len(response)
 response[0]
 ```
 
-### 2- Post Workspace info.
+### 2- Post Workspace info
 ```python
 post_workspace_info(workspaces, lineage=True, datasourceDetails=True, datasetSchema=True, datasetExpressions=True, getArtifactUsers=True)
 ```
