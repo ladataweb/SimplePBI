@@ -529,7 +529,7 @@ class Datasets():
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
-    def post_dax_query(self, dataset_id, query, return_pandas=False):
+    def execute_queries(self, dataset_id, query, return_pandas=False):
         """Executes Data Analysis Expressions (DAX) queries against the provided dataset. The dataset must reside in My workspace or another new workspace experience workspace.
         DAX query errors will result in: A response error, such as DAX query failure. A failure HTTP status code (400).
         Limitation: A query that requests more than one table, or more than 100,000 table rows, will result in Error.

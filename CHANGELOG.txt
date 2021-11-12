@@ -8,3 +8,6 @@ Change Log
 0.0.2 (29/10/2021)
 -------------------
 - Second build: completing almost all the requests in Admin Section
+
+0.0.3 (17/11/2021)
+- Third build: creating aditional content to admin and adding first commit for groups and datasets category

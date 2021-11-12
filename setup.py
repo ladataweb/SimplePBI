@@ -1,3 +1,16 @@
+'''
+  /¯¯¯¯¯¯¯¯¯\
+ /           \
+|   |   __    |  *********************************************
+|   |  |  \   |  Code writen by Ignacio and Martin.
+|   |  |  |   |
+|   |__|_ |   |  Sponsored by La Data Web 
+|	   |__/   |  *********************************************
+ \            /
+  \__________/
+  
+'''
+
 from setuptools import find_packages, setup
 
 classifiers = [

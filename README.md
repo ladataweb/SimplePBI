@@ -52,11 +52,19 @@ Datasets_In_Groups = ad.get_datasets_in_group(workspace_id)
 The library get requests will return a response object .json() that python reads it as a Dict.
 
 ## Current Categories
-Right now the library is only consuming endpoints from Admin category.
+Right now the library is consuming endpoints from Admin, groups and datasets category.
 
 ## Missing endpoints
 We are still developing the library. The following endpoints from admin are still missing
+### Admin 
 - Set and Remove LabelsAsAdmin
+### Groups
+- Update group User
+### Datasets
+- Bind to gateway (regular and in group)
+- Set all datasets connections (regular and in group)
+- Update datasources (regular and in group)
+- Update Direct Query Refresh Schedule (regular and in group)
 
 ## Preview methods
 There are some methods in the classes that still need more testing. Those will have a "preview" at the end of the name. Please let us know if something goes wrong with those.
