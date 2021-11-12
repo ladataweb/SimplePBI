@@ -53,7 +53,7 @@ The library get requests will return a response object .json() that python reads
 
 ## Complex requests
 If you want to get a deeper look on complex __Admin__ methods. 
-<a href="https://github.com/ladataweb/SimplePBI/blob/main/Admin.md" target="_blank">Check this doc</a>
+<a href="https://github.com/ladataweb/SimplePBI/blob/main/Admin_complex.md" target="_blank">Check this doc</a>
 
 ## Current Categories
 Right now the library is consuming endpoints from: 
