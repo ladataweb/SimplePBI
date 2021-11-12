@@ -744,6 +744,9 @@ class Admin():
         ### Returns
         ----
         If return_pandas = True returns a Pandas dataframe concatenating iterations otherwise it returns a dict of the response
+        ### Limitations
+        ----
+        Maximum 200 requests per hour.
         '''        
         columnas = ['artifactId', 'displayName', 'artifactType', 'accessRight']
         df_total = pd.DataFrame(columns=columnas)
@@ -1328,6 +1331,9 @@ class Admin():
         ### Returns
         ----
         If return_pandas = True returns a Pandas dataframe concatenating iterations otherwise it returns a dict of the response
+        ### Limitations
+        ----
+        Maximum 200 requests per hour.
         '''        
         columnas = ['Id', 'RecordType', 'CreationTime', 'Operation', 'OrganizationId',
            'UserType', 'UserKey', 'Workload', 'UserId', 'ClientIP', 'UserAgent',
@@ -1454,7 +1460,7 @@ class Admin():
             print("Request exception: ", e)            
             
     def get_scan_status_preview(self, scan_id):
-        """Gets a list of workspace IDs in the organization. This is a preview API call.
+        """Gets the scan status for the specified scan. This is a preview API call.
             *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
         ### Parameters
         ----
@@ -1475,7 +1481,7 @@ class Admin():
             print("Request exception: ", e)            
             
     def get_scan_result_preview(self, scan_id):
-        """Gets a list of workspace IDs in the organization. This is a preview API call.
+        """Gets the scan result for the specified scan. This is a preview API call.
             *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
         ### Parameters
         ----
