@@ -51,8 +51,15 @@ Datasets_In_Groups = ad.get_datasets_in_group(workspace_id)
 
 The library get requests will return a response object .json() that python reads it as a Dict.
 
+## Complex requests
+If you want to get a deeper look on complex __Admin__ methods. 
+<a href="https://github.com/ladataweb/SimplePBI/blob/main/Admin.md" target="_blank">Check this doc</a>
+
 ## Current Categories
-Right now the library is consuming endpoints from Admin, groups and datasets category.
+Right now the library is consuming endpoints from: 
+- <a href="https://github.com/ladataweb/SimplePBI/blob/main/Admin_details.txt" target="_blank">Admin</a>
+- <a href="https://github.com/ladataweb/SimplePBI/blob/main/Groups_details.txt" target="_blank">Groups</a>
+- <a href="https://github.com/ladataweb/SimplePBI/blob/main/Datasets_details.txt" target="_blank">Datasets</a>
 
 ## Missing endpoints
 We are still developing the library. The following endpoints from admin are still missing
