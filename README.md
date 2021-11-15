@@ -2,6 +2,7 @@
 
 This is a simple library that makes it easy to use the Power Bi REST API. One day SimplePBI will contain all the categories in the API (Admin, datasets, reports, etc).
 Feel free to check the doc to get a deeper understanding of a specific request: https://docs.microsoft.com/en-us/rest/api/power-bi/
+<br>We are doing our best to make this library useful for the community. This project is not a remunerable job for us. It's a public community project. Please be patient if you submit an issue and it's not fixed right away. It's a way to express our passion of sharing knowledge.
 <br>Each category is an Object. This means we need to initialize an object to start using its methods. In order to create them we need the Bearer token that can be obtain from a Token Object. 
 Let's see how we can create an Admin Object to try the requests in that category.
 
