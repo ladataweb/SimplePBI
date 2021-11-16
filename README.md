@@ -53,6 +53,9 @@ Datasets_In_Groups = ad.get_datasets_in_group(workspace_id)
 
 The library get requests will return a response object .json() that python reads it as a Dict.
 
+## Preview methods
+There are some methods in the classes that still need more testing. Those will have a "preview" at the end of the name. Please let us know if something goes wrong with those.
+
 ## Complex requests
 If you want to get a deeper look on complex __Admin__ methods. 
 <a href="https://github.com/ladataweb/SimplePBI/blob/main/Admin_complex.md" target="_blank">Check this doc</a>
@@ -62,21 +65,21 @@ Right now the library is consuming endpoints from:
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Admin_details.txt" target="_blank">Admin</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Groups_details.txt" target="_blank">Groups</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Datasets_details.txt" target="_blank">Datasets</a>
+- <a href="https://github.com/ladataweb/SimplePBI/blob/main/Dataflows_details.txt" target="_blank">Dataflows</a>
 
-## Missing endpoints
+## Additional content
+There an aditional library Utils for transformations. It is used to help some requests returning different values.
+The most useful method in the Utils class might be to_pandas. You can use the method to convert simple dicts to pandas. It needs the dict and the key father of a list of dicts in the response. The usual get responses are using "value" as the key.
+
+# Missing endpoints
 We are still developing the library. The following endpoints from admin are still missing
 ### Admin 
 - Set and Remove LabelsAsAdmin
 ### Groups
 - Update group User
 ### Datasets
-- Bind to gateway (regular and in group)
-- Set all datasets connections (regular and in group)
-- Update datasources (regular and in group)
-- Update Direct Query Refresh Schedule (regular and in group)
+- Update datasources (regular and in groups)
 
-## Preview methods
-There are some methods in the classes that still need more testing. Those will have a "preview" at the end of the name. Please let us know if something goes wrong with those.
 
 
 

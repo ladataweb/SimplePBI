@@ -140,7 +140,7 @@ CLASSES
      |      ----
      |      Maximum 200 requests per hour.
      |  
-     |  get_apps(self, top=None)
+     |  get_apps(self, top)
      |      Returns a list of apps for the organization.
      |      ### Parameters
      |      ----

@@ -23,6 +23,40 @@ CLASSES
      |          token: String
      |              Bearer Token to use the Power Bi Rest API
      |  
+     |  bind_to_gateway_in_group_preview(self, workspace_id, dataset_id, gatewayObjectId, datasourceObjectIds)
+     |      Binds the specified dataset from the specified workspace to the specified gateway, optionally with a given set of data source IDs. If you don’t supply a specific data source ID, the dataset will be bound to the first matching data source in the gateway. Only supports the on-premises data gateway
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The Power Bi workspace id. You can take it from PBI Service URL
+     |      dataset_id: str uuid
+     |          The Power Bi Dataset id. You can take it from PBI Service URL
+     |      ### Request Body
+     |      ----
+     |      gatewayObjectId: str uuid
+     |          The gateway ID. When using a gateway cluster, the gateway ID refers to the primary (first) gateway in the cluster and is similar to the gateway cluster ID.
+     |      datasourceObjectIds: str []
+     |          The unique identifier for the datasource in the gateway
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK
+     |  
+     |  bind_to_gateway_preview(self, dataset_id, gatewayObjectId, datasourceObjectIds)
+     |      Binds the specified dataset from My workspace to the specified gateway, optionally with a given set of data source IDs. If you don’t supply a specific data source ID, the dataset will be bound to the first matching data source in the gateway. Only supports the on-premises data gateway
+     |      ### Parameters
+     |      ----
+     |      dataset_id: str uuid
+     |          The Power Bi Dataset id. You can take it from PBI Service URL
+     |      ### Request Body
+     |      ----
+     |      gatewayObjectId: str uuid
+     |          The gateway ID. When using a gateway cluster, the gateway ID refers to the primary (first) gateway in the cluster and is similar to the gateway cluster ID.
+     |      datasourceObjectIds: str []
+     |          The unique identifier for the datasource in the gateway
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK
+     |  
      |  delete_dataset(self, dataset_id)
      |      Deletes the specified dataset from My workspace.
      |      ### Parameters
@@ -329,6 +363,34 @@ CLASSES
      |      ----
      |      Response object from requests library. 200 OK
      |  
+     |  update_direct_query_refresh_schedule_in_group_preview(self, workspace_id, dataset_id, frequency=None, days=None, enabled=None, localTimeZoneId=None, times=None)
+     |      Updates the refresh schedule for a specified DirectQuery or LiveConnection dataset from the specified workspace.
+     |      A request should contain either a set of days and times or a valid frequency, but not both. If you choose a set of days without specifying any times, then Power BI will use a default single time per day. Setting the frequency will automatically overwrite the days and times setting.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The Power Bi workspace id. You can take it from PBI Service URL
+     |      dataset_id: str uuid
+     |          The Power Bi Dataset id. You can take it from PBI Service URL
+     |      ### Request Body
+     |      ----
+     |      frequency: int
+     |          The interval in minutes between successive refreshes. Supported values are 15, 30, 60, 120, and 180.
+     |      days: str []
+     |          Days to execute the refresh. Example: ["Sunday", "Tuesday"]
+     |      enabled: bool
+     |          is the refresh enabled
+     |      localTimeZoneId: str
+     |          The ID of the timezone to use. See TimeZone Info. Example "UTC"
+     |      times: str []
+     |          Times to execute the refresh within each day. Example: ["07:00", "16:00"]
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK
+     |      ### Limitations
+     |      ----
+     |      The limit on the number of time slots per day depends on whether a Premium or Shared capacity is used.
+     |  
      |  update_parameters(self, dataset_id, updateDetails)
      |      Updates the parameters values for the specified dataset from My workspace.
      |      If you're using enhanced dataset metadata, refresh the dataset to apply the new parameter values.
@@ -417,7 +479,7 @@ CLASSES
      |          The Power Bi Dataset id. You can take it from PBI Service URL
      |      ### Request Body
      |      ----
-     |      NotifyOption: ShceduleNotifyOption str
+     |      NotifyOption: ScheduleNotifyOption str
      |          Notification option at scheduled refresh termination. Example MailOnFailure or NoNotification.
      |      days: str []
      |          Days to execute the refresh. Example: ["Sunday", "Tuesday"]
@@ -446,7 +508,7 @@ CLASSES
      |          The Power Bi Dataset id. You can take it from PBI Service URL
      |      ### Request Body
      |      ----
-     |      NotifyOption: ShceduleNotifyOption str
+     |      NotifyOption: ScheduleNotifyOption str
      |          Notification option at scheduled refresh termination. Example MailOnFailure or NoNotification.
      |      days: str []
      |          Days to execute the refresh. Example: ["Sunday", "Tuesday"]
