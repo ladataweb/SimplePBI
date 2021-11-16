@@ -31,15 +31,13 @@ class Dataflows():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/groups/{}/dataflows/{}".format(workspace_id, dataflow_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
-        except Exception as ee:
-            print("Exception: ", ee)
-		
                     
     def get_dataflows_in_group(self, workspace_id):
         """Returns a list of all dataflows from the specified workspace.
@@ -54,14 +52,14 @@ class Dataflows():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/groups/{}/dataflows".format(workspace_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
-        except Exception as ee:
-            print("Exception: ", ee)
+
             
     def get_datasources_in_group(self, workspace_id, dataflow_id):
         """Returns a list of datasources for the specified dataflow.
@@ -78,14 +76,14 @@ class Dataflows():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/groups/{}/dataflows/{}/datasources".format(workspace_id, dataflow_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
-        except Exception as ee:
-            print("Exception: ", ee)
+
             
     def get_upstream_dataflow_in_group(self, workspace_id, dataflow_id):
         """Returns a list of upstream dataflows for dataflows from the specified workspace.
@@ -100,14 +98,14 @@ class Dataflows():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/groups/{}/dataflows/{}/upstreamDataflows".format(workspace_id, dataflow_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
-        except Exception as ee:
-            print("Exception: ", ee)
+
                       
     def refresh_dataflow_in_group(self, workspace_id, dataflow_id, notifyOption, processType=None):
         """Triggers a refresh for the specified dataflow. The only supported mail notification options are either in case of failure, or none. MailOnCompletion is not supported.
@@ -131,20 +129,20 @@ class Dataflows():
         """
         try: 
             url= "https://api.powerbi.com/v1.0/myorg/groups/{}/dataflows/{}/refreshes".format(workspace_id, dataflow_id)
-            if url != None:
+            if processType != None:
                 url = url + "?processType={" + processType + "}"
             body = {
                 "notifyOption": notifyOption 
             }               
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             res = requests.post(url, data = json.dumps(body), headers = headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
-        except Exception as ee:
-            print("Exception: ", ee)
+
                         
     def delete_dataflow_in_group(self, workspace_id, dataflow_id):
         """Deletes the specified dataflow from the specified workspace.
@@ -161,15 +159,15 @@ class Dataflows():
             url= "https://api.powerbi.com/v1.0/myorg/groups/{}/dataflows/{}".format(workspace_id, dataflow_id)   
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             res = requests.delete(url, headers=headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
-        except Exception as ee:
-            print("Exception: ", ee)
+
                         
-    def update_refresh_schedule_in_group(self, workspace_id, dataflow_id, NotifyOption=None, days=None, enabled=None, localTimeZoneId=None, times=None):
+    def update_refresh_schedule_in_group_preview(self, workspace_id, dataflow_id, NotifyOption=None, days=None, enabled=None, localTimeZoneId=None, times=None):
         """Creates or updates the specified dataflow refresh schedule configuration.    
         ### Parameters
         ----
@@ -216,15 +214,15 @@ class Dataflows():
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             
             res = requests.patch(url, json.dumps(body), headers = headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
-        except Exception as ee:
-            print("Exception: ", ee)
+
             
-    def update_dataflow(self, workspace_id, dataflow_id, allowNativeQueries=None, computeEngineBehavior=None, description=None, name=None):
+    def update_dataflow_preview(self, workspace_id, dataflow_id, allowNativeQueries=None, computeEngineBehavior=None, description=None, name=None):
         """Update dataflow properties, capabilities and settings.
         ### Parameters
         ----
@@ -266,13 +264,13 @@ class Dataflows():
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             
             res = requests.patch(url, json.dumps(body), headers = headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
-        except Exception as ee:
-            print("Exception: ", ee)
+
             
     def get_dataflow_transaction_in_group(self, workspace_id, dataflow_id):
         """Returns a list of transactions for the specified dataflow.
@@ -289,16 +287,16 @@ class Dataflows():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/groups/{}/dataflows/{}/transactions".format(workspace_id, dataflow_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
-        except Exception as ee:
-            print("Exception: ", ee)
+
             
-    def cancel_dataflow_transaction_in_group(self, workspace_id, dataflow_id, transaction_id):
+    def cancel_dataflow_transaction_in_group_preview(self, workspace_id, dataflow_id, transaction_id):
         """Attempts to Cancel the specified transactions.
         ### Parameters
         ----
@@ -319,10 +317,9 @@ class Dataflows():
                 url = url + "?processType={" + processType + "}"           
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             res = requests.post(url, headers = headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
-        except Exception as ee:
-            print("Exception: ", ee)

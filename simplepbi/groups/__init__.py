@@ -60,9 +60,10 @@ class Groups():
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             
             res = requests.post(url, data = json.dumps(body), headers = headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
 
@@ -79,10 +80,11 @@ class Groups():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/groups"
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -100,10 +102,11 @@ class Groups():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/groups/{}/users".format(workspace_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -122,9 +125,10 @@ class Groups():
             url= "https://api.powerbi.com/v1.0/myorg/groups/{}".format(workspace_id)   
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             res = requests.delete(url, headers=headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -145,9 +149,10 @@ class Groups():
             url= "https://api.powerbi.com/v1.0/myorg/groups/{}/users/{}".format(workspace_id, user)   
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             res = requests.delete(url, headers=headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
 
@@ -176,9 +181,10 @@ class Groups():
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             
             res = requests.post(url, data = json.dumps(body), headers = headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -228,9 +234,10 @@ class Groups():
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             
             res = requests.put(url, data = json.dumps(body), headers = headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
 '''    

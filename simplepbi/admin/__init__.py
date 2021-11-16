@@ -39,10 +39,11 @@ class Admin():
                 url = url + "&$top={}".format(top)
             if skip != None:
                 url = url + "&$skip={}".format(skip) 
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -75,10 +76,11 @@ class Admin():
                 url = url + "&$skip={}".format(skip)   
             if top != None:
                 url = url + "&$top={}".format(top)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -95,10 +97,11 @@ class Admin():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/datasets/{}/users".format(dataset)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -115,10 +118,11 @@ class Admin():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/datasets/{}/datasources".format(dataset_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -135,10 +139,11 @@ class Admin():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/groups/{}/datasets/upstreamDataflows".format(workspace_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
         
@@ -165,10 +170,11 @@ class Admin():
                 url = url + "&$top={}".format(top)
             if skip != None:
                 url = url + "&$skip={}".format(skip)  
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -197,10 +203,11 @@ class Admin():
                 url = url + "&$top={}".format(top)
             if skip != None:
                 url = url + "&$skip={}".format(skip) 
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -217,10 +224,11 @@ class Admin():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/reports/{}/users".format(report_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -249,10 +257,11 @@ class Admin():
                 url = url + "&$filter={}".format(filter)
             if skip != None:
                 url = url + "&$skip={}".format(skip)                
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -273,10 +282,11 @@ class Admin():
             url = "https://api.powerbi.com/v1.0/myorg/admin/groups/{}".format(group_id)
             if expand != None:
                 url = url + "?$expand={}".format(expand)              
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -293,10 +303,11 @@ class Admin():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/groups/{}/users".format(group_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -331,9 +342,10 @@ class Admin():
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             
             res = requests.post(url, data = json.dumps(body), headers = headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
 
@@ -364,10 +376,11 @@ class Admin():
                 url = url + "&$top={}".format(top)
             if skip != None:
                 url = url + "&$skip={}".format(skip)  
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -396,10 +409,11 @@ class Admin():
                 url = url + "&$top={}".format(top)
             if skip != None:
                 url = url + "&$skip={}".format(skip) 
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -416,10 +430,11 @@ class Admin():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/dashboards/{}/users".format(dashboard_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
            
@@ -436,10 +451,11 @@ class Admin():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/dashboards/{}/tiles".format(dashboard_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
     
@@ -466,10 +482,11 @@ class Admin():
                 url = url + "&$top={}".format(top)
             if skip != None:
                 url = url + "&$skip={}".format(skip)  
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -498,10 +515,11 @@ class Admin():
                 url = url + "&$top={}".format(top)
             if skip != None:
                 url = url + "&$skip={}".format(skip) 
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -518,10 +536,11 @@ class Admin():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/dataflows/{}/users".format(dataflow_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
         
@@ -538,10 +557,11 @@ class Admin():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/dataflows/{}/datasources".format(dataflow_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -560,10 +580,11 @@ class Admin():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/groups/{}/dataflows/{}/upstreamDataflows".format(workspace_id, dataflow_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)    
             
@@ -580,14 +601,15 @@ class Admin():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/dataflows/{}/export".format(dataflow_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
-    def get_apps(self, top=None):
+    def get_apps(self, top):
         """Returns a list of apps for the organization.
         ### Parameters
         ----
@@ -599,13 +621,12 @@ class Admin():
             A dictionary containing all the apps in the tenant.
         """
         try:
-            url = "https://api.powerbi.com/v1.0/myorg/admin/apps?"
-            if top != None:
-                url = url + "$top={}".format(top)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            url = "https://api.powerbi.com/v1.0/myorg/admin/apps?$top={}".format(top)
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -622,10 +643,11 @@ class Admin():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/apps/{}/users".format(app_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -644,10 +666,11 @@ class Admin():
             url = "https://api.powerbi.com/v1.0/myorg/admin/capacities?"
             if expand != None:
                 url = url + "$expand={}".format(expand)
-            response = requests.get(url, headers={'Content-Type': 'capacitielication/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'capacitielication/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -664,10 +687,11 @@ class Admin():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/capacities/{}/users".format(capacity_id)
-            response = requests.get(url, headers={'Content-Type': 'capacitielication/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'capacitielication/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -690,10 +714,11 @@ class Admin():
             url = "https://api.powerbi.com/v1.0/myorg/admin/capacities/{}/refreshables/{}?".format(capacity_id, refreshable_id)
             if expand != None:
                 url = url + "$expand={}".format(expand)
-            response = requests.get(url, headers={'Content-Type': 'capacitielication/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'capacitielication/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -724,10 +749,11 @@ class Admin():
                 url = url + "&$filter={}".format(filter)
             if skip != None:
                 url = url + "&$skip={}".format(skip) 
-            response = requests.get(url, headers={'Content-Type': 'capacitielication/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'capacitielication/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
            
@@ -758,24 +784,24 @@ class Admin():
         contar = 0    
         try:
             while(ban):        
-                response = requests.get(url, headers=headers)
+                res = requests.get(url, headers=headers)
                 if return_pandas:
-                    js = json.dumps(response.json()["ArtifactAccessEntities"])
+                    js = json.dumps(res.json()["ArtifactAccessEntities"])
                     df = pd.read_json(js)
                     df_total = df_total.append(df, sort=True, ignore_index=True)
                     print("Building dataframe iteration: ", str(contar))
                 else:
-                    if response.json()["ArtifactAccessEntities"]:
-                        list_total.extend(response.json()["ArtifactAccessEntities"])
-                        #append_value(dict_total, "ArtifactAccessEntities", response.json()["ArtifactAccessEntities"])
+                    if res.json()["ArtifactAccessEntities"]:
+                        list_total.extend(res.json()["ArtifactAccessEntities"])
+                        #append_value(dict_total, "ArtifactAccessEntities", res.json()["ArtifactAccessEntities"])
                         print("Building dict iteration: ", str(contar))
-                print(response.status_code)
+                print(res.status_code)
                 contar = contar +1    
-                if "continuationUri" not in response.json():
+                if "continuationUri" not in res.json():
                     ban=False
                 else:
-                    url = response.json()["continuationUri"]                   
-                    print(response.json()["continuationUri"])    
+                    url = res.json()["continuationUri"]                   
+                    print(res.json()["continuationUri"])    
             if return_pandas:
                 print(df_total.tail())
                 return df_total
@@ -805,10 +831,11 @@ class Admin():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/groups/{}/unused".format(workspace_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)        
             
@@ -839,10 +866,11 @@ class Admin():
                 url = url + "&$top={}".format(top)
             if skip != None:
                 url = url + "&$skip={}".format(skip)  
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
 			
@@ -859,10 +887,11 @@ class Admin():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/pipelines/{}/users".format(pipeline_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)    
         
@@ -893,10 +922,11 @@ class Admin():
                 url = url + "&$top={}".format(top)
             if skip != None:
                 url = url + "&$skip={}".format(skip)  
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
     
@@ -925,10 +955,11 @@ class Admin():
                 url = url + "&$filter={}".format(filter)            
             if skip != None:
                 url = url + "&$skip={}".format(skip)  
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
         
@@ -943,10 +974,11 @@ class Admin():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/tenantKeys"
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -983,9 +1015,10 @@ class Admin():
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             
             res = requests.post(url, data = json.dumps(body), headers = headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -1014,9 +1047,10 @@ class Admin():
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             
             res = requests.post(url, data = json.dumps(body), headers = headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
     
@@ -1064,9 +1098,10 @@ class Admin():
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             
             res = requests.post(url, data = json.dumps(body), headers = headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -1088,9 +1123,10 @@ class Admin():
             url= "https://api.powerbi.com/v1.0/myorg/admin/groups/{}/users/{}".format(workspace_id, user)   
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             res = requests.delete(url, headers=headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -1181,9 +1217,10 @@ class Admin():
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             
             res = requests.patch(url, json.dumps(body), headers = headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -1218,9 +1255,10 @@ class Admin():
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             
             res = requests.post(url, data = json.dumps(body), headers = headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -1242,9 +1280,10 @@ class Admin():
             url= "https://api.powerbi.com/v1.0/myorg/admin/pipelines/{}/users/{}".format(pipeline_id, identifier)   
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             res = requests.delete(url, headers=headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -1282,9 +1321,10 @@ class Admin():
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             
             res = requests.post(url, data = json.dumps(body), headers = headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -1311,9 +1351,10 @@ class Admin():
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             
             res = requests.post(url, data = json.dumps(body), headers = headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
                                                                                          
@@ -1354,29 +1395,29 @@ class Admin():
         contar = 0    
         try:
             while(ban):        
-                response = requests.get(url,
+                res = requests.get(url,
                     headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
                     )
                 if return_pandas:
-                    js = json.dumps(response.json()["activityEventEntities"])
+                    js = json.dumps(res.json()["activityEventEntities"])
                     df = pd.read_json(js)
                     #print(df.head())
                     df_total = df_total.append(df, sort=True, ignore_index=True)
                     print("Building dataframe iteration: ", str(contar))
                     #print(df_total.head())
                 else:
-                    if response.json()["activityEventEntities"]:                
-                        #append_value(dict_total, "activityEventEntities", response.json()["activityEventEntities"][0])
-                        list_total.extend(response.json()["activityEventEntities"])
+                    if res.json()["activityEventEntities"]:                
+                        #append_value(dict_total, "activityEventEntities", res.json()["activityEventEntities"][0])
+                        list_total.extend(res.json()["activityEventEntities"])
                         print("Building dict iteration: ", str(contar))
                     
-                print(response.status_code)
+                print(res.status_code)
                 contar = contar +1
-                print(response.json()["continuationUri"])
+                print(res.json()["continuationUri"])
                 
-                if response.json()["continuationUri"] == None:
+                if res.json()["continuationUri"] == None:
                     ban=False
-                url = response.json()["continuationUri"]   
+                url = res.json()["continuationUri"]   
             if return_pandas:
                 return df_total
             else:
@@ -1390,7 +1431,7 @@ class Admin():
             print("Catastrophic error.")
             raise SystemExit(e)
         except Exception as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
             
     def get_modified_workspaces_preview(self, excludePersonalWorkspaces=True, modifiedSince=None):
         """Gets a list of workspace IDs in the organization. This is a preview API call.
@@ -1415,8 +1456,8 @@ class Admin():
             url = "https://api.powerbi.com/v1.0/myorg/admin/workspaces/modified?excludePersonalWorkspaces={}".format(excludePersonalWorkspaces)
             if modifiedSince != None:
                 url = url + "&modifiedSince={}".format(modifiedSince)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            res = response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res = res.json()
             lista = [res[i]['id'] for i in range(len(res))]
             for item in range(len(lista)):
                 if lista[item*100:item*100+100] != []:
@@ -1426,7 +1467,7 @@ class Admin():
             return lista_total 
         
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
         
@@ -1453,9 +1494,10 @@ class Admin():
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             
             res = requests.post(url, data = json.dumps(body), headers = headers)
+            res.raise_for_status()
             return res.json()["id"]
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)            
             
@@ -1473,10 +1515,11 @@ class Admin():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/workspaces/scanStatus/{}".format(scan_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()["status"]
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()["status"]
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)            
             
@@ -1494,20 +1537,22 @@ class Admin():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/admin/workspaces/scanResult/{}".format(scan_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
     def get_available_features(self):
         try:
             url = "https://api.powerbi.com/v1.0/myorg/availableFeatures"
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)  
             
@@ -1546,7 +1591,7 @@ class Admin():
             
             return orphans
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
         except Exception as ee:

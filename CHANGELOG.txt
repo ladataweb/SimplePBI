@@ -7,7 +7,16 @@ Change Log
 
 0.0.2 (29/10/2021)
 -------------------
-- Second build: completing almost all the requests in Admin Section
+- Completing almost all the requests in Admin Section
 
-0.0.3 (17/11/2021)
-- Third build: creating aditional content to admin and adding first commit for groups and datasets category
+0.0.3 (14/11/2021)
+------------------
+- Creating aditional content to admin and adding first commit for groups and datasets category
+
+0.0.4 (15/11/2021)
+------------------
+- Repo/source going public. Adding datasets and groups Power Bi Rest API category.
+
+0.0.5 (16/11/2021)
+------------------
+- Fixing error handling. Adding dataflows Power Bi Rest API category

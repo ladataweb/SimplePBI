@@ -29,10 +29,11 @@ class Datasets():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/datasets/{}".format(dataset_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -51,10 +52,11 @@ class Datasets():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/groups/{}/datasets/{}".format(workspace_id, dataset_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -70,10 +72,11 @@ class Datasets():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/datasets"
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -90,10 +93,11 @@ class Datasets():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/groups/{}/datasets".format(workspace_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
 
@@ -110,10 +114,11 @@ class Datasets():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/datasets/{}/datasources".format(dataset_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -132,10 +137,11 @@ class Datasets():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/groups/{}/datasets/{}/datasources".format(workspace_id, dataset_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -152,13 +158,15 @@ class Datasets():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/groups/{}/datasets/upstreamDataflows".format(workspace_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            if response.text == '':
-                return response
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            if res.text == '':
+                res.raise_for_status()
+                return res
             else:
-                return response.json()
+                res.raise_for_status()
+                return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
 
@@ -175,10 +183,11 @@ class Datasets():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/datasets/{}/directQueryRefreshSchedule".format(dataset_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -197,10 +206,11 @@ class Datasets():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/groups/{}/datasets/{}/directQueryRefreshSchedule".format(workspace_id, dataset_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -236,10 +246,11 @@ class Datasets():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/datasets/{}/parameters".format(dataset_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -258,10 +269,11 @@ class Datasets():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/groups/{}/datasets/{}/parameters".format(workspace_id, dataset_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
     
@@ -282,10 +294,11 @@ class Datasets():
             url = "https://api.powerbi.com/v1.0/myorg/datasets/{}/refreshes".format(dataset_id)
             if top != None:
                 url = url + "?$top={}".format(str(top))
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -308,10 +321,11 @@ class Datasets():
             url = "https://api.powerbi.com/v1.0/myorg/groups/{}/datasets/{}/refreshes".format(workspace_id, dataset_id)
             if top != None:
                 url = url + "?$top={}".format(str(top))
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -328,10 +342,11 @@ class Datasets():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/datasets/{}/refreshSchedule".format(dataset_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -350,10 +365,11 @@ class Datasets():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/groups/{}/datasets/{}/refreshSchedule".format(workspace_id, dataset_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -380,9 +396,10 @@ class Datasets():
             }                
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}            
             res = requests.post(url, data = json.dumps(body), headers = headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -411,9 +428,10 @@ class Datasets():
             }               
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             res = requests.post(url, data = json.dumps(body), headers = headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -437,9 +455,10 @@ class Datasets():
             url= "https://api.powerbi.com/v1.0/myorg/groups/{}/datasets/{}/Default.TakeOver".format(workspace_id, dataset_id)
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             res = requests.post(url, headers = headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -457,10 +476,11 @@ class Datasets():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/datasets/{}/Default.DiscoverGateways".format(dataset_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -480,10 +500,11 @@ class Datasets():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/groups/{}/datasets/{}/Default.DiscoverGateways".format(workspace_id, dataset_id)
-            response = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            return response.json()
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -502,9 +523,10 @@ class Datasets():
             url= "https://api.powerbi.com/v1.0/myorg/datasets/{}".format(dataset_id)   
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             res = requests.delete(url, headers=headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -523,9 +545,10 @@ class Datasets():
             url= "https://api.powerbi.com/v1.0/myorg/groups/{}/datasets/{}".format(workspace_id, dataset_id)   
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             res = requests.delete(url, headers=headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -564,6 +587,7 @@ class Datasets():
                 print(df.head())
                 return df
             else:
+                res.raise_for_status()
                 return res.json()
         except requests.exceptions.HTTPError as ex:
             print("ERROR ", ex)
@@ -616,9 +640,10 @@ class Datasets():
             }               
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             res = requests.post(url, data = json.dumps(body), headers = headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -670,9 +695,10 @@ class Datasets():
             }               
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             res = requests.post(url, data = json.dumps(body), headers = headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -686,7 +712,7 @@ class Datasets():
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Request Body
         ----
-        NotifyOption: ShceduleNotifyOption str
+        NotifyOption: ScheduleNotifyOption str
             Notification option at scheduled refresh termination. Example MailOnFailure or NoNotification.
         days: str []
             Days to execute the refresh. Example: ["Sunday", "Tuesday"]
@@ -723,9 +749,10 @@ class Datasets():
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             
             res = requests.patch(url, json.dumps(body), headers = headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
@@ -741,7 +768,7 @@ class Datasets():
             The Power Bi Dataset id. You can take it from PBI Service URL
         ### Request Body
         ----
-        NotifyOption: ShceduleNotifyOption str
+        NotifyOption: ScheduleNotifyOption str
             Notification option at scheduled refresh termination. Example MailOnFailure or NoNotification.
         days: str []
             Days to execute the refresh. Example: ["Sunday", "Tuesday"]
@@ -778,10 +805,185 @@ class Datasets():
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             
             res = requests.patch(url, json.dumps(body), headers = headers)
+            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex)
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
+    def bind_to_gateway_preview(self, dataset_id, gatewayObjectId, datasourceObjectIds):
+        """Binds the specified dataset from My workspace to the specified gateway, optionally with a given set of data source IDs. If you don’t supply a specific data source ID, the dataset will be bound to the first matching data source in the gateway. Only supports the on-premises data gateway
+        ### Parameters
+        ----
+        dataset_id: str uuid
+            The Power Bi Dataset id. You can take it from PBI Service URL
+        ### Request Body
+        ----
+        gatewayObjectId: str uuid
+            The gateway ID. When using a gateway cluster, the gateway ID refers to the primary (first) gateway in the cluster and is similar to the gateway cluster ID.
+        datasourceObjectIds: str []
+            The unique identifier for the datasource in the gateway
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/datasets/{}/Default.BindToGateway".format(dataset_id)
+            body = {
+                "gatewayObjectId": gatewayObjectId,
+                "datasourceObjectIds": datasourceObjectIds
+            }
+                
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             
+            res = requests.post(url, json.dumps(body), headers = headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+            
+    def bind_to_gateway_in_group_preview(self, workspace_id, dataset_id, gatewayObjectId, datasourceObjectIds):
+        """Binds the specified dataset from the specified workspace to the specified gateway, optionally with a given set of data source IDs. If you don’t supply a specific data source ID, the dataset will be bound to the first matching data source in the gateway. Only supports the on-premises data gateway
+        ### Parameters
+        ----
+        workspace_id: str uuid
+            The Power Bi workspace id. You can take it from PBI Service URL
+        dataset_id: str uuid
+            The Power Bi Dataset id. You can take it from PBI Service URL
+        ### Request Body
+        ----
+        gatewayObjectId: str uuid
+            The gateway ID. When using a gateway cluster, the gateway ID refers to the primary (first) gateway in the cluster and is similar to the gateway cluster ID.
+        datasourceObjectIds: str []
+            The unique identifier for the datasource in the gateway
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/groups/{}/datasets/{}/Default.BindToGateway".format(workspace_id, dataset_id)
+            body = {
+                "gatewayObjectId": gatewayObjectId,
+                "datasourceObjectIds": datasourceObjectIds
+            }
+                
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            
+            res = requests.post(url, json.dumps(body), headers = headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+            
+    def update_direct_query_refresh_schedule_in_group_preview(self, dataset_id, frequency=None, days=None, enabled=None, localTimeZoneId=None, times=None):
+        """Updates the refresh schedule for a specified DirectQuery or LiveConnection dataset from My workspace.
+        A request should contain either a set of days and times or a valid frequency, but not both. If you choose a set of days without specifying any times, then Power BI will use a default single time per day. Setting the frequency will automatically overwrite the days and times setting.
+        ### Parameters
+        ----
+        dataset_id: str uuid
+            The Power Bi Dataset id. You can take it from PBI Service URL
+        ### Request Body
+        ----
+        frequency: int
+            The interval in minutes between successive refreshes. Supported values are 15, 30, 60, 120, and 180.
+        days: str []
+            Days to execute the refresh. Example: ["Sunday", "Tuesday"]
+        enabled: bool
+            is the refresh enabled
+        localTimeZoneId: str
+            The ID of the timezone to use. See TimeZone Info. Example "UTC"
+        times: str []
+            Times to execute the refresh within each day. Example: ["07:00", "16:00"]
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        ### Limitations
+        ----
+        The limit on the number of time slots per day depends on whether a Premium or Shared capacity is used.
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/datasets/{}/directQueryRefreshSchedule".format(dataset_id)
+            body = {
+                "value": {}
+            }
+            
+            if frequency != None:
+                body["value"]["frequency"]=frequency
+            if days != None:
+                body["value"]["days"] = days
+            if enabled != None:
+                body["value"]["enabled"] = enabled
+            if localTimeZoneId != None:
+                body["value"]["localTimeZoneId"] = localTimeZoneId
+            if times != None:
+                body["value"]["times"]=times
+                
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            
+            res = requests.patch(url, json.dumps(body), headers = headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+            
+    def update_direct_query_refresh_schedule_in_group_preview(self, workspace_id, dataset_id, frequency=None, days=None, enabled=None, localTimeZoneId=None, times=None):
+        """Updates the refresh schedule for a specified DirectQuery or LiveConnection dataset from the specified workspace.
+        A request should contain either a set of days and times or a valid frequency, but not both. If you choose a set of days without specifying any times, then Power BI will use a default single time per day. Setting the frequency will automatically overwrite the days and times setting.
+        ### Parameters
+        ----
+        workspace_id: str uuid
+            The Power Bi workspace id. You can take it from PBI Service URL
+        dataset_id: str uuid
+            The Power Bi Dataset id. You can take it from PBI Service URL
+        ### Request Body
+        ----
+        frequency: int
+            The interval in minutes between successive refreshes. Supported values are 15, 30, 60, 120, and 180.
+        days: str []
+            Days to execute the refresh. Example: ["Sunday", "Tuesday"]
+        enabled: bool
+            is the refresh enabled
+        localTimeZoneId: str
+            The ID of the timezone to use. See TimeZone Info. Example "UTC"
+        times: str []
+            Times to execute the refresh within each day. Example: ["07:00", "16:00"]
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        ### Limitations
+        ----
+        The limit on the number of time slots per day depends on whether a Premium or Shared capacity is used.
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/groups/{}/datasets/{}/directQueryRefreshSchedule".format(workspace_id, dataset_id)
+            body = {
+                "value": {}
+            }
+            
+            if frequency != None:
+                body["value"]["frequency"]=frequency
+            if days != None:
+                body["value"]["days"] = days
+            if enabled != None:
+                body["value"]["enabled"] = enabled
+            if localTimeZoneId != None:
+                body["value"]["localTimeZoneId"] = localTimeZoneId
+            if times != None:
+                body["value"]["times"]=times
+                
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            
+            res = requests.patch(url, json.dumps(body), headers = headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
