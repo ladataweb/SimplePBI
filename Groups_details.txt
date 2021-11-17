@@ -3,6 +3,16 @@ Python Library Documentation: package simplepbi.groups in simplepbi
 NAME
     simplepbi.groups
 
+DESCRIPTION
+  /¯¯¯¯¯¯¯¯¯\
+ /           \
+|   |   __    |  *********************************************
+|   |  |  \   |  Code writen by Ignacio and Martin.
+|   |  |  |   |
+|   |__|_ |   |  La Data Web 
+|      |__/   |  *********************************************
+ \            /
+  \__________/
 PACKAGE CONTENTS
 
 

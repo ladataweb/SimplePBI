@@ -1,8 +1,18 @@
+'''
+  /¯¯¯¯¯¯¯¯¯\
+ /           \
+|   |   __    |  *********************************************
+|   |  |  \   |  Code writen by Ignacio and Martin.
+|   |  |  |   |
+|   |__|_ |   |  La Data Web 
+|      |__/   |  *********************************************
+ \            /
+  \__________/
+  
+'''
+
 import json
 import requests
-#from simplepbi import utils
-#from datetime import date, timedelta
-#import pandas as pd
 
 class Groups():
     """Simple library to use the Power BI api and obtain groups from it.
