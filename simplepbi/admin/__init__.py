@@ -1574,20 +1574,24 @@ class Admin():
             *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
         ### Limitations
         ----
-        It can only be used for organizations with less than 200 workspaces. The PBI Rest API won't allow more than 200 requests in an hour.
+        It can only be used for organizations with less than 200 workspaces that contains dataflows. The PBI Rest API won't allow more than 200 requests in an hour.
         ### Returns
         ----
         List:
             A list containing all the dataflows without a dataset connected.
         """
         try:
-            url_wp = "https://api.powerbi.com/v1.0/myorg/admin/workspaces/modified?excludePersonalWorkspaces=True"
-            res_wp= requests.get(url_wp, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            workspaces = [res_wp.json()[i]["id"] for i in range(len(res_wp.json()))]
+            res_wp = self.get_groups(top=5000, expand="dataflows")
+            workspaces = [res_wp["value"][i]["id"] for i in range(len(res_wp["value"])) if res_wp["value"][i]["dataflows"] != []]
             
-            url_df = "https://api.powerbi.com/v1.0/myorg/admin/dataflows"
-            res_df = requests.get(url_df, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
-            dataflows = [res_df.json()["value"][i]["objectId"] for i in range(len(res_df.json()["value"]))]
+            if len(workspaces) > 200:            
+                return "You can't use this request because you have more than 200 workspaces (limitation)."
+        
+            #url_df = "https://api.powerbi.com/v1.0/myorg/admin/dataflows"
+            #res_df = requests.get(url_df, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            #res_df.raise_for_status()
+            res_df = self.get_dataflows()
+            dataflows = [res_df["value"][i]["objectId"] for i in range(len(res_df["value"]))]
             
             actives = []
             orphans = []
@@ -1607,5 +1611,3 @@ class Admin():
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
-        except Exception as ee:
-            print("Exception: ", ee)        
