@@ -80,6 +80,7 @@ We are still developing the library. The following endpoints from admin are stil
 ### Datasets
 - Update datasources (regular and in groups)
 
-
+# Next Steps (planned items)
+- Adding Reports category
 
 
