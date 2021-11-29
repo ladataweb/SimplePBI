@@ -584,7 +584,7 @@ class Datasets():
         """
         try: 
             url= "https://api.powerbi.com/v1.0/myorg/datasets/{}/executeQueries".format(dataset_id)
-            body = {"queries": [{"query": query}], "serializerSettings": {"incudeNulls": "true"}}
+            body = {"queries": [{"query": query}], "serializerSettings": {"includeNulls": "true"}}
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             res = requests.post(url, data = json.dumps(body), headers = headers)            
             if return_pandas:
