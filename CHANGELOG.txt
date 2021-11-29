@@ -28,3 +28,7 @@ Change Log
 0.0.7 (29/11/2021)
 ------------------
 - Fixing datasets for dax queries
+
+0.0.8 (29/11/2021)
+------------------
+- Fixing typo for dax queries avoiding nulls
