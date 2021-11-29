@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-0.0.1 (04/12/2020)
+0.0.1 (04/09/2021)
 -------------------
 - First Commit
 
@@ -20,3 +20,11 @@ Change Log
 0.0.5 (16/11/2021)
 ------------------
 - Fixing error handling. Adding dataflows Power Bi Rest API category
+
+0.0.6 (29/11/2021)
+------------------
+- Fixing install module issues
+
+0.0.7 (29/11/2021)
+------------------
+- Fixing datasets for dax queries

@@ -13,6 +13,8 @@
 
 import json
 import requests
+from simplepbi import utils
+import pandas as pd
 
 class Datasets():
     """Simple library to use the Power BI api and obtain datasets from it.
