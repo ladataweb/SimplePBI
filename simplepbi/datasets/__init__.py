@@ -586,20 +586,23 @@ class Datasets():
             url= "https://api.powerbi.com/v1.0/myorg/datasets/{}/executeQueries".format(dataset_id)
             body = {"queries": [{"query": query}], "serializerSettings": {"includeNulls": "true"}}
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
-            res = requests.post(url, data = json.dumps(body), headers = headers)            
+            res = requests.post(url, data = json.dumps(body), headers = headers)      
+            res.raise_for_status()
             if return_pandas:
                 #get columns from json response - keys from dict
                 columnas = list(res.json()['results'][0]['tables'][0]['rows'][0].keys())
+                print(columnas)
                 #get the number of rows to loop data
                 rows = len(res.json()['results'][0]['tables'][0]['rows'])        
+                print(rows)
                 #get data from json response - values from dict
                 datos = [list(res.json()['results'][0]['tables'][0]['rows'][n].values()) for n in range(rows-1)]
+                print("datos")
                 #build a dataframe from the collected data
                 df = pd.DataFrame(data=datos, columns=columnas)
                 print(df.head())
                 return df
             else:
-                res.raise_for_status()
                 return res.json()
         except requests.exceptions.HTTPError as ex:
             print("ERROR ", ex)

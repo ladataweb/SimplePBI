@@ -109,7 +109,7 @@ class Admin():
             A dictionary containing all the users in the dataset.
         """
         try:
-            url = "https://api.powerbi.com/v1.0/myorg/admin/datasets/{}/users".format(dataset)
+            url = "https://api.powerbi.com/v1.0/myorg/admin/datasets/{}/users".format(dataset_id)
             res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             return res.json()
