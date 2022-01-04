@@ -1559,6 +1559,12 @@ class Admin():
             print("Request exception: ", e)
             
     def get_available_features(self):
+        """
+        Returns a list of available features for the user.
+        ### Returns
+        -------
+        200 ok. A dict with the features.
+        """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/availableFeatures"
             res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
@@ -1607,6 +1613,94 @@ class Admin():
                     orphans.append(df)
             
             return orphans
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+            
+    def get_dashboard_subscriptions_preview(self, dashboard_id):
+        """Returns a list of subscriptions along with subscribees that the dashboard subscribed to. This is a preview API call.
+        ### Parameters
+        ----
+        dashboard_id: str uui
+            The dashboard id
+        ### Returns
+        ----
+        Dict:
+            Returns detailed subscriptions of the dashboard.
+        ### Limitations
+        ----
+        Maximum 200 requests per hour.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/dashboards/{}/subscriptions".format(dashboard_id)
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+            
+    def get_report_subscriptions_preview(self, report_id):
+        """Returns a list of subscriptions along with subscribees that the report subscribed to. This is a preview API call.
+        ### Parameters
+        ----
+        report_id: str uui
+            The report id
+        ### Returns
+        ----
+        Dict:
+            Returns detailed subscriptions of the report.
+        ### Limitations
+        ----
+        Maximum 200 requests per hour.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/admin/reports/{}/subscriptions".format(report_id)
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+            
+    def get_user_subscriptions_preview(self, user_id):
+        """Returns a list of subscriptions that the given user has subscribed to (preview).
+        ### Parameters
+        ----
+        user_id: str uui
+            The graph ID or UPN of user
+        ### Returns
+        ----
+        Dict:
+            Returns  detailed subscriptions of the user.
+        ### Limitations
+        ----
+        Maximum 200 requests per hour.
+        """
+        ban = True 
+        url = "https://api.powerbi.com/v1.0/myorg/admin/users/{}/subscriptions".format(user_id)
+        contar = 0
+        list_total = []
+        dict_total = {'SubscriptionEntities':[]}
+        try:
+            while(ban):                
+                res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+                res.raise_for_status()
+                
+                if res.json()["SubscriptionEntities"]:
+                    list_total.extend(res.json()["SubscriptionEntities"])
+                    print("Building dict iteration: ", str(contar))
+                    
+                contar = contar +1
+                print("Pagination: ", str(contar))
+                
+                if res.json()["continuationUri"] == None or res.json()["SubscriptionEntities"]==[]:
+                    ban=False
+                url = res.json()["continuationUri"]   
+            return res.json()
         except requests.exceptions.HTTPError as ex:
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:

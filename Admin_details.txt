@@ -4,15 +4,13 @@ NAME
     simplepbi.admin
 
 DESCRIPTION
-  /¯¯¯¯¯¯¯¯¯\
- /           \
-|   |   __    |  *********************************************
-|   |  |  \   |  Code writen by Ignacio and Martin.
-|   |  |  |   |
-|   |__|_ |   |  La Data Web 
-|      |__/   |  *********************************************
- \            /
-  \__________/
+    /¯¯¯¯¯¯¯¯¯ /           |   |   __    |  *********************************************
+    |   |  |  \   |  Code writen by Ignacio and Martin.
+    |   |  |  |   |
+    |   |__|_ |   |  La Data Web 
+    |      |__/   |  *********************************************
+     \            /
+      \__________/
 
 PACKAGE CONTENTS
 
@@ -174,6 +172,10 @@ CLASSES
      |          A dictionary containing all the users in the app.
      |  
      |  get_available_features(self)
+     |      Returns a list of available features for the user.
+     |      ### Returns
+     |      -------
+     |      200 ok. A dict with the features.
      |  
      |  get_capacities(self, expand=None)
      |      Returns a list of capacities for the organization.
@@ -196,6 +198,20 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the users in the capacity.
+     |  
+     |  get_dashboard_subscriptions_preview(self, dashboard_id)
+     |      Returns a list of subscriptions along with subscribees that the dashboard subscribed to. This is a preview API call.
+     |      ### Parameters
+     |      ----
+     |      dashboard_id: str uui
+     |          The dashboard id
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          Returns detailed subscriptions of the dashboard.
+     |      ### Limitations
+     |      ----
+     |      Maximum 200 requests per hour.
      |  
      |  get_dashboards(self, expand=None, filter=None, skip=None, top=None)
      |      Returns a list of dashboards for the organization.
@@ -450,7 +466,7 @@ CLASSES
      |          *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
      |      ### Limitations
      |      ----
-     |      It can only be used for organizations with less than 200 workspaces. The PBI Rest API won't allow more than 200 requests in an hour.
+     |      It can only be used for organizations with less than 200 workspaces that contains dataflows. The PBI Rest API won't allow more than 200 requests in an hour.
      |      ### Returns
      |      ----
      |      List:
@@ -534,6 +550,20 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the users in the capacity.
+     |  
+     |  get_report_subscriptions_preview(self, report_id)
+     |      Returns a list of subscriptions along with subscribees that the report subscribed to. This is a preview API call.
+     |      ### Parameters
+     |      ----
+     |      report_id: str uui
+     |          The report id
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          Returns detailed subscriptions of the report.
+     |      ### Limitations
+     |      ----
+     |      Maximum 200 requests per hour.
      |  
      |  get_reports(self, filter=None, skip=None, top=None)
      |      Returns a list of reports for the organization.
@@ -650,6 +680,20 @@ CLASSES
      |      ### Returns
      |      ----
      |      If return_pandas = True returns a Pandas dataframe concatenating iterations otherwise it returns a dict of the response
+     |      ### Limitations
+     |      ----
+     |      Maximum 200 requests per hour.
+     |  
+     |  get_user_subscriptions_preview(self, user_id)
+     |      Returns a list of subscriptions that the given user has subscribed to (preview).
+     |      ### Parameters
+     |      ----
+     |      user_id: str uui
+     |          The graph ID or UPN of user
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          Returns  detailed subscriptions of the user.
      |      ### Limitations
      |      ----
      |      Maximum 200 requests per hour.

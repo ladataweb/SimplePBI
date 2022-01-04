@@ -32,3 +32,7 @@ Change Log
 0.0.8 (29/11/2021)
 ------------------
 - Fixing typo for dax queries avoiding nulls
+
+0.0.9 (04/01/2022)
+------------------
+- Adding new preview requests for subscriptions in Admin category. Those released this month by Power Bi.
