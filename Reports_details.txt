@@ -1,0 +1,320 @@
+Python Library Documentation: package simplepbi.reports in simplepbi
+
+NAME
+    simplepbi.reports
+
+DESCRIPTION
+    /¯¯¯¯¯¯¯¯¯ /           |   |   __    |  *********************************************
+    |   |  |  \   |  Code writen by Ignacio and Martin.
+    |   |  |  |   |
+    |   |__|_ |   |  La Data Web 
+    |      |__/   |  *********************************************
+     \            /
+      \__________/
+
+PACKAGE CONTENTS
+
+
+CLASSES
+    builtins.object
+        Reports
+    
+    class Reports(builtins.object)
+     |  Reports(token)
+     |  
+     |  Simple library to use the Power BI api and obtain reports from it.
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, token)
+     |      Create a simplePBI object to request admin API
+     |      Args:
+     |          token: String
+     |              Bearer Token to use the Power Bi Rest API
+     |  
+     |  clone_report(self, report_id, name, target_dataset_id=None, target_workspace_id=None)
+     |      Clones the specified report from "My Workspace".
+     |      If after cloning the report and its dataset reside in two different upgraded workspaces or "My Workspace", a shared dataset will be created in the report's workspace.
+     |      Reports with live connection will lose the live connection when cloning, and will have a direct binding to the target dataset.
+     |      ### Parameters
+     |      ----
+     |      report_id: str uuid
+     |          The Power Bi report id. You can take it from PBI Service URL
+     |      ### Request Body
+     |      ----
+     |      name: str
+     |          The new report name
+     |      target_dataset_id: str uuid
+     |          (Optional) Parameter for specifying the target associated dataset ID. If not provided, the new report will be associated with the same dataset as the source report.
+     |      target_workspace_id: str uuid
+     |          (Optional) Parameter for specifying the target workspace ID. An empty GUID (00000000-0000-0000-0000-000000000000) indicates My workspace. If this parameter isn't provided, the new report will be cloned within the same workspace as the source report.
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK
+     |  
+     |  clone_report_in_group(self, workspace_id, report_id, name, target_dataset_id=None, target_workspace_id=None)
+     |      Clones the specified report from the specified workspace.
+     |      If after cloning the report and its dataset reside in two different upgraded workspaces or "My Workspace", a shared dataset will be created in the report's workspace.
+     |      Reports with live connection will lose the live connection when cloning, and will have a direct binding to the target dataset.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The Power Bi workspace id. You can take it from PBI Service URL   
+     |      report_id: str uuid
+     |          The Power Bi report id. You can take it from PBI Service URL
+     |      ### Request Body
+     |      ----
+     |      name: str
+     |          The new report name
+     |      target_dataset_id: str uuid
+     |          (Optional) Parameter for specifying the target associated dataset ID. If not provided, the new report will be associated with the same dataset as the source report.
+     |      target_workspace_id: str uuid
+     |          (Optional) Parameter for specifying the target workspace ID. An empty GUID (00000000-0000-0000-0000-000000000000) indicates My workspace. If this parameter isn't provided, the new report will be cloned within the same workspace as the source report.
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK
+     |  
+     |  delete_report(self, report_id)
+     |      Deletes the specified report from My workspace.
+     |      ### Parameters
+     |      ----
+     |      report_id: str uuid
+     |          The Power Bi report id. You can take it from PBI Service URL
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK
+     |  
+     |  delete_report_in_group(self, workspace_id, report_id)
+     |      Deletes the specified report from the specified workspace.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The Power Bi workspace id. You can take it from PBI Service URL   
+     |      report_id: str uuid
+     |          The Power Bi report id. You can take it from PBI Service URL
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK
+     |  
+     |  export_report(self, report_id, filename_path)
+     |      Exports the specified report from "My Workspace" to a .pbix file.
+     |      Note: As a workaround for fixing timeout issues, you can set preferClientRouting to true.
+     |      Large files are downloaded to a temporary blob. Their URL is returned in the response and stored in the locally downloaded PBIX file.
+     |      ### Parameters
+     |      ----
+     |      report_id: str uuid
+     |          The Power Bi report id. You can take it from PBI Service URL
+     |      filename_path: str
+     |          Path of the local machine to save the file. Example: C:\Tempile.pbix
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          Response 200 OK with a File.
+     |      ### Restrictions
+     |      ----
+     |      Export of a report with Power BI service live connection after calling rebind report is not supported. Refer to Download a report from the Power BI service to Power BI Desktop for requirements and limitations.
+     |  
+     |  export_report_in_group(self, workspace_id, report_id, filename_path)
+     |      Exports the specified report from the specified workspace to a .pbix file.
+     |      Note: As a workaround for fixing timeout issues, you can set preferClientRouting to true.
+     |      Large files are downloaded to a temporary blob. Their URL is returned in the response and stored in the locally downloaded PBIX file.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The Power Bi workspace id. You can take it from PBI Service URL
+     |      report_id: str uuid
+     |          The Power Bi report id. You can take it from PBI Service URL
+     |      filename_path: str
+     |          Path of the local machine to save the file. Example: C:\Tempile.pbix
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          Response 200 OK with a File.
+     |      ### Restrictions
+     |      ----
+     |      Export of a report with Power BI service live connection after calling rebind report is not supported. Refer to Download a report from the Power BI service to Power BI Desktop for requirements and limitations.
+     |  
+     |  get_datasources(self, report_id)
+     |      Returns a list of data sources for the specified report from My workspace.
+     |      GetReportDatasources is supported only for RDL reports.
+     |      ### Parameters
+     |      ----
+     |      report_id: str uuid
+     |          The Power Bi report id. You can take it from PBI Service URL
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing all the datasources in the report from My workspace.
+     |  
+     |  get_datasources_in_group(self, workspace_id, report_id)
+     |      Returns a list of data sources for the specified report from the specified workspace
+     |      GetReportDatasources is supported only for RDL reports
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The Power Bi workspace id. You can take it from PBI Service URL
+     |      report_id: str uuid
+     |          The Power Bi report id. You can take it from PBI Service URL
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing all the datasources in the report from the workspace.
+     |  
+     |  get_page(self, report_id, page_name)
+     |      Returns the specified page within the specified report from "My Workspace".
+     |      ### Parameters
+     |      ----
+     |      report_id: str uuid
+     |          The Power Bi report id. You can take it from PBI Service URL
+     |      page_name: str
+     |          The Page Name in the URL
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing a page in My workspace.
+     |  
+     |  get_page_in_group(self, workspace_id, report_id, page_name)
+     |      Returns the specified page within the specified report from the specified workspace.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The Power Bi workspace id. You can take it from PBI Service URL
+     |      report_id: str uuid
+     |          The Power Bi report id. You can take it from PBI Service URL
+     |      page_name: str
+     |          The Page Name in the URL 
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing a page in the workspace.
+     |  
+     |  get_pages(self, report_id)
+     |      Returns a list of pages within the specified report from "My Workspace".
+     |      ### Parameters
+     |      ----
+     |      report_id: str uuid
+     |          The Power Bi report id. You can take it from PBI Service URL
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing all the pages in a reports from My workspace.
+     |  
+     |  get_pages_in_group(self, workspace_id, report_id)
+     |      Returns a list of pages within the specified report from the specified workspace.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The Power Bi workspace id. You can take it from PBI Service URL
+     |      report_id: str uuid
+     |          The Power Bi report id. You can take it from PBI Service URL
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing all the pages in a report from a workspace.
+     |  
+     |  get_report(self, report_id)
+     |      Returns the specified report from My workspace.
+     |      ### Parameters
+     |      ----
+     |      report_id: str uuid
+     |          The Power Bi report id. You can take it from PBI Service URL
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing a report in My workspace.
+     |  
+     |  get_report_in_group(self, workspace_id, report_id)
+     |      Returns the specified report from the specified workspace.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The Power Bi workspace id. You can take it from PBI Service URL
+     |      report_id: str uuid
+     |          The Power Bi report id. You can take it from PBI Service URL
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing a report in the workspace.
+     |  
+     |  get_reports(self)
+     |      Returns a list of reports from My workspace.
+     |      ### Parameters
+     |      ----
+     |      None
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing all the reports in My workspace.
+     |  
+     |  get_reports_in_group(self, workspace_id)
+     |      Returns a list of reports from the specified workspace.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The Power Bi workspace id. You can take it from PBI Service URL
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing all the reports in the workspace.
+     |  
+     |  rebind_report_in_group_preview(self, workspace_id, report_id, dataset_id)
+     |      Rebinds the specified report from the specified workspace to the requested dataset.
+     |      If the dataset resides in a different upgraded workspace or in "My Workspace", a shared dataset will be created in the report's workspace.
+     |      Reports with live connection will lose the live connection when rebinding, and will have a direct binding to the target dataset
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The Power Bi workspace id. You can take it from PBI Service URL        
+     |      report_id: str uuid
+     |          The Power Bi report id. You can take it from PBI Service URL
+     |      ### Request Body
+     |      ----
+     |      dataset_id: str uuid
+     |          The Power Bi dataset id. You can take it from PBI Service URL
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK
+     |  
+     |  rebind_report_preview(self, report_id, dataset_id)
+     |      Rebinds the specified report from "My Workspace" to the requested dataset.
+     |      If the dataset resides in a different upgraded workspace, a shared dataset will be created in "My Workspace".
+     |      Reports with live connection will lose the live connection when rebinding, and will have a direct binding to the target dataset.
+     |      ### Parameters
+     |      ----       
+     |      report_id: str uuid
+     |          The Power Bi report id. You can take it from PBI Service URL
+     |      ### Request Body
+     |      ----
+     |      dataset_id: str uuid
+     |          The Power Bi dataset id. You can take it from PBI Service URL
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK
+     |  
+     |  take_over_report_in_group_preview(self, workspace_id, report_id)
+     |      Transfers ownership over the specified PAGINATED REPORT to the current authorized user.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The Power Bi workspace id. You can take it from PBI Service URL        
+     |      report_id: str uuid
+     |          The Power Bi report id. You can take it from PBI Service URL
+     |      ### Request Body
+     |      ----
+     |      None
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+FILE
+    c:\users\ibarrau\documents\github\simplepbi\simplepbi\reports\__init__.py
+

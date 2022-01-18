@@ -36,3 +36,7 @@ Change Log
 0.0.9 (04/01/2022)
 ------------------
 - Adding new preview requests for subscriptions in Admin category. Those released this month by Power Bi.
+
+0.0.10 (18/01/2022)
+------------------
+- Adding all dashboards requests and 80% of reports requests.

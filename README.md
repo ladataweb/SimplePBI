@@ -66,6 +66,8 @@ Right now the library is consuming endpoints from:
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Groups_details.txt" target="_blank">Groups</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Datasets_details.txt" target="_blank">Datasets</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Dataflows_details.txt" target="_blank">Dataflows</a>
+- <a href="https://github.com/ladataweb/SimplePBI/blob/main/Reports_details.txt" target="_blank">Reports</a>
+- <a href="https://github.com/ladataweb/SimplePBI/blob/main/Dashboards_details.txt" target="_blank">Dashboards</a>
 
 ## Additional content
 There an aditional library Utils for transformations. It is used to help some requests returning different values.
@@ -79,8 +81,15 @@ We are still developing the library. The following endpoints from admin are stil
 - Update group User
 ### Datasets
 - Update datasources (regular and in groups)
+### Reports
+- Export To File (regular and in groups)
+- Get Export To File Status (regular and in groups)
+- Get File Of Export To File (regular and in groups)
+- Update Datasources (regular and in groups)
+- Update Report Content (regular and in groups)
 
 # Next Steps (planned items)
-- Adding Reports category
+- Completing Reports category
+- Starting a new category. It can be gateway or imports.
 
 
