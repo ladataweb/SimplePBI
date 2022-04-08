@@ -40,3 +40,9 @@ Change Log
 0.0.10 (18/01/2022)
 ------------------
 - Adding all dashboards requests and 80% of reports requests.
+
+0.0.11 (08/04/2022)
+------------------
+- Adding widely shared artifacts requests for admin category. 
+- Adding App category requests.
+- Adding "get" requests from import category.

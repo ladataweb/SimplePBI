@@ -198,6 +198,55 @@ class Groups():
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
+    def get_dataflow_storage_account(self):
+        """Returns a list of dataflow storage accounts that the user has access to.        
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the dataflow storage accounts that the user has access to.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/dataflowStorageAccounts"
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)            
+
+    def assign_to_dataflow_storage(self, workspace_id, dataflow_storage_id):
+        """Assigns the specified workspace to the specified dataflow storage account.
+        To perform this operation, the user must be an admin on the specified workspace and the Power BI dataflow storage account must be enabled.
+        To unassign the specified workspace from a Power BI dataflow storage account, provide an empty GUID (00000000-0000-0000-0000-000000000000) as the dataflowStorageId.
+        ### Parameters
+        ----
+        workspace_id: str uuid
+            The Power Bi workspace id. You can take it from PBI Service URL        
+        ### Request Body
+        ----
+        dataflow_storage_id: str uuid
+            Mail notification options (success and/or failure, or none). Options: { MailOnCompletion, MailOnFailure, NoNotification }
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/groups/{}/AssignToDataflowStorage".format(workspace_id)
+            body = {
+                "dataflowStorageId": dataflow_storage_id 
+            }               
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.post(url, data = json.dumps(body), headers = headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+            
+            
             
 ''' REQUEST not working
     def update_user_group_preview(self, workspace_id, groupUserAccessRight, emailAddress, displayName=None, graphId=None, identifier=None, principalType=None):

@@ -57,6 +57,22 @@ CLASSES
      |      ----
      |      Response object from requests library. 200 OK
      |  
+     |  assign_to_dataflow_storage(self, workspace_id, dataflow_storage_id)
+     |      Assigns the specified workspace to the specified dataflow storage account.
+     |      To perform this operation, the user must be an admin on the specified workspace and the Power BI dataflow storage account must be enabled.
+     |      To unassign the specified workspace from a Power BI dataflow storage account, provide an empty GUID (00000000-0000-0000-0000-000000000000) as the dataflowStorageId.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The Power Bi workspace id. You can take it from PBI Service URL        
+     |      ### Request Body
+     |      ----
+     |      dataflow_storage_id: str uuid
+     |          Mail notification options (success and/or failure, or none). Options: { MailOnCompletion, MailOnFailure, NoNotification }
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK
+     |  
      |  create_group_preview(self, name, workspaceV2=None)
      |      Creates a new workspace.
      |      ### Parameters
@@ -92,6 +108,13 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
+     |  
+     |  get_dataflow_storage_account(self)
+     |      Returns a list of dataflow storage accounts that the user has access to.        
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing all the dataflow storage accounts that the user has access to.
      |  
      |  get_groups(self)
      |      Returns a list of workspaces the user has access to.

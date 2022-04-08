@@ -698,6 +698,26 @@ CLASSES
      |      ----
      |      Maximum 200 requests per hour.
      |  
+     |  get_widely_shared_artifacts_links_shared_to_whole_organization(self)
+     |      Returns a list of artifacts shared to the whole organization through links.
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          Returns artifacts shared to the whole organization.
+     |      ### Limitations
+     |      ----
+     |      Maximum 200 requests per hour.
+     |  
+     |  get_widely_shared_artifacts_published_to_web(self)
+     |      Returns a list of artifacts shared through published to web.
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          Returns artifacts published to web.
+     |      ### Limitations
+     |      ----
+     |      Maximum 200 requests per hour.
+     |  
      |  post_workspace_info(self, workspaces, lineage=True, datasourceDetails=True, datasetSchema=True, datasetExpressions=True, getArtifactUsers=True)
      |      Initiates a call to receive metadata for the requested list of workspaces. This is a preview API call.
      |      *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***

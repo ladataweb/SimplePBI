@@ -1705,3 +1705,85 @@ class Admin():
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
+            
+    def get_widely_shared_artifacts_links_shared_to_whole_organization(self):
+        """Returns a list of artifacts shared to the whole organization through links.
+        ### Returns
+        ----
+        Dict:
+            Returns artifacts shared to the whole organization.
+        ### Limitations
+        ----
+        Maximum 200 requests per hour.
+        """
+        ban = True 
+        url = "https://api.powerbi.com/v1.0/myorg/admin/widelySharedArtifacts/linksSharedToWholeOrganization"
+        contar = 0
+        list_total = []
+        dict_total = {'ArtifactAccessEntities':[]}
+        try:
+            while(ban):                
+                res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+                res.raise_for_status()
+                
+                if res.json()["ArtifactAccessEntities"]:
+                    list_total.extend(res.json()["ArtifactAccessEntities"])
+                    print("Building dict iteration: ", str(contar))
+                    
+                contar = contar +1
+                print("Pagination: ", str(contar))
+                
+                try:
+                    res.json()["continuationUri"]                    
+                except Exception as ex:
+                    break
+                    
+                if res.json()["continuationUri"] == None or res.json()["ArtifactAccessEntities"]==[]:
+                    ban=False        
+                url = res.json()["continuationUri"]   
+            return res.json()
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+            
+    def get_widely_shared_artifacts_published_to_web(self):
+        """Returns a list of artifacts shared through published to web.
+        ### Returns
+        ----
+        Dict:
+            Returns artifacts published to web.
+        ### Limitations
+        ----
+        Maximum 200 requests per hour.
+        """
+        ban = True 
+        url = "https://api.powerbi.com/v1.0/myorg/admin/widelySharedArtifacts/publishedToWeb"
+        contar = 0
+        list_total = []
+        dict_total = {'ArtifactAccessEntities':[]}
+        try:
+            while(ban):                
+                res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+                res.raise_for_status()
+                
+                if res.json()["ArtifactAccessEntities"]:
+                    list_total.extend(res.json()["ArtifactAccessEntities"])
+                    print("Building dict iteration: ", str(contar))
+                    
+                contar = contar +1
+                print("Pagination: ", str(contar))
+                
+                try:
+                    res.json()["continuationUri"]                    
+                except Exception as ex:
+                    break
+                    
+                if res.json()["continuationUri"] == None or res.json()["ArtifactAccessEntities"]==[]:
+                    ban=False        
+                url = res.json()["continuationUri"]   
+            return res.json()
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)

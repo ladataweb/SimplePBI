@@ -68,10 +68,15 @@ Right now the library is consuming endpoints from:
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Dataflows_details.txt" target="_blank">Dataflows</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Reports_details.txt" target="_blank">Reports</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Dashboards_details.txt" target="_blank">Dashboards</a>
+- <a href="https://github.com/ladataweb/SimplePBI/blob/main/Apps_details.txt" target="_blank">Apps</a>
+- <a href="https://github.com/ladataweb/SimplePBI/blob/main/Imports_details.txt" target="_blank">Imports</a>
 
 ## Additional content
 There an aditional library Utils for transformations. It is used to help some requests returning different values.
 The most useful method in the Utils class might be to_pandas. You can use the method to convert simple dicts to pandas. It needs the dict and the key father of a list of dicts in the response. The usual get responses are using "value" as the key.
+
+## Small categories
+Small categories like Dataflow Storage Accounts and Available Features were moved to Groups and Admin.
 
 # Missing endpoints
 We are still developing the library. The following endpoints from admin are still missing
@@ -87,6 +92,11 @@ We are still developing the library. The following endpoints from admin are stil
 - Get File Of Export To File (regular and in groups)
 - Update Datasources (regular and in groups)
 - Update Report Content (regular and in groups)
+### Imports
+Create Temporary Upload Location
+Create Temporary Upload Location In Group
+Post Import
+Post Import In Group
 
 # Next Steps (planned items)
 - Completing Reports category

@@ -4,6 +4,8 @@ from simplepbi import groups
 from simplepbi import dataflows
 from simplepbi import reports
 from simplepbi import dashboards
+from simplepbi import apps
+from simplepbi import imports
 #from simplepbi import utils
 
 import pydoc
@@ -15,6 +17,8 @@ if __name__ == '__main__':
     dataflow = pydoc.render_doc(dataflows, forceload=0, renderer=pydoc.plaintext)
     report = pydoc.render_doc(reports, forceload=0, renderer=pydoc.plaintext)
     dashboard = pydoc.render_doc(dashboards, forceload=0, renderer=pydoc.plaintext)
+    app = pydoc.render_doc(apps, forceload=0, renderer=pydoc.plaintext)
+    impo = pydoc.render_doc(imports, forceload=0, renderer=pydoc.plaintext)
 
     a=open(r'Admin_details.txt', 'w')
     a.write(ad)
@@ -39,3 +43,11 @@ if __name__ == '__main__':
     db=open(r'Dashboards_details.txt', 'w')
     db.write(dashboard)
     db.close()
+    
+    ap=open(r'Apps_details.txt', 'w')
+    ap.write(app)
+    ap.close()
+    
+    im=open(r'Imports_details.txt', 'w')
+    im.write(impo)
+    im.close()
