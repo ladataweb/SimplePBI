@@ -87,7 +87,7 @@ We are still developing the library. The following endpoints from admin are stil
 ### Datasets
 - Update datasources (regular and in groups)
 ### Reports
-- Export To File (regular and in groups)
+- Export To File (full request, there is a smaller simpler one)
 - Get Export To File Status (regular and in groups)
 - Get File Of Export To File (regular and in groups)
 - Update Datasources (regular and in groups)
@@ -95,8 +95,8 @@ We are still developing the library. The following endpoints from admin are stil
 ### Imports
 Create Temporary Upload Location
 Create Temporary Upload Location In Group
-Post Import
-Post Import In Group
+Post Import (for xlsx, json and rdl)
+Post Import In Group (for xlsx, json and rdl)
 
 # Next Steps (planned items)
 - Completing Reports category

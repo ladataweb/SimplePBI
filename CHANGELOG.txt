@@ -46,3 +46,8 @@ Change Log
 - Adding widely shared artifacts requests for admin category. 
 - Adding App category requests.
 - Adding "get" requests from import category.
+
+0.0.12 (20/05/2022)
+------------------
+- Fixing reports bugs and adding export to file as preview
+- Adding post import file to workspace (only pbix files of less than 1gb)

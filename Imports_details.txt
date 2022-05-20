@@ -77,6 +77,70 @@ CLASSES
      |      Dict:
      |          A dictionary containing all the imports in the workspace.
      |  
+     |  simple_import_pbix(self, filePath, datasetDisplayName, nameConflict=None, overrideModelLabel=None, overrideReportLabel=None)
+     |      Creates new content in My Workspace. Pbix with size lower than 1gb or with temporal blog storage url created
+     |      Note: supported content for now Power BI .pbix files. Soon JSON files (.json), Excel files (.xlsx), SQL Server Report Definition Language files (.rdl)        
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The Power Bi workspace id. You can take it from PBI Service URL
+     |      datasetDisplayName: str 
+     |          The display name of the dataset should include file extension
+     |      filePath: str
+     |          Full local path like "C:/Users/SimplePBI/Documents/Filename.pbix"
+     |      nameConflict: str
+     |          Specifies what to do if a dataset with the same name already exists. The default value is Ignore. You can also use CreateOrOverwrite,GenerateUniqueName or Overwrite
+     |      overrideModelLabel: str
+     |          Determines whether to override the existing label on a model when republishing a Power BI .pbix file. The service default value is true.
+     |      overrideReportLabel: str
+     |          Whether to override the existing label on a report when republishing a Power BI .pbix file. The service default value is true.
+     |      ### Request Body
+     |      ----
+     |      filePath
+     |          The path of the OneDrive for Business Excel (.xlsx) file to import, which can be absolute or relative. Power BI .pbix files aren't supported.
+     |      fileUrl
+     |          SOON The shared access signature URL of the temporary blob storage used to import large Power BI .pbix files between 1 GB and 10 GB in size.
+     |          
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          Response 202. A dict with a new report id.
+     |      ### Limitations
+     |      ----
+     |      Importing a Power BI .pbix file from OneDrive isn't supported.
+     |  
+     |  simple_import_pbix_in_group(self, workspace_id, filePath, datasetDisplayName, nameConflict=None, overrideModelLabel=None, overrideReportLabel=None)
+     |      Creates new content in the specified workspace. Pbix with size lower than 1gb or with temporal blog storage url created
+     |      Note: supported content for now Power BI .pbix files. Soon JSON files (.json), Excel files (.xlsx), SQL Server Report Definition Language files (.rdl)        
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The Power Bi workspace id. You can take it from PBI Service URL
+     |      datasetDisplayName: str 
+     |          The display name of the dataset should include file extension
+     |      filePath: str
+     |          Full local path like "C:/Users/SimplePBI/Documents/Filename.pbix"
+     |      nameConflict: str
+     |          Specifies what to do if a dataset with the same name already exists. The default value is Ignore. You can also use CreateOrOverwrite,GenerateUniqueName or Overwrite
+     |      overrideModelLabel: str
+     |          Determines whether to override the existing label on a model when republishing a Power BI .pbix file. The service default value is true.
+     |      overrideReportLabel: str
+     |          Whether to override the existing label on a report when republishing a Power BI .pbix file. The service default value is true.
+     |      ### Request Body
+     |      ----
+     |      filePath
+     |          The path of the OneDrive for Business Excel (.xlsx) file to import, which can be absolute or relative. Power BI .pbix files aren't supported.
+     |      fileUrl
+     |          SOON The shared access signature URL of the temporary blob storage used to import large Power BI .pbix files between 1 GB and 10 GB in size.
+     |          
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          Response 202. A dict with a new report id.
+     |      ### Limitations
+     |      ----
+     |      Importing a Power BI .pbix file from OneDrive isn't supported.
+     |  
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
      |  

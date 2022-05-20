@@ -15,6 +15,7 @@ import json
 import requests
 from simplepbi import utils
 import pandas as pd
+from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 class Imports():
     """Simple library to use the Power BI api and obtain imports from it.
@@ -112,85 +113,116 @@ class Imports():
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
-
-
-
-'''
-Import files requests here
-
-    def clone_tile_in_dashboard(self, dashboard_id, tile_id, target_dashboard_id, target_dataset_id = None, target_report_id = None, target_workspace_id = None):
-        """Clones the specified tile from My workspace.
-        When a tile is cloned to another workspace and bound to another report and dataset, it's cloned as is with its underlying query containing the original report filters.
-        If the target report ID and target dataset are missing, errors can occur.
+            
+    def simple_import_pbix(self, filePath, datasetDisplayName, nameConflict=None, overrideModelLabel=None, overrideReportLabel=None):
+        """Creates new content in My Workspace. Pbix with size lower than 1gb or with temporal blog storage url created
+        Note: supported content for now Power BI .pbix files. Soon JSON files (.json), Excel files (.xlsx), SQL Server Report Definition Language files (.rdl)        
         ### Parameters
         ----
-        dashboard_id: str uuid
-            The Power Bi dashboard id. You can take it from PBI Service URL
-        tile_id: str
-            The tile id
+        workspace_id: str uuid
+            The Power Bi workspace id. You can take it from PBI Service URL
+        datasetDisplayName: str 
+            The display name of the dataset should include file extension
+        filePath: str
+            Full local path like "C:/Users/SimplePBI/Documents/Filename.pbix"
+        nameConflict: str
+            Specifies what to do if a dataset with the same name already exists. The default value is Ignore. You can also use CreateOrOverwrite,GenerateUniqueName or Overwrite
+        overrideModelLabel: str
+            Determines whether to override the existing label on a model when republishing a Power BI .pbix file. The service default value is true.
+        overrideReportLabel: str
+            Whether to override the existing label on a report when republishing a Power BI .pbix file. The service default value is true.
         ### Request Body
         ----
-        target_dashboard_id: str
-            The target dashboard ID
-        target_dataset_id: str uuid
-            (Optional) A parameter for specifying a target model ID. When cloning a tile linked to a dataset, pass the target model ID to rebind the new tile to a different dataset.
-        target_report_id: str uuid
-            (Optional) A parameter for specifying a target report ID. When cloning a tile linked to a report, pass the target report ID to rebind the new tile to a different report.
-        target_workspace_id: str uuid
-            (Optional) A parameter for specifying a target workspace ID. An empty GUID (00000000-0000-0000-0000-000000000000) indicates 'My Workspace'. If this parameter isn't provided, the tile will be cloned within the same workspace as the source tile.
+        filePath
+            The path of the OneDrive for Business Excel (.xlsx) file to import, which can be absolute or relative. Power BI .pbix files aren't supported.
+        fileUrl
+            SOON The shared access signature URL of the temporary blob storage used to import large Power BI .pbix files between 1 GB and 10 GB in size.
+            
         ### Returns
         ----
-        Response object from requests library. 200 OK
-        
+        Dict:
+            Response 202. A dict with a new report id.
+        ### Limitations
+        ----
+        Importing a Power BI .pbix file from OneDrive isn't supported.
         """
-        try: 
-            url= "https://api.powerbi.com/v1.0/myorg/dashboards/{}/tiles/{}/Clone".format(dashboard_id, tile_id)
-            body = {
-                "targetDashboardId": target_dashboard_id
-            }
-            if target_report_id != None:
-                body["targetReportId"]=target_report_id
-            if target_dataset_id != None:
-                body["targetModelId"]=target_dataset_id
-            if target_workspace_id != None:
-                body["targetWorkspaceId"] = target_workspace_id
-            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
-            res = requests.post(url, data = json.dumps(body), headers = headers)
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/imports?datasetDisplayName={}".format(workspace_id, datasetDisplayName)
+            if nameConflict != None:
+                url = url + "&nameConflict={}".format(str(nameConflict))
+            if overrideModelLabel != None:
+                url = url + "&overrideModelLabel={}".format(str(overrideModelLabel))
+            if overrideReportLabel != None:
+                url = url + "&overrideReportLabel={}".format(str(overrideReportLabel))                        
+            # you need this dictionary to convert a binary file into form-data format
+            # None here means we skip the filename and file content is important 
+            files = {'value': (None, open(filePath, 'rb'), 'multipart/form-data')}
+            # The MultipartEncoder is posted as data, don't use files=...!
+            mp_encoder = MultipartEncoder(fields=files)
+            # The MultipartEncoder provides the content-type header with the boundary:
+            headers = {'Content-Type': 'multipart/form-data', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.post(url, data = mp_encoder, headers=headers)
             res.raise_for_status()
-            return res
-        except requests.exceptions.HTTPError as ex:
-            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
-        except requests.exceptions.RequestException as e:
-            print("Request exception: ", e)
             
- 
-            
-    def add_dashboard(self, workspace_name):
-        """Creates a new empty dashboard in My workspace.
-        ### Parameters
-        ----
-        None
-        ### Request Body
-        ----
-        workspace_name: str 
-            The name of the new dashboard
-        ### Returns
-        ----
-        Response object from requests library. 200 OK
-        
-        """
-        try: 
-            url= "https://api.powerbi.com/v1.0/myorg/dashboards"
-            body = {
-                "name": workspace_name
-            }
-            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
-            res = requests.post(url, data = json.dumps(body), headers = headers)
-            res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
 
-'''
+    def simple_import_pbix_in_group(self, workspace_id, filePath, datasetDisplayName, nameConflict=None, overrideModelLabel=None, overrideReportLabel=None):
+        """Creates new content in the specified workspace. Pbix with size lower than 1gb or with temporal blog storage url created
+        Note: supported content for now Power BI .pbix files. Soon JSON files (.json), Excel files (.xlsx), SQL Server Report Definition Language files (.rdl)        
+        ### Parameters
+        ----
+        workspace_id: str uuid
+            The Power Bi workspace id. You can take it from PBI Service URL
+        datasetDisplayName: str 
+            The display name of the dataset should include file extension
+        filePath: str
+            Full local path like "C:/Users/SimplePBI/Documents/Filename.pbix"
+        nameConflict: str
+            Specifies what to do if a dataset with the same name already exists. The default value is Ignore. You can also use CreateOrOverwrite,GenerateUniqueName or Overwrite
+        overrideModelLabel: str
+            Determines whether to override the existing label on a model when republishing a Power BI .pbix file. The service default value is true.
+        overrideReportLabel: str
+            Whether to override the existing label on a report when republishing a Power BI .pbix file. The service default value is true.
+        ### Request Body
+        ----
+        filePath
+            The path of the OneDrive for Business Excel (.xlsx) file to import, which can be absolute or relative. Power BI .pbix files aren't supported.
+        fileUrl
+            SOON The shared access signature URL of the temporary blob storage used to import large Power BI .pbix files between 1 GB and 10 GB in size.
+            
+        ### Returns
+        ----
+        Dict:
+            Response 202. A dict with a new report id.
+        ### Limitations
+        ----
+        Importing a Power BI .pbix file from OneDrive isn't supported.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/groups/{}/imports?datasetDisplayName={}".format(workspace_id, datasetDisplayName)
+            if nameConflict != None:
+                url = url + "&nameConflict={}".format(str(nameConflict))
+            if overrideModelLabel != None:
+                url = url + "&overrideModelLabel={}".format(str(overrideModelLabel))
+            if overrideReportLabel != None:
+                url = url + "&overrideReportLabel={}".format(str(overrideReportLabel))                        
+            # you need this dictionary to convert a binary file into form-data format
+            # None here means we skip the filename and file content is important 
+            files = {'value': (None, open(filePath, 'rb'), 'multipart/form-data')}
+            # The MultipartEncoder is posted as data, don't use files=...!
+            mp_encoder = MultipartEncoder(fields=files)
+            # The MultipartEncoder provides the content-type header with the boundary:
+            headers = {'Content-Type': 'multipart/form-data', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.post(url, data = mp_encoder, headers=headers)
+            res.raise_for_status()
+            
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+

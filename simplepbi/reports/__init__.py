@@ -310,6 +310,83 @@ class Reports():
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
+            
+
+    def simple_export_file(self, report_id, fileFormat, filename_path, includeHiddenPages=False):
+        """Exports the specified report from "My Workspace" to a .pbix file.
+        Note: As a workaround for fixing timeout issues, you can set preferClientRouting to true.
+        Large files are downloaded to a temporary blob. Their URL is returned in the response and stored in the locally downloaded PBIX file.
+        ### Parameters
+        ----
+        report_id: str uuid
+            The Power Bi report id. You can take it from PBI Service URL
+        filename_path: str
+            Path of the local machine to save the file. Example: C:\Temp\file.pbix
+        ### Returns
+        ----
+        Dict:
+            Response 200 OK with a File.
+        ### Restrictions
+        ----
+        Export of a report with Power BI service live connection after calling rebind report is not supported. Refer to Download a report from the Power BI service to Power BI Desktop for requirements and limitations.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/reports/{}/ExportTo".format(report_id)
+            body= {
+                "format": fileFormat,
+                "powerBIReportConfiguration": {
+                    "settings": {
+                        "includeHiddenPages":includeHiddenPages
+                        }
+                    }
+                }
+            res = requests.post(url, data = json.dumps(body), headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            open(filename_path, 'wb').write(res.content)
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+           
+    def simple_export_file_in_group(self, workspace_id, report_id, fileFormat, filename_path, includeHiddenPages=False):
+        """Exports the specified report from the specified workspace to a .pbix file.
+        Note: As a workaround for fixing timeout issues, you can set preferClientRouting to true.
+        Large files are downloaded to a temporary blob. Their URL is returned in the response and stored in the locally downloaded PBIX file.
+        ### Parameters
+        ----
+        workspace_id: str uuid
+            The Power Bi workspace id. You can take it from PBI Service URL
+        report_id: str uuid
+            The Power Bi report id. You can take it from PBI Service URL
+        filename_path: str
+            Path of the local machine to save the file. Example: C:\Temp\file.pbix
+        ### Returns
+        ----
+        Dict:
+            Response 200 OK with a File.
+        ### Restrictions
+        ----
+        Export of a report with Power BI service live connection after calling rebind report is not supported. Refer to Download a report from the Power BI service to Power BI Desktop for requirements and limitations.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/groups/{}/reports/{}/ExportTo".format(workspace_id, report_id)
+            body= {
+                "format": fileFormat,
+                "powerBIReportConfiguration": {
+                    "settings": {
+                        "includeHiddenPages":includeHiddenPages
+                        }
+                    }
+                }
+            res = requests.post(url, data = json.dumps(body), headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(auth_token)})
+            res.raise_for_status()
+            open(filename_path, 'wb').write(res.content)
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
           
     def take_over_report_in_group_preview(self, workspace_id, report_id):
         """Transfers ownership over the specified PAGINATED REPORT to the current authorized user.
