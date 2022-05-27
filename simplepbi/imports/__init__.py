@@ -123,8 +123,6 @@ class Imports():
             The Power Bi workspace id. You can take it from PBI Service URL
         datasetDisplayName: str 
             The display name of the dataset should include file extension
-        filePath: str
-            Full local path like "C:/Users/SimplePBI/Documents/Filename.pbix"
         nameConflict: str
             Specifies what to do if a dataset with the same name already exists. The default value is Ignore. You can also use CreateOrOverwrite,GenerateUniqueName or Overwrite
         overrideModelLabel: str
@@ -133,8 +131,8 @@ class Imports():
             Whether to override the existing label on a report when republishing a Power BI .pbix file. The service default value is true.
         ### Request Body
         ----
-        filePath
-            The path of the OneDrive for Business Excel (.xlsx) file to import, which can be absolute or relative. Power BI .pbix files aren't supported.
+        filePath: str
+            Full local path like "C:/Users/SimplePBI/Documents/Filename.pbix"
         fileUrl
             SOON The shared access signature URL of the temporary blob storage used to import large Power BI .pbix files between 1 GB and 10 GB in size.
             
@@ -147,7 +145,7 @@ class Imports():
         Importing a Power BI .pbix file from OneDrive isn't supported.
         """
         try:
-            url = "https://api.powerbi.com/v1.0/myorg/imports?datasetDisplayName={}".format(workspace_id, datasetDisplayName)
+            url = "https://api.powerbi.com/v1.0/myorg/imports?datasetDisplayName={}".format(datasetDisplayName)
             if nameConflict != None:
                 url = url + "&nameConflict={}".format(str(nameConflict))
             if overrideModelLabel != None:
@@ -179,8 +177,6 @@ class Imports():
             The Power Bi workspace id. You can take it from PBI Service URL
         datasetDisplayName: str 
             The display name of the dataset should include file extension
-        filePath: str
-            Full local path like "C:/Users/SimplePBI/Documents/Filename.pbix"
         nameConflict: str
             Specifies what to do if a dataset with the same name already exists. The default value is Ignore. You can also use CreateOrOverwrite,GenerateUniqueName or Overwrite
         overrideModelLabel: str
@@ -189,8 +185,8 @@ class Imports():
             Whether to override the existing label on a report when republishing a Power BI .pbix file. The service default value is true.
         ### Request Body
         ----
-        filePath
-            The path of the OneDrive for Business Excel (.xlsx) file to import, which can be absolute or relative. Power BI .pbix files aren't supported.
+        filePath: str
+            Full local path like "C:/Users/SimplePBI/Documents/Filename.pbix"
         fileUrl
             SOON The shared access signature URL of the temporary blob storage used to import large Power BI .pbix files between 1 GB and 10 GB in size.
             
@@ -226,3 +222,116 @@ class Imports():
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
 
+    def simple_import_pbix_folder_preview(self, folderPath, nameConflict=None, overrideModelLabel=None, overrideReportLabel=None):
+        """Creates new multiple contents in the specified workspace. Define a local folder with pbix files. Pbix with size lower than 1gb or with temporal blog storage url created
+        Note: supported content for now Power BI .pbix files. Soon JSON files (.json), Excel files (.xlsx), SQL Server Report Definition Language files (.rdl)        
+        ### Parameters
+        ----
+        datasetDisplayName: str 
+            The display name of the dataset should include file extension            
+        nameConflict: str
+            Specifies what to do if a dataset with the same name already exists. The default value is Ignore. You can also use CreateOrOverwrite,GenerateUniqueName or Overwrite
+        overrideModelLabel: str
+            Determines whether to override the existing label on a model when republishing a Power BI .pbix file. The service default value is true.
+        overrideReportLabel: str
+            Whether to override the existing label on a report when republishing a Power BI .pbix file. The service default value is true.
+        ### Request Body
+        ----
+        filePath: str
+            Full local path of the files like "C:/Users/SimplePBI/Documents/"
+        fileUrl: str
+            SOON The shared access signature URL of the temporary blob storage used to import large Power BI .pbix files between 1 GB and 10 GB in size.
+            
+        ### Returns
+        ----
+        Dict:
+            Response 202. A dict with a new report id.
+        ### Limitations
+        ----
+        Importing a Power BI .pbix file from OneDrive isn't supported.
+        """
+        results = []
+        try:
+            allFiles= [files for root, dirs, files in os.walk(folderPath)][0]
+            pbixFiles = [name for name in allFiles if name.endswith(("pbix"))]
+            for datasetDisplayName in pbixFiles:
+                url = "https://api.powerbi.com/v1.0/myorg/imports?datasetDisplayName={}".format(datasetDisplayName)
+                if nameConflict != None:
+                    url = url + "&nameConflict={}".format(str(nameConflict))
+                if overrideModelLabel != None:
+                    url = url + "&overrideModelLabel={}".format(str(overrideModelLabel))
+                if overrideReportLabel != None:
+                    url = url + "&overrideReportLabel={}".format(str(overrideReportLabel))                        
+                # you need this dictionary to convert a binary file into form-data format
+                # None here means we skip the filename and file content is important 
+                files = {'value': (None, open(folderPath+datasetDisplayName, 'rb'), 'multipart/form-data')}
+                # The MultipartEncoder is posted as data, don't use files=...!
+                mp_encoder = MultipartEncoder(fields=files)
+                # The MultipartEncoder provides the content-type header with the boundary:
+                headers = {'Content-Type': 'multipart/form-data', "Authorization": "Bearer {}".format(self.token)}
+                res = requests.post(url, data = mp_encoder, headers=headers)
+                res.raise_for_status()
+                results.append(res)
+            return results
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def simple_import_pbix_folder_in_group_preview(self, workspace_id, folderPath, nameConflict=None, overrideModelLabel=None, overrideReportLabel=None):
+        """Creates new multiple contents in the specified workspace. Define a local folder with pbix files. Pbix with size lower than 1gb or with temporal blog storage url created
+        Note: supported content for now Power BI .pbix files. Soon JSON files (.json), Excel files (.xlsx), SQL Server Report Definition Language files (.rdl)        
+        ### Parameters
+        ----
+        workspace_id: str uuid
+            The Power Bi workspace id. You can take it from PBI Service URL
+        datasetDisplayName: str 
+            The display name of the dataset should include file extension            
+        nameConflict: str
+            Specifies what to do if a dataset with the same name already exists. The default value is Ignore. You can also use CreateOrOverwrite,GenerateUniqueName or Overwrite
+        overrideModelLabel: str
+            Determines whether to override the existing label on a model when republishing a Power BI .pbix file. The service default value is true.
+        overrideReportLabel: str
+            Whether to override the existing label on a report when republishing a Power BI .pbix file. The service default value is true.
+        ### Request Body
+        ----
+        filePath: str
+            Full local path of the files like "C:/Users/SimplePBI/Documents/"
+        fileUrl: str
+            SOON The shared access signature URL of the temporary blob storage used to import large Power BI .pbix files between 1 GB and 10 GB in size.
+            
+        ### Returns
+        ----
+        Dict:
+            Response 202. A dict with a new report id.
+        ### Limitations
+        ----
+        Importing a Power BI .pbix file from OneDrive isn't supported.
+        """
+        results = []
+        try:
+            allFiles= [files for root, dirs, files in os.walk(folderPath)][0]
+            pbixFiles = [name for name in allFiles if name.endswith(("pbix"))]
+            for datasetDisplayName in pbixFiles:
+                url = "https://api.powerbi.com/v1.0/myorg/groups/{}/imports?datasetDisplayName={}".format(workspace_id, datasetDisplayName)
+                if nameConflict != None:
+                    url = url + "&nameConflict={}".format(str(nameConflict))
+                if overrideModelLabel != None:
+                    url = url + "&overrideModelLabel={}".format(str(overrideModelLabel))
+                if overrideReportLabel != None:
+                    url = url + "&overrideReportLabel={}".format(str(overrideReportLabel))                        
+                # you need this dictionary to convert a binary file into form-data format
+                # None here means we skip the filename and file content is important 
+                files = {'value': (None, open(folderPath+datasetDisplayName, 'rb'), 'multipart/form-data')}
+                # The MultipartEncoder is posted as data, don't use files=...!
+                mp_encoder = MultipartEncoder(fields=files)
+                # The MultipartEncoder provides the content-type header with the boundary:
+                headers = {'Content-Type': 'multipart/form-data', "Authorization": "Bearer {}".format(self.token)}
+                res = requests.post(url, data = mp_encoder, headers=headers)
+                res.raise_for_status()
+                results.append(res)
+            return results
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)

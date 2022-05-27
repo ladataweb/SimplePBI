@@ -51,3 +51,8 @@ Change Log
 ------------------
 - Fixing reports bugs and adding export to file as preview
 - Adding post import file to workspace (only pbix files of less than 1gb)
+
+0.0.13 (27/05/2022)
+------------------
+- Updating Import request ExecuteQueries with the new update from Microsoft making it GA.
+- Creating a new method to import all pbix files in an specified local folder to a workspace

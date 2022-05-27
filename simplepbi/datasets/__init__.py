@@ -587,23 +587,81 @@ class Datasets():
             body = {"queries": [{"query": query}], "serializerSettings": {"includeNulls": "true"}}
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             res = requests.post(url, data = json.dumps(body), headers = headers)      
-            res.raise_for_status()
+            #Encode text in json to avoid Unexpected UTF-8 BOM (decode using utf-8-sig)
+            encoded_data = json.loads(res.text.encode().decode('utf-8-sig'))
             if return_pandas:
                 #get columns from json response - keys from dict
-                columnas = list(res.json()['results'][0]['tables'][0]['rows'][0].keys())
+                tabla_columnas = list(encoded_data['results'][0]['tables'][0]['rows'][0].keys())
+                columnas = [columnita.split("[")[1].split("]")[0] for columnita in tabla_columnas]
                 print(columnas)
                 #get the number of rows to loop data
-                rows = len(res.json()['results'][0]['tables'][0]['rows'])        
+                rows = len(encoded_data['results'][0]['tables'][0]['rows'])        
                 print(rows)
                 #get data from json response - values from dict
-                datos = [list(res.json()['results'][0]['tables'][0]['rows'][n].values()) for n in range(rows-1)]
+                datos = [list(encoded_data['results'][0]['tables'][0]['rows'][n].values()) for n in range(rows-1)]
                 print("datos")
                 #build a dataframe from the collected data
                 df = pd.DataFrame(data=datos, columns=columnas)
                 print(df.head())
                 return df
             else:
-                return res.json()
+                return encoded_data
+        except requests.exceptions.HTTPError as ex:
+            print("ERROR ", ex)
+        except Exception as e:
+            print("ERROR ", e)
+            
+    def execute_queries_in_group(self, workspace_id, dataset_id, query, return_pandas=False, impersonatedUserName=None):
+        """Executes Data Analysis Expressions (DAX) queries against the provided dataset. The dataset must reside in My workspace or another new workspace experience workspace.
+        DAX query errors will result in: A response error, such as DAX query failure. A failure HTTP status code (400).
+        Limitation: A query that requests more than one table, or more than 100,000 table rows, will result in Error.
+        ### Parameters
+        ----
+        workspace_id: str uuid
+            The Power Bi workspace id. You can take it from PBI Service URL    
+        dataset_id: str uuid
+            The Power Bi Dataset id. You can take it from PBI Service URL        
+        return_pandas: bool
+            Flag to specify if you want to return a dict response or a pandas dataframe of events.
+        ### Body
+        ----
+        query: str
+            Requested. DAX query returning a Table. Starts with EVALUATE
+        impersonatedUserName: str
+            The UPN of a user to be impersonated. If the model is not RLS enabled, this will be ignored. E.g. "someuser@mycompany.com"
+        ### Returns
+        ----
+        If return_pandas = True returns a Pandas dataframe concatenating iterations otherwise it returns a dict of the response
+        Response object from requests library. 200 OK
+        
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/groups/{}/datasets/{}/executeQueries".format(workspace_id, dataset_id)
+            body = {"queries": [{"query": query}], "serializerSettings": {"includeNulls": "true"}}
+            if impersonatedUserName != None:
+                body["impersonatedUserName"]=impersonatedUserName
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.post(url, data = json.dumps(body), headers = headers)      
+            res.raise_for_status()
+            #Encode text in json to avoid Unexpected UTF-8 BOM (decode using utf-8-sig)
+            encoded_data = json.loads(res.text.encode().decode('utf-8-sig'))
+            if return_pandas:
+                #get columns from json response - keys from dict
+                tabla_columnas = list(encoded_data['results'][0]['tables'][0]['rows'][0].keys())
+                columnas = [columnita.split("[")[1].split("]")[0] for columnita in tabla_columnas]
+                print(columnas)
+                #get the number of rows to loop data
+                rows = len(encoded_data['results'][0]['tables'][0]['rows'])        
+                print(rows)
+                #get data from json response - values from dict
+                datos = [list(encoded_data['results'][0]['tables'][0]['rows'][n].values()) for n in range(rows-1)]
+                print("datos")
+                #build a dataframe from the collected data
+                df = pd.DataFrame(data=datos, columns=columnas)
+                print(df.head())
+                return df
+            else:
+                return encoded_data
         except requests.exceptions.HTTPError as ex:
             print("ERROR ", ex)
         except Exception as e:
