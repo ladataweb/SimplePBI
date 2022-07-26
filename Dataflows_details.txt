@@ -57,7 +57,7 @@ CLASSES
      |      Response object from requests library. 200 OK
      |  
      |  get_dataflow_in_group(self, workspace_id, dataflow_id)
-     |      Exports the specified dataflow definition to a .json file.
+     |      Returns a single dataflow from the specified workspace.
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid

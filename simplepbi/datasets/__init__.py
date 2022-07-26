@@ -1059,4 +1059,54 @@ class Datasets():
         except requests.exceptions.HTTPError as ex:
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)            
+            
+    def enhanced_refresh_dataset_in_group(self, workspace_id, dataset_id, objects, typeProcessing="Full", commitMode="transactional", maxParallelism=1, retryCount=1, applyRefreshPolicy=True):
+        """Triggers a refresh for the specified dataset from the specified workspace.
+        For Shared capacities, a maximum of eight requests per day, which includes refreshes executed using a scheduled refresh.
+        ### Parameters
+        ----
+        workspace_id: str uuid
+            The Power Bi workspace id. You can take it from PBI Service URL        
+        dataset_id: str uuid
+            The Power Bi Dataset id. You can take it from PBI Service URL        
+        ### Request Body
+        ----
+        typeProcessing: Enum (str)
+            The type of processing to perform. Types are aligned with the TMSL refresh command types: full, clearValues, calculate, dataOnly, automatic, and defragment. Add type isn't supported.
+        commitMode: Enum (str)
+            Determines if objects will be committed in batches or only when complete. Modes include: transactional, partialBatch.
+        maxParallelism: int
+            Determines the maximum number of threads on which to run processing commands in parallel. This value aligned with the MaxParallelism property that can be set in the TMSL Sequence command or by using other methods.
+        retryCount: int
+            Number of times the operation will retry before failing.
+        objects: array
+            An array of objects to be processed. Each object includes table when processing the entire table, or table and partition when processing a partition. If no objects are specified, the entire dataset is refreshed.
+            E.g. [ { "table": "DimCustomer", "partition": "DimCustomer" }  ,  { "table": "DimDate" } ]
+        applyRefreshPolicy: boolean
+            If an incremental refresh policy is defined, applyRefreshPolicy will determine if the policy is applied or not
+        effectiveDate: date
+            Comming Soon            
+        ### Returns
+        ----
+        Response object from requests library. 202 OK
+        
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/groups/{}/datasets/{}/refreshes".format(workspace_id, dataset_id)
+            body = {
+                "type": typeProcessing,
+                "commitMode": commitMode,
+                "maxParallelism": maxParallelism,
+                "retryCount": retryCount,
+                "objects": objects,
+                "applyRefreshPolicy": applyRefreshPolicy
+            }         
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.post(url, data = json.dumps(body), headers = headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
             print("Request exception: ", e)

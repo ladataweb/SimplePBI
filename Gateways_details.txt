@@ -1,0 +1,171 @@
+Python Library Documentation: package simplepbi.gateways in simplepbi
+
+NAME
+    simplepbi.gateways
+
+DESCRIPTION
+    /¯¯¯¯¯¯¯¯¯ /           |   |   __    |  *********************************************
+    |   |  |  \   |  Code writen by Ignacio and Martin.
+    |   |  |  |   |
+    |   |__|_ |   |  La Data Web 
+    |      |__/   |  *********************************************
+     \            /
+      \__________/
+
+PACKAGE CONTENTS
+
+
+CLASSES
+    builtins.object
+        Gateways
+    
+    class Gateways(builtins.object)
+     |  Gateways(token)
+     |  
+     |  Simple library to use the Power BI api and obtain gateways and sources from it. The user must have gateway admin permissions.
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, token)
+     |      Create a simplePBI object to request admin API
+     |      Args:
+     |          token: String
+     |              Bearer Token to use the Power Bi Rest API
+     |  
+     |  get_datasource(self, gateway_id, datasource_id)
+     |      Returns a list of datasources for the specified gateway.
+     |      ### Parameters
+     |      ----
+     |      gateway_id: str uuid
+     |          The Power Bi gateway id
+     |      datasource_id: str uuid
+     |          The data source id of a gateway
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing the datasource in the gateway.
+     |      ### Limitations
+     |      ----
+     |      Virtual network (VNet) gateways aren't supported.
+     |  
+     |  get_datasource_status(self, gateway_id, datasource_id)
+     |      Checks the connectivity status of the specified data source from the specified gateway.
+     |      ### Parameters
+     |      ----
+     |      gateway_id: str uuid
+     |          The Power Bi gateway id
+     |      datasource_id: str uuid
+     |          The data source id of a gateway
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing the datasource in the gateway.
+     |      ### Limitations
+     |      ----
+     |      Virtual network (VNet) gateways aren't supported.
+     |  
+     |  get_datasource_users(self, gateway_id, datasource_id)
+     |      Returns a list of users who have access to the specified data source.
+     |      ### Parameters
+     |      ----
+     |      gateway_id: str uuid
+     |          The Power Bi gateway id
+     |      datasource_id: str uuid
+     |          The data source id of a gateway
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing the datasource in the gateway.
+     |      ### Limitations
+     |      ----
+     |      Virtual network (VNet) gateways aren't supported.
+     |  
+     |  get_datasources(self, gateway_id)
+     |      Returns a list of datasources for the specified gateway.
+     |      ### Parameters
+     |      ----
+     |      gateway_id: str uuid
+     |          The Power Bi gateway id
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing all the datasources in the gateway.
+     |      ### Limitations
+     |      ----
+     |      Virtual network (VNet) gateways aren't supported.
+     |  
+     |  get_gateway(self, gateway_id)
+     |      Returns the specified gateway.
+     |      ### Parameters
+     |      ----
+     |      gateway_id: str uuid
+     |          The Power Bi gateway id. 
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing a gateway.
+     |      ### Limitations
+     |      ----
+     |      Virtual network (VNet) gateways aren't supported.
+     |  
+     |  get_gateways(self)
+     |      Returns a list of gateways for which the user is an admin.
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing all the gateways.
+     |      ### Limitations
+     |      ----
+     |      Virtual network (VNet) gateways aren't supported.
+     |  
+     |  simple_add_datasource_user(self, gateway_id, datasource_id, datasourceAccessRight, emailAddress)
+     |      Grants or updates the permissions required to use the specified data source for the specified user.
+     |      ### Parameters
+     |      ----
+     |      gateway_id: str uuid
+     |          The Power Bi gateway id
+     |      datasource_id: str uuid
+     |          The data source id of a gateway
+     |      ### Request Body
+     |      ----
+     |      datasourceAccessRight: DatasourceUserAccessRight str
+     |          The access right (permission level) that a user has on the data source. Options: { None, Read, ReadOverrideEffectiveIdentity }
+     |      emailAddress: str
+     |          The email address of the user            
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 202 OK
+     |      ### Limitations
+     |      ----
+     |      Virtual network (VNet) gateways aren't supported.
+     |  
+     |  simple_delete_datasource_user(self, gateway_id, datasource_id, emailAdress)
+     |      Deletes the specified data source from the specified gateway.
+     |      ### Parameters
+     |      ----
+     |      gateway_id: str uuid
+     |          The Power Bi gateway id
+     |      datasource_id: str uuid
+     |          The data source id of a gateway
+     |      emailAdress: str
+     |          The user's email address or the object ID of the service principal
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A status code 200 OK
+     |      ### Limitations
+     |      ----
+     |      Virtual network (VNet) gateways aren't supported.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+FILE
+    c:\users\ibarrau\documents\github\simplepbi\simplepbi\gateways\__init__.py
+

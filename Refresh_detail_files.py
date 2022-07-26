@@ -6,6 +6,7 @@ from simplepbi import reports
 from simplepbi import dashboards
 from simplepbi import apps
 from simplepbi import imports
+from simplepbi import gateways
 #from simplepbi import utils
 
 import pydoc
@@ -19,6 +20,7 @@ if __name__ == '__main__':
     dashboard = pydoc.render_doc(dashboards, forceload=0, renderer=pydoc.plaintext)
     app = pydoc.render_doc(apps, forceload=0, renderer=pydoc.plaintext)
     impo = pydoc.render_doc(imports, forceload=0, renderer=pydoc.plaintext)
+    gway = pydoc.render_doc(gateways, forceload=0, renderer=pydoc.plaintext)
 
     a=open(r'Admin_details.txt', 'w')
     a.write(ad)
@@ -51,3 +53,7 @@ if __name__ == '__main__':
     im=open(r'Imports_details.txt', 'w')
     im.write(impo)
     im.close()
+    
+    gw=open(r'Gateways_details.txt', 'w')
+    gw.write(gway)
+    gw.close()

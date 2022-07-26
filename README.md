@@ -70,10 +70,15 @@ Right now the library is consuming endpoints from:
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Dashboards_details.txt" target="_blank">Dashboards</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Apps_details.txt" target="_blank">Apps</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Imports_details.txt" target="_blank">Imports</a>
+- <a href="https://github.com/ladataweb/SimplePBI/blob/main/Gateways_details.txt" target="_blank">Gateways</a>
 
 ## Additional content
 There an aditional library Utils for transformations. It is used to help some requests returning different values.
 The most useful method in the Utils class might be to_pandas. You can use the method to convert simple dicts to pandas. It needs the dict and the key father of a list of dicts in the response. The usual get responses are using "value" as the key.
+We are also adding new methods with the requests to help get new actions. Examples:
+- Dataflows: get orphan dataflows (get dataflows without dataset)
+- Imports: post import report folder (post a all pbix files in a local folder)
+- Reports: simple migrate report (copy report from workspace to a workspace)
 
 ## Small categories
 Small categories like Dataflow Storage Accounts and Available Features were moved to Groups and Admin.
@@ -97,9 +102,13 @@ Create Temporary Upload Location
 Create Temporary Upload Location In Group
 Post Import (for xlsx, json and rdl)
 Post Import In Group (for xlsx, json and rdl)
+### Gateways 
+Create Datasource (looks like there is a bug on the API)
+Update Datasource 
+Delete Datasource 
 
 # Next Steps (planned items)
-- Completing Reports category
-- Starting a new category. It can be gateway or imports.
+- Keep completing missing endpoints category
+- Starting a new category. It might be Pipelines or Capacity
 
 

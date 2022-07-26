@@ -56,3 +56,8 @@ Change Log
 ------------------
 - Updating Import request ExecuteQueries with the new update from Microsoft making it GA.
 - Creating a new method to import all pbix files in an specified local folder to a workspace
+
+0.0.14 (27/07/2022)
+------------------
+- Adding almost all gateway category requests
+- Adding new special request from ladataweb. Migrating reports between workspaces. Importing pbix files from Reponse.Content requests library to a Power Bi Service Workspace

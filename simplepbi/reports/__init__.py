@@ -15,6 +15,8 @@ import json
 import requests
 from simplepbi import utils
 import pandas as pd
+from requests_toolbelt.multipart.encoder import MultipartEncoder
+import io
 
 class Reports():
     """Simple library to use the Power BI api and obtain reports from it.
@@ -251,7 +253,63 @@ class Reports():
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
           
-    def export_report(self, report_id, filename_path):
+    def export_report(self, report_id):
+        """Exports the specified report from "My Workspace" to a .pbix file.
+        Note: As a workaround for fixing timeout issues, you can set preferClientRouting to true.
+        Large files are downloaded to a temporary blob. Their URL is returned in the response and stored in the locally downloaded PBIX file.
+        ### Parameters
+        ----
+        report_id: str uuid
+            The Power Bi report id. You can take it from PBI Service URL
+        filename_path: str
+            Path of the local machine to save the file. Example: C:\Temp\file.pbix
+        ### Returns
+        ----
+        Dict:
+            Response 200 OK with a File.
+        ### Restrictions
+        ----
+        Export of a report with Power BI service live connection after calling rebind report is not supported. Refer to Download a report from the Power BI service to Power BI Desktop for requirements and limitations.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/reports/{}/Export".format(report_id)
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+            
+    def export_report_in_group(self, workspace_id, report_id):
+        """Exports the specified report from the specified workspace to a .pbix file.
+        Note: As a workaround for fixing timeout issues, you can set preferClientRouting to true.
+        Large files are downloaded to a temporary blob. Their URL is returned in the response and stored in the locally downloaded PBIX file.
+        ### Parameters
+        ----
+        workspace_id: str uuid
+            The Power Bi workspace id. You can take it from PBI Service URL
+        report_id: str uuid
+            The Power Bi report id. You can take it from PBI Service URL
+        ### Returns
+        ----
+        Dict:
+            Response 200 OK with a File.
+        ### Restrictions
+        ----
+        Export of a report with Power BI service live connection after calling rebind report is not supported. Refer to Download a report from the Power BI service to Power BI Desktop for requirements and limitations.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/groups/{}/reports/{}/Export".format(workspace_id, report_id)
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+            
+    def simple_export_report(self, report_id, filename_path):
         """Exports the specified report from "My Workspace" to a .pbix file.
         Note: As a workaround for fixing timeout issues, you can set preferClientRouting to true.
         Large files are downloaded to a temporary blob. Their URL is returned in the response and stored in the locally downloaded PBIX file.
@@ -280,7 +338,7 @@ class Reports():
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
-    def export_report_in_group(self, workspace_id, report_id, filename_path):
+    def simple_export_report_in_group(self, workspace_id, report_id, filename_path):
         """Exports the specified report from the specified workspace to a .pbix file.
         Note: As a workaround for fixing timeout issues, you can set preferClientRouting to true.
         Large files are downloaded to a temporary blob. Their URL is returned in the response and stored in the locally downloaded PBIX file.
@@ -310,7 +368,6 @@ class Reports():
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
-            
 
     def simple_export_file(self, report_id, fileFormat, filename_path, includeHiddenPages=False):
         """Exports the specified report from "My Workspace" to a .pbix file.
@@ -601,6 +658,59 @@ class Reports():
             res = requests.post(url, data = json.dumps(body), headers = headers)
             res.raise_for_status()
             return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+            
+    def simple_copy_reports_between_groups(self, workspace_id_origin, report_id, workspace_id_destination, datasetDisplayName=None, nameConflict="CreateOrOverwrite", overrideModelLabel=None, overrideReportLabel=None):
+        """Download and upload a power bi report from one workspace to another. Pbix must have a size lower than 1gb
+        ### Parameters
+        ----
+        workspace_id origin and destination: str uuid
+            The Power Bi workspace id from origin and from destination. You can take it from PBI Service URL
+        report_id: str uud
+            The Power Bi report id to migrate. You can take it from PBI Service URL
+        datasetDisplayName: str 
+            The display name of the dataset should include file extension
+        nameConflict: str
+            Specifies what to do if a dataset with the same name already exists. The default value is Ignore. You can also use CreateOrOverwrite,GenerateUniqueName or Overwrite
+        overrideModelLabel: str
+            Determines whether to override the existing label on a model when republishing a Power BI .pbix file. The service default value is true.
+        overrideReportLabel: str
+            Whether to override the existing label on a report when republishing a Power BI .pbix file. The service default value is true.            
+        ### Returns
+        ----
+        Dict:
+            Response 200. A dict with a new report id.
+        ### Restrictions
+        ----
+        Export of a report with Power BI service live connection after calling rebind report is not supported. Refer to Download a report from the Power BI service to Power BI Desktop for requirements and limitations.
+        
+        """
+        try:
+            if datasetDisplayName == None:
+                datasetDisplayName = self.get_report_in_group(workspace_id_origin, report_id)['name']+".pbix"            
+            # Export report url
+            exported_file = self.export_report_in_group(workspace_id_origin, report_id)
+            # Import report url
+            url = "https://api.powerbi.com/v1.0/myorg/groups/{}/imports?datasetDisplayName={}".format(workspace_id_destination, datasetDisplayName)
+            if nameConflict != None:
+                	url = url + "&nameConflict={}".format(str(nameConflict))
+            if overrideModelLabel != None:
+                	url = url + "&overrideModelLabel={}".format(str(overrideModelLabel))
+            if overrideReportLabel != None:
+                	url = url + "&overrideReportLabel={}".format(str(overrideReportLabel))
+            # Set the file to the correct format 
+            nube = io.BytesIO(exported_file.content)
+            # None here means we skip the filename and file content is important 
+            files = {'value': (None, nube, 'multipart/form-data')}
+            # The MultipartEncoder is posted as data, don't use files=...!
+            mp_encoder = MultipartEncoder(fields=files)
+            # The MultipartEncoder provides the content-type header with the boundary:
+            headers = {'Content-Type': 'multipart/form-data', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.post(url, data = mp_encoder, headers=headers)
+            res.raise_for_status()
         except requests.exceptions.HTTPError as ex:
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
