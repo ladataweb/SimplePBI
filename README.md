@@ -71,6 +71,7 @@ Right now the library is consuming endpoints from:
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Apps_details.txt" target="_blank">Apps</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Imports_details.txt" target="_blank">Imports</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Gateways_details.txt" target="_blank">Gateways</a>
+- <a href="https://github.com/ladataweb/SimplePBI/blob/main/Capacities_details.txt" target="_blank">Capacities</a>
 
 ## Additional content
 There an aditional library Utils for transformations. It is used to help some requests returning different values.
@@ -109,6 +110,6 @@ Delete Datasource
 
 # Next Steps (planned items)
 - Keep completing missing endpoints category
-- Starting a new category. It might be Pipelines or Capacity
+- Starting a new category. It might be Pipelines
 
 

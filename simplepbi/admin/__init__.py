@@ -709,7 +709,8 @@ class Admin():
             print("Request exception: ", e)
             
     def get_refreshable_capacity(self, capacity_id, refreshable_id, expand=None):
-        """Returns a list of users that have access to the specified capacitie (Preview).
+        """Returns the specified refreshable for the specified capacity that the user has access to.
+        Power BI retains a seven-day refresh history for each dataset, up to a maximum of sixty refreshes.
         ### Parameters
         ----
         capacity_id:
@@ -736,7 +737,8 @@ class Admin():
             print("Request exception: ", e)
             
     def get_refreshables_capacity(self, capacity_id, top, expand=None, filter=None, skip=None):
-        """Returns a list of users that have access to the specified capacitie (Preview).
+        """Returns a list of refreshables for the specified capacity that the user has access to.
+        Power BI retains a seven-day refresh history for each dataset, up to a maximum of sixty refreshes.
         ### Parameters
         ----
         capacity_id:

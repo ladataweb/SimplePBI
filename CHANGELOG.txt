@@ -61,3 +61,8 @@ Change Log
 ------------------
 - Adding almost all gateway category requests
 - Adding new special request from ladataweb. Migrating reports between workspaces. Importing pbix files from Reponse.Content requests library to a Power Bi Service Workspace
+
+0.0.15 (8/8/2022)
+------------------
+- Adding capacities category requests.
+- Fixing descriptions

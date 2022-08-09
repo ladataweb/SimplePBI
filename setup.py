@@ -22,7 +22,7 @@ classifiers = [
 setup(
     name='SimplePBI',
     packages=find_packages(),
-    version='0.0.14',
+    version='0.0.15',
     project_urls={
         'Documentation': 'https://docs.microsoft.com/en-us/rest/api/power-bi/',
         'Say Thanks!': 'https://www.ladataweb.com.ar/contacto.html',
@@ -39,7 +39,8 @@ setup(
     classifiers=classifiers,
     install_requires=[
         'requests', 
-        'pandas'
+        'pandas',
+        'requests-toolbelt'
     ],
-    keywords=['Power BI', 'Azure', 'Data', 'Python']
+    keywords=['Power BI', 'PBI', 'LaDataWeb', 'Azure', 'Data', 'Python']
 )
