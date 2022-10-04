@@ -60,6 +60,14 @@ There are some methods in the classes that still need more testing. Those will h
 If you want to get a deeper look on complex __Admin__ methods. 
 <a href="https://github.com/ladataweb/SimplePBI/blob/main/Admin_complex.md" target="_blank">Check this doc</a>
 
+## Example of our amazing unique requests
+- get_orphan_dataflows_preview
+- get_activity_events_preview (already iterating)
+- simple_import_pbix
+- simple_import_pbix_as_parameter
+- simple_copy_reports_between_groups
+- enhanced_refresh_dataset_in_group
+
 ## Current Categories
 Right now the library is consuming endpoints from: 
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Admin_details.txt" target="_blank">Admin</a>
@@ -72,6 +80,8 @@ Right now the library is consuming endpoints from:
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Imports_details.txt" target="_blank">Imports</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Gateways_details.txt" target="_blank">Gateways</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Capacities_details.txt" target="_blank">Capacities</a>
+- <a href="https://github.com/ladataweb/SimplePBI/blob/main/Pipelines_details.txt" target="_blank">Pipelines (Preview)</a>
+- <a href="https://github.com/ladataweb/SimplePBI/blob/main/Scorecards_details.txt" target="_blank">Scorecards (Preview)</a>
 
 ## Additional content
 There an aditional library Utils for transformations. It is used to help some requests returning different values.
@@ -99,17 +109,26 @@ We are still developing the library. The following endpoints from admin are stil
 - Update Datasources (regular and in groups)
 - Update Report Content (regular and in groups)
 ### Imports
-Create Temporary Upload Location
-Create Temporary Upload Location In Group
-Post Import (for xlsx, json and rdl)
-Post Import In Group (for xlsx, json and rdl)
+- Create Temporary Upload Location
+- Create Temporary Upload Location In Group
+- Post Import (for xlsx, json and rdl)
+- Post Import In Group (for xlsx, json and rdl)
 ### Gateways 
-Create Datasource (looks like there is a bug on the API)
-Update Datasource 
-Delete Datasource 
+- Create Datasource (looks like there is a bug on the API)
+- Update Datasource 
+- Delete Datasource 
+### Scorecards (preview)
+- Patch By Id 
+- Move Goals
+### Push Datasets
+- All requests
+### Embed Token
+- All requests 
+### Goals (preview)
+- All requests
 
 # Next Steps (planned items)
-- Keep completing missing endpoints category
-- Starting a new category. It might be Pipelines
+- Keep completing missing endpoints category.
+- Analyzing how to include embeding and pushing dataset requests.
 
 

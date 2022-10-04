@@ -1,14 +1,19 @@
-'''
-  /¯¯¯¯¯¯¯¯¯\
- /           \
-|   |   __    |  *********************************************
-|   |  |  \   |  Code writen by Ignacio and Martin.
-|   |  |  |   |
-|   |__|_ |   |  Sponsored by La Data Web 
-|	   |__/   |  *********************************************
- \            /
-  \__________/
-  
+'''.
+           @@@@@@@@@@
+       @@@@..........@@@@
+    @@@         .        @@@
+  @@.           .         . @@
+ @  .     _     .         .   @
+@........| |...................@    *********************************************
+@      . | |   _____  .        @
+@      . | |  |  __ \ .        @    La Data Web
+@      . | |__| |  | |.   ***  @
+@........|____| |  | |...*   *.@    Copyright © 2022 Ignacio Barrau
+@   .       . | |__| |. *     *@
+@   .       . |_____/ . *     *@    *********************************************
+@   .       .         . *     *@
+@   .       .         . *******@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 '''
 
 from setuptools import find_packages, setup
@@ -22,7 +27,7 @@ classifiers = [
 setup(
     name='SimplePBI',
     packages=find_packages(),
-    version='0.0.15',
+    version='0.1.0',
     project_urls={
         'Documentation': 'https://docs.microsoft.com/en-us/rest/api/power-bi/',
         'Say Thanks!': 'https://www.ladataweb.com.ar/contacto.html',

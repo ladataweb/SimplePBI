@@ -8,6 +8,8 @@ from simplepbi import apps
 from simplepbi import imports
 from simplepbi import gateways
 from simplepbi import capacities
+from simplepbi import pipelines
+from simplepbi import scorecards
 #from simplepbi import utils
 
 import pydoc
@@ -23,6 +25,8 @@ if __name__ == '__main__':
     impo = pydoc.render_doc(imports, forceload=0, renderer=pydoc.plaintext)
     gway = pydoc.render_doc(gateways, forceload=0, renderer=pydoc.plaintext)
     capa = pydoc.render_doc(capacities, forceload=0, renderer=pydoc.plaintext)
+    pipe = pydoc.render_doc(pipelines, forceload=0, renderer=pydoc.plaintext)
+    score = pydoc.render_doc(scorecards, forceload=0, renderer=pydoc.plaintext)
 
     a=open(r'Admin_details.txt', 'w')
     a.write(ad)
@@ -64,3 +68,10 @@ if __name__ == '__main__':
     cap.write(capa)
     cap.close()
     
+    pipel=open(r'Pipelines_details.txt', 'w')
+    pipel.write(pipe)
+    pipel.close()
+    
+    Scor=open(r'Scorecards_details.txt', 'w')
+    Scor.write(score)
+    Scor.close()
