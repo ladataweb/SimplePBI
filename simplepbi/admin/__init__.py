@@ -968,7 +968,7 @@ class Admin():
             A dictionary containing all the refreshables in the tenant.
         """
         try:
-            url = "https://api.powerbi.com/v1.0/myorg/admin/refreshables?$top={}".format(top)
+            url = "https://api.powerbi.com/v1.0/myorg/admin/capacities/refreshables?$top={}".format(top)
             if expand != None:
                 url = url + "&$expand={}".format(expand)
             if filter != None:

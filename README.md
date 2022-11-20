@@ -65,6 +65,7 @@ If you want to get a deeper look on complex __Admin__ methods.
 - get_activity_events_preview (already iterating)
 - simple_import_pbix
 - simple_import_pbix_as_parameter
+- simple_import_pbix_folder_in_group_preview
 - simple_copy_reports_between_groups
 - enhanced_refresh_dataset_in_group
 
