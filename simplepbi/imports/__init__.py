@@ -19,6 +19,7 @@
 import json
 import requests
 import io
+import os
 from simplepbi import utils
 import pandas as pd
 from requests_toolbelt.multipart.encoder import MultipartEncoder
@@ -346,8 +347,8 @@ class Imports():
         ----
         workspace_id: str uuid
             The Power Bi workspace id. You can take it from PBI Service URL
-        datasetDisplayName: str 
-            The display name of the dataset should include file extension            
+        folderPath: str 
+            Set the file path from local file system like C:/Files/
         nameConflict: str
             Specifies what to do if a dataset with the same name already exists. The default value is Ignore. You can also use CreateOrOverwrite,GenerateUniqueName or Overwrite
         overrideModelLabel: str

@@ -85,6 +85,12 @@ Utils is not an object, so you can just write:
 utils.get_artifact_from_scan_preview(scan_result, artifact="reports")
 ```
 
+### Get Widely Shared Artifacts Published to Web
+```python
+get_widely_shared_artifacts_published_to_web()
+```
+This request returns a dict of published to web reports over the tenant. It has been made easier for you. The method contains a solution for pagination that will loop over the pages with the continuation token resulting on a big dict with all reports.
+
 ## Get Orphan Dataflows
 ```python
 get_orphan_dataflows_preview()

@@ -62,12 +62,14 @@ If you want to get a deeper look on complex __Admin__ methods.
 
 ## Example of our amazing unique requests
 - get_orphan_dataflows_preview
-- get_activity_events_preview (already iterating)
 - simple_import_pbix
 - simple_import_pbix_as_parameter
 - simple_import_pbix_folder_in_group_preview
 - simple_copy_reports_between_groups
 - enhanced_refresh_dataset_in_group
+- get_activity_events_preview (already iterating)
+- get_user_artifact_access_preview (already iterating)
+- get_widely shared_artifacts_published_to_web (already iterating)
 
 ## Current Categories
 Right now the library is consuming endpoints from: 

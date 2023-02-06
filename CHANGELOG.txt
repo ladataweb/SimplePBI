@@ -73,3 +73,7 @@ Change Log
 - All componentes category are now available with a little missing endpoints
 - Completing at least 80% of request for all most frequent items at Power Bi. The only categories unavailables are push datasets and embedding.
 - Bug fixing requests 
+
+0.1.1 (30/01/2023)
+------------------
+Minor bug fixing for imports to read filesystem
