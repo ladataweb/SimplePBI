@@ -77,3 +77,8 @@ Change Log
 0.1.1 (30/01/2023)
 ------------------
 Minor bug fixing for imports to read filesystem
+
+0.1.2 (14/02/2023)
+------------------
+Improving get activity events for single day after PowerBi updates.
+Adding new request to get last 30 days of activity logs automatically.

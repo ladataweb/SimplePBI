@@ -1396,11 +1396,18 @@ class Admin():
         ----
         Maximum 200 requests per hour.
         '''        
-        columnas = ['Id', 'RecordType', 'CreationTime', 'Operation', 'OrganizationId',
-           'UserType', 'UserKey', 'Workload', 'UserId', 'ClientIP', 'UserAgent',
-           'Activity', 'ItemName', 'WorkSpaceName', 'DatasetName', 'WorkspaceId',
-           'ObjectId', 'DatasetId', 'DataConnectivityMode', 'IsSuccess',
-           'RequestId', 'ActivityId', 'TableName', 'LastRefreshTime']
+        columnas = ['Activity', 'ActivityId', 'AppId', 'AppName', 'AppReportId',
+       'ArtifactId', 'ArtifactKind', 'ArtifactName', 'CapacityId',
+       'CapacityName', 'ClientIP', 'ConsumptionMethod', 'CreationTime',
+       'DataConnectivityMode', 'DatasetId', 'DatasetName',
+       'DistributionMethod', 'FolderAccessRequests', 'FolderDisplayName',
+       'FolderObjectId', 'GatewayClusters', 'HasFullReportAttachment', 'Id',
+       'ImportDisplayName', 'ImportId', 'ImportSource', 'ImportType',
+       'IsSuccess', 'IsTenantAdminApi', 'ItemName', 'LastRefreshTime',
+       'ModelsSnapshots', 'ObjectId', 'Operation', 'OrganizationId',
+       'RecordType', 'RefreshType', 'ReportId', 'ReportName', 'ReportType',
+       'RequestId', 'TableName', 'UserAgent', 'UserId', 'UserKey', 'UserType',
+       'WorkSpaceName', 'Workload', 'WorkspaceId']
         df_total = pd.DataFrame(columns=columnas)
         dict_total = {'activityEventEntities': [] }
         list_total = []
@@ -1435,7 +1442,7 @@ class Admin():
                 contar = contar +1
                 print(res.json()["continuationUri"])
                 
-                if res.json()["continuationUri"] == None:
+                if res.json()['activityEventEntities'] == [] or res.json()["continuationUri"] == None:
                     ban=False
                 url = res.json()["continuationUri"]   
             if return_pandas:
@@ -1452,6 +1459,45 @@ class Admin():
             raise SystemExit(e)
         except Exception as ex:
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+            
+    def get_activity_events_last_30_days_preview(self):
+        '''Returns a pandas dataframe of audit activity events for the last 30 days at the tenant.
+        *** THIS can take a several minutes because it loops 30 days and pagination ***
+        *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
+        The continuation token is automtaically used to get all the results in the last 30 days starting yesterday.        
+        ### Returns
+        ----
+        Returns a Pandas dataframe concatenating iterations
+        ### Limitations
+        ----
+        Maximum 200 requests per hour.
+        '''  
+        
+        # Getting last 30 days
+        today = date.today() - timedelta(days=1)
+        last_30_days = []
+        for i in range(30):
+            last_30_days.append((today - timedelta(days=i)).strftime("%Y-%m-%d"))
+
+        # Creating an empty DataFrame with the structure needed    
+        df = pd.DataFrame(['Activity', 'ActivityId', 'AppId', 'AppName', 'AppReportId',
+           'ArtifactId', 'ArtifactKind', 'ArtifactName', 'CapacityId',
+           'CapacityName', 'ClientIP', 'ConsumptionMethod', 'CreationTime',
+           'DataConnectivityMode', 'DatasetId', 'DatasetName',
+           'DistributionMethod', 'FolderAccessRequests', 'FolderDisplayName',
+           'FolderObjectId', 'GatewayClusters', 'HasFullReportAttachment', 'Id',
+           'ImportDisplayName', 'ImportId', 'ImportSource', 'ImportType',
+           'IsSuccess', 'IsTenantAdminApi', 'ItemName', 'LastRefreshTime',
+           'ModelsSnapshots', 'ObjectId', 'Operation', 'OrganizationId',
+           'RecordType', 'RefreshType', 'ReportId', 'ReportName', 'ReportType',
+           'RequestId', 'TableName', 'UserAgent', 'UserId', 'UserKey', 'UserType',
+           'WorkSpaceName', 'Workload', 'WorkspaceId'])
+        # Loop last 30 days appending the result in a single dataframe
+        for i in last_30_days:
+            df_temp = self.get_activity_events_preview(i, return_pandas=True)
+            df = df.append(df_temp)
+            print("\nStarting date: ", i, "...\n")
+        return df
             
     def get_modified_workspaces_preview(self, excludePersonalWorkspaces=True, modifiedSince=None):
         """Gets a list of workspace IDs in the organization. This is a preview API call.

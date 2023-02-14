@@ -140,6 +140,18 @@ CLASSES
      |      Dict:
      |          A dictionary containing all the metadata built in the dataflow.
      |  
+     |  get_activity_events_last_30_days_preview(self)
+     |      Returns a pandas dataframe of audit activity events for the last 30 days at the tenant.
+     |      *** THIS can take a several minutes because it loops 30 days and pagination ***
+     |      *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
+     |      The continuation token is automtaically used to get all the results in the last 30 days starting yesterday.        
+     |      ### Returns
+     |      ----
+     |      Returns a Pandas dataframe concatenating iterations
+     |      ### Limitations
+     |      ----
+     |      Maximum 200 requests per hour.
+     |  
      |  get_activity_events_preview(self, activity_date=None, return_pandas=False)
      |      Returns a dict of pandas dataframe of audit activity events for a tenant.
      |      *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***

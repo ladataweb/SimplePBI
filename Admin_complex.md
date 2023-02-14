@@ -7,6 +7,7 @@ Complex Requests
 - Get Activity Events
 - Get user Artifact access 
 - Scanner API 
+- Get Widely Shared Artifacts Published to Web
 - Orphan Dataflows
 
 *NOTE: This is the first approach to make it easier for the user playing with the library. We try to handle iterations and responses. There are also some limitations to explain.
