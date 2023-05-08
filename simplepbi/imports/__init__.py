@@ -397,3 +397,40 @@ class Imports():
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
+            
+    def simple_import_from_devops(self, organization, project, repository_id, path, devopsKey, workspace_id):
+        '''This function will import a PBIX file from DevOps to Power BI. Only available for Pbix with size lower than 1gb
+         ### Parameters
+        ----
+        organization: str
+            The organization name in DevOps. For example: https://dev.azure.com/ibarrau/ the organization name is ibarrau
+        project: str
+            The project name in DevOps. For example: https://dev.azure.com/ibarrau/ladataweb_proj/ the project name is ladataweb_proj
+        repository_id: str
+            The repository name in DevOps. Sometimes matches the name of the repo.
+        path: str
+            The path of the file in DevOps. For example: /Prod/PBITenantOverview.pbix
+        devopsKey: str
+            The DevOps Key. You can turn it on from DevOps > User Settings > Personal Access Tokens
+        workspace_id: str uuid
+            The Power Bi workspace id. You can take it from PBI Service URL    
+        ### Returns
+        ----
+        Dict:
+            Response 200 Ok
+        '''
+        file_name = path.split("/")[-1]
+        try:
+            pbix = requests.get(url="https://dev.azure.com/{}/{}/_apis/git/repositories/{}/items?path={}&download=true&api-version=6.0".format(organization, project, repository_id, path), auth=('user', pat))
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+        try:
+            res = self.simple_import_pbix_as_parameter(workspace_id, pbix.content, file_name)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)

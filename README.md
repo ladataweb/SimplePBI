@@ -56,21 +56,6 @@ The library get requests will return a response object .json() that python reads
 ## Preview methods
 There are some methods in the classes that still need more testing. Those will have a "preview" at the end of the name. Please let us know if something goes wrong with those.
 
-## Complex requests
-If you want to get a deeper look on complex __Admin__ methods. 
-<a href="https://github.com/ladataweb/SimplePBI/blob/main/Admin_complex.md" target="_blank">Check this doc</a>
-
-## Example of our amazing unique requests
-- get_orphan_dataflows_preview
-- simple_import_pbix
-- simple_import_pbix_as_parameter
-- simple_import_pbix_folder_in_group_preview
-- simple_copy_reports_between_groups
-- enhanced_refresh_dataset_in_group
-- get_activity_events_preview (already iterating)
-- get_user_artifact_access_preview (already iterating)
-- get_widely shared_artifacts_published_to_web (already iterating)
-
 ## Current Categories
 Right now the library is consuming endpoints from: 
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Admin_details.txt" target="_blank">Admin</a>
@@ -86,13 +71,26 @@ Right now the library is consuming endpoints from:
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Pipelines_details.txt" target="_blank">Pipelines (Preview)</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Scorecards_details.txt" target="_blank">Scorecards (Preview)</a>
 
+## Complex requests
+If you want to get a deeper look on complex __Admin__ methods and unique methods. 
+<a href="https://github.com/ladataweb/SimplePBI/blob/main/Admin_complex.md" target="_blank">Check this doc</a>
+
 ## Additional content
 There an aditional library Utils for transformations. It is used to help some requests returning different values.
 The most useful method in the Utils class might be to_pandas. You can use the method to convert simple dicts to pandas. It needs the dict and the key father of a list of dicts in the response. The usual get responses are using "value" as the key.
 We are also adding new methods with the requests to help get new actions. Examples:
-- Dataflows: get orphan dataflows (get dataflows without dataset)
-- Imports: post import report folder (post a all pbix files in a local folder)
-- Reports: simple migrate report (copy report from workspace to a workspace)
+
+### Example of our amazing unique requests
+- get_orphan_dataflows_preview: get dataflows without dataset
+- simple_import_pbix: makes publishing a pbix file easier
+- simple_import_pbix_as_parameter: import a pbix from api response content
+- simple_import_pbix_folder_in_group_preview: post a all pbix files in a local folder
+- simple_import_from_devops: import a pbix from azure devops repo
+- simple_copy_reports_between_groups: copy report from workspace to a workspace
+- enhanced_refresh_dataset_in_group: a special request feature that not only eliminates the need for synchronous client connections to perform a refresh, but also unlocks enterprise-grade refresh capabilities.
+- get_activity_events_preview (already iterating): makes the get activity events specified by date easier
+- get_user_artifact_access_preview (already iterating): makes the get user artifact access easier
+- get_widely shared_artifacts_published_to_web (already iterating): makes geting the published to web repos info easier
 
 ## Small categories
 Small categories like Dataflow Storage Accounts and Available Features were moved to Groups and Admin.
@@ -103,13 +101,11 @@ We are still developing the library. The following endpoints from admin are stil
 - Set and Remove LabelsAsAdmin
 ### Groups
 - Update group User
-### Datasets
-- Update datasources (regular and in groups)
 ### Reports
 - Export To File (full request, there is a smaller simpler one)
 - Get Export To File Status (regular and in groups)
 - Get File Of Export To File (regular and in groups)
-- Update Datasources (regular and in groups)
+- Update Datasources (rdl files regular and in groups)
 - Update Report Content (regular and in groups)
 ### Imports
 - Create Temporary Upload Location
@@ -132,6 +128,7 @@ We are still developing the library. The following endpoints from admin are stil
 
 # Next Steps (planned items)
 - Keep completing missing endpoints category.
+- Creating new awesome ideas.
 - Analyzing how to include embeding and pushing dataset requests.
 
 

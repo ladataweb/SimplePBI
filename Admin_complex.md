@@ -1,4 +1,4 @@
-# Admin Power Bi Rest API Requests
+# Admin and unique complex requests
 
 This section will define specific complex requests. It won't go one by one the requests explaining their definitions. You can find that when you type the code for it or in the Microsoft Docs for Power Bi Rest API.
 If you need any specific detail about a limitations, permissions of your clientId or a request is returning a weird status code or error, please check microsoft documentation first. Validate that you have what you need for the request.
@@ -9,6 +9,7 @@ Complex Requests
 - Scanner API 
 - Get Widely Shared Artifacts Published to Web
 - Orphan Dataflows
+- Simple import from devops
 
 *NOTE: This is the first approach to make it easier for the user playing with the library. We try to handle iterations and responses. There are also some limitations to explain.
 
@@ -101,5 +102,12 @@ It returns a list of dataflows ids in UUID format that are not connected from an
 The request will build everything automatically. Getting the workspace and exploring dataflows connected to datasets in order to show the ids of those that are not used.
 There is a big limitation for this method. There is a maximum of 200 requests per hour. This means that if you have more than 200 workspaces created, you can't use this request. If you are getting that reach, it will send a 429 Error. Please notify the issue so we can take a look on how to handle this (getting back to star and end params)
 
-
-
+## Simple import from devops
+```python
+- simple_import_from_devops(organization, project, repository_id, path, devopsKey, workspace_id)
+```
+Even though not all power bi developers are familiarized with repo technologies, we can't deny that it's an amazing practise. 
+That's why we have added this request for people working with Azure DevOps git repo. If you are using this repo you can use this request to publish/import your Pbix file from there automatically.
+First you need a personal token access from your Azure Devops account. Click over your user icon (top right corner) > Personal Access Token. Then create a new one.
+Once you have it, collect all the information of the repo starting by organization name (you can get it from url), project name, repository id (usually the created repo name) and finally the path of the file starting with the folder like /Folder/Pbixfile.pbix
+All that information will be necessary to take the file from there and import it to the specified power bi workspace id.

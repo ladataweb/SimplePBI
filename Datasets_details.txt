@@ -434,6 +434,41 @@ CLASSES
      |      ----
      |      Response object from requests library. 200 OK
      |  
+     |  update_datasources_in_group_preview(self, workspace_id, dataset_id, updateDetails)
+     |      Updates the data sources of the specified dataset from the specified workspace.
+     |      Only these data sources are supported: SQL Server, Azure SQL Server, Azure Analysis Services, Azure Synapse, OData, SharePoint, Teradata, and SAP HANA.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The Power Bi workspace id. You can take it from PBI Service URL
+     |      dataset_id: str uuid
+     |          The Power Bi Dataset id. You can take it from PBI Service URL
+     |      ### Request Body (PLEASE READ THE DOCS)
+     |      ----
+     |      UpdateDetails[]: list
+     |          A list of data source connection update requests. PLEASE READ THE DOCS
+     |          E.g.[
+     |              {
+     |                "datasourceSelector": {
+     |                  "datasourceType": "Sql",
+     |                  "connectionDetails": {
+     |                    "server": "My-Sql-Server",
+     |                    "database": "My-Sql-Database"
+     |                  }
+     |                },
+     |                "connectionDetails": {
+     |                  "server": "New-Sql-Server",
+     |                  "database": "New-Sql-Database"
+     |                }
+     |              }
+     |          ]
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK
+     |      ### Limitations
+     |      ----
+     |      Datasets created using the public XMLA endpoint aren't supported.
+     |  
      |  update_direct_query_refresh_schedule_in_group_preview(self, workspace_id, dataset_id, frequency=None, days=None, enabled=None, localTimeZoneId=None, times=None)
      |      Updates the refresh schedule for a specified DirectQuery or LiveConnection dataset from the specified workspace.
      |      A request should contain either a set of days and times or a valid frequency, but not both. If you choose a set of days without specifying any times, then Power BI will use a default single time per day. Setting the frequency will automatically overwrite the days and times setting.

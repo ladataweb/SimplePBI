@@ -1064,6 +1064,57 @@ class Datasets():
         except requests.exceptions.HTTPError as ex:
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+            
+    def update_datasources_in_group_preview(self, workspace_id, dataset_id, updateDetails):
+        """Updates the data sources of the specified dataset from the specified workspace.
+        Only these data sources are supported: SQL Server, Azure SQL Server, Azure Analysis Services, Azure Synapse, OData, SharePoint, Teradata, and SAP HANA.
+        ### Parameters
+        ----
+        workspace_id: str uuid
+            The Power Bi workspace id. You can take it from PBI Service URL
+        dataset_id: str uuid
+            The Power Bi Dataset id. You can take it from PBI Service URL
+        ### Request Body (PLEASE READ THE DOCS)
+        ----
+        UpdateDetails[]: list
+            A list of data source connection update requests. PLEASE READ THE DOCS
+            E.g.[
+                {
+                  "datasourceSelector": {
+                    "datasourceType": "Sql",
+                    "connectionDetails": {
+                      "server": "My-Sql-Server",
+                      "database": "My-Sql-Database"
+                    }
+                  },
+                  "connectionDetails": {
+                    "server": "New-Sql-Server",
+                    "database": "New-Sql-Database"
+                  }
+                }
+            ]
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        ### Limitations
+        ----
+        Datasets created using the public XMLA endpoint aren't supported.
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/groups/{}/datasets/{}/Default.UpdateDatasources".format(workspace_id, dataset_id)
+            body = {
+                "updateDetails": updateDetails
+            }
+                
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            
+            res = requests.post(url, json.dumps(body), headers = headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
             print("Request exception: ", e)            
             
     def enhanced_refresh_dataset_in_group(self, workspace_id, dataset_id, objects, typeProcessing="Full", commitMode="transactional", maxParallelism=1, retryCount=1, applyRefreshPolicy=True):

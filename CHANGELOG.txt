@@ -82,3 +82,9 @@ Minor bug fixing for imports to read filesystem
 ------------------
 Improving get activity events for single day after PowerBi updates.
 Adding new request to get last 30 days of activity logs automatically.
+
+0.1.3 (08/05/2023)
+------------------
+Adding update sources for datasets. It's a complex body request.
+Adding new unique request for publishing pbix file from azure devops repo.
+Changing pandas coding to work with 2.0.1 version. Fixing deprecated methods.

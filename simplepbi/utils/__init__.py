@@ -102,7 +102,7 @@ def get_artifact_from_scan_preview(scan_result, artifact):
         for group in scan_result["workspaces"]:
             df = pd.read_json(json.dumps(group[artifact]))
             df["workspaceId"] = group["id"]
-            df_total = df_total.append(df, sort=True, ignore_index=True)
+            df_total = pd.concat([df_total, df], sort=True, ignore_index=True)
         return df_total
     except Exception as e:
         print("ERROR: ", e)

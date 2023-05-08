@@ -808,7 +808,7 @@ class Admin():
                 if return_pandas:
                     js = json.dumps(res.json()["ArtifactAccessEntities"])
                     df = pd.read_json(js)
-                    df_total = df_total.append(df, sort=True, ignore_index=True)
+                    df_total = pd.concat([df_total, df], sort=True, ignore_index=True)
                     print("Building dataframe iteration: ", str(contar))
                 else:
                     if res.json()["ArtifactAccessEntities"]:
@@ -1429,7 +1429,7 @@ class Admin():
                     js = json.dumps(res.json()["activityEventEntities"])
                     df = pd.read_json(js)
                     #print(df.head())
-                    df_total = df_total.append(df, sort=True, ignore_index=True)
+                    df_total = pd.concat([df_total, df], sort=True, ignore_index=True)
                     print("Building dataframe iteration: ", str(contar))
                     #print(df_total.head())
                 else:
@@ -1495,7 +1495,7 @@ class Admin():
         # Loop last 30 days appending the result in a single dataframe
         for i in last_30_days:
             df_temp = self.get_activity_events_preview(i, return_pandas=True)
-            df = df.append(df_temp)
+            df = pd.concat([df, df_temp])
             print("\nStarting date: ", i, "...\n")
         return df
             
