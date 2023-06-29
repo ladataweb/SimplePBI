@@ -1840,3 +1840,23 @@ class Admin():
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
+            
+    def get_tenant_settings(self):
+        """Returns a list of the tenant settings.
+        ### Returns
+        ----
+        Dict:
+            Response 200. A dict with tenant settings.
+        ### Limitations
+        ----
+        Maximum 200 requests per hour.
+        """
+        try:
+            url = "https://api.powerbi.com/v1/admin/tenantsettings"                     
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
