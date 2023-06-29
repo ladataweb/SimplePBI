@@ -70,10 +70,15 @@ Right now the library is consuming endpoints from:
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Capacities_details.txt" target="_blank">Capacities</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Pipelines_details.txt" target="_blank">Pipelines (Preview)</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Scorecards_details.txt" target="_blank">Scorecards (Preview)</a>
+- <a href="https://github.com/ladataweb/SimplePBI/blob/main/Az_Pause_Resume_details.txt" target="_blank">Azure Pause and Resume resource(Preview)</a>
 
 ## Complex requests
 If you want to get a deeper look on complex __Admin__ methods and unique methods. 
 <a href="https://github.com/ladataweb/SimplePBI/blob/main/Admin_complex.md" target="_blank">Check this doc</a>
+
+## Azure Pause Resume Resources
+We have added a new feature to include some Azure Resource API Manager. The new "azpause" class will let you Pause or Resume Azure tabular or capacity resources. With SimplePBI you can pause and resume Fabric, Power Bi Embedded or Azure Analysis Services resources.
+<a href="https://github.com/ladataweb/SimplePBI/blob/main/AzPauseResume.md" target="_blank">Check this doc</a>
 
 ## Additional content
 There an aditional library Utils for transformations. It is used to help some requests returning different values.

@@ -655,6 +655,16 @@ CLASSES
      |      str:
      |          Returns the status of the scan. Succeeded means you are ready to request scans.
      |  
+     |  get_tenant_settings(self)
+     |      Returns a list of the tenant settings.
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          Response 200. A dict with tenant settings.
+     |      ### Limitations
+     |      ----
+     |      Maximum 200 requests per hour.
+     |  
      |  get_tiles(self, dashboard_id)
      |      Returns a list of tiles within the specified dashboard.
      |      ### Parameters

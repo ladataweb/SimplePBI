@@ -10,6 +10,7 @@ from simplepbi import gateways
 from simplepbi import capacities
 from simplepbi import pipelines
 from simplepbi import scorecards
+from simplepbi import azpause
 #from simplepbi import utils
 
 import pydoc
@@ -27,6 +28,7 @@ if __name__ == '__main__':
     capa = pydoc.render_doc(capacities, forceload=0, renderer=pydoc.plaintext)
     pipe = pydoc.render_doc(pipelines, forceload=0, renderer=pydoc.plaintext)
     score = pydoc.render_doc(scorecards, forceload=0, renderer=pydoc.plaintext)
+    azpau = pydoc.render_doc(azpause, forceload=0, renderer=pydoc.plaintext)
 
     a=open(r'Admin_details.txt', 'w')
     a.write(ad)
@@ -75,3 +77,7 @@ if __name__ == '__main__':
     Scor=open(r'Scorecards_details.txt', 'w')
     Scor.write(score)
     Scor.close()
+    
+    az=open(r'Az_Pause_Resume_details.txt', 'w')
+    az.write(azpau)
+    az.close()

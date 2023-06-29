@@ -88,3 +88,8 @@ Adding new request to get last 30 days of activity logs automatically.
 Adding update sources for datasets. It's a complex body request.
 Adding new unique request for publishing pbix file from azure devops repo.
 Changing pandas coding to work with 2.0.1 version. Fixing deprecated methods.
+
+0.1.4 (29/06/2023)
+------------------
+Adding newest admin request for getting tenant settings
+Adding new unique requests for pausing and resuming Fabric, Power Bi Embedded and Azure Analysis Services.

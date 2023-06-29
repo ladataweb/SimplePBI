@@ -1,0 +1,108 @@
+Python Library Documentation: package simplepbi.azpause in simplepbi
+
+NAME
+    simplepbi.azpause
+
+DESCRIPTION
+    .
+               @@@@@@@@@@
+           @@@@..........@@@@
+        @@@         .        @@@
+      @@.           .         . @@
+     @  .     _     .         .   @
+    @........| |...................@    *********************************************
+    @      . | |   _____  .        @
+    @      . | |  |  __ \ .        @    La Data Web
+    @      . | |__| |  | |.   ***  @
+    @........|____| |  | |...*   *.@    Copyright © 2023 Ignacio Barrau
+    @   .       . | |__| |. *     *@
+    @   .       . |_____/ . *     *@    *********************************************
+    @   .       .         . *     *@
+    @   .       .         . *******@
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+PACKAGE CONTENTS
+
+
+CLASSES
+    builtins.object
+        Azpause
+    
+    class Azpause(builtins.object)
+     |  Azpause(tenant_id, client_id, client_secret)
+     |  
+     |  Simple library to use the Azure management resource to pause or resume AAS and PBI Embedded.
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, tenant_id, client_id, client_secret)
+     |      Create a simplePBI azure on off to get authentication token.
+     |      
+     |      Service principal authentication (set use_service_principal to True)
+     |          Provide:    tenant_id
+     |                      power_bi_client_id
+     |                      power_bi_secret
+     |                      use_service_principal=True
+     |      Args:
+     |          tenant_id : String
+     |              Tenant ID to connect to.
+     |          client_id : String
+     |              Client ID (also known as App ID)
+     |              Password to use when authenticating.
+     |          ecret : String
+     |              The secret to authenticate with the Client ID.
+     |          use_service_principal : Bool
+     |              False by default, if set to true it will authenticate using power_bi_client_id and power_bi_secret.
+     |  
+     |  pause_resource(self, subscriptionId, resourceGroupName, resourceType, resourceName)
+     |      Function to pause Azure Analysis Services or PowerBi Embedded capacity
+     |      ### Parameters
+     |      ----
+     |      subscriptionId: str uuid
+     |          The Azure subscription id
+     |      resourceGroupName: str
+     |          The Azure resource group name containing the resource
+     |      resourceType: str
+     |          The Azure resource type. It can be "FABRIC", "AAS" or "PBI"
+     |      resourceName: str
+     |          The Azure resource name. If it's AAS server name, if it's PBI embedded then capacity name.
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing the specified installed app.
+     |      ### Limitations
+     |      ----
+     |      Service principal authentication isn't supported.
+     |  
+     |  resume_resource(self, subscriptionId, resourceGroupName, resourceType, resourceName)
+     |      Function to resume Azure Analysis Services or PowerBi Embedded capacity
+     |      ### Parameters
+     |      ----
+     |      subscriptionId: str uuid
+     |          The Azure subscription id
+     |      resourceGroupName: str
+     |          The Azure resource group name containing the resource
+     |      resourceType: str
+     |          The Azure resource type. It can be "FABRIC", "AAS" or "PBI"
+     |      resourceName: str
+     |          The Azure resource name. If it's AAS server name, if it's PBI embedded then capacity name.
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing the specified installed app.
+     |      ### Limitations
+     |      ----
+     |      Service principal authentication isn't supported.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+FILE
+    c:\users\ibarrau\documents\github\simplepbi\simplepbi\azpause\__init__.py
+

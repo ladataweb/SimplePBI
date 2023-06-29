@@ -23,23 +23,19 @@ class Azpause():
     """
 
     def __init__(self, tenant_id, client_id, client_secret):
-        """Create a simplePBI azure on off to get authentication token.
+        """Create a SimplePBI azpause object to get authentication token and methods.
         
         Service principal authentication (set use_service_principal to True)
             Provide:    tenant_id
-                        power_bi_client_id
-                        power_bi_secret
-                        use_service_principal=True
+                        client_id
+                        client_secret
         Args:
             tenant_id : String
                 Tenant ID to connect to.
             client_id : String
                 Client ID (also known as App ID)
-                Password to use when authenticating.
-            ecret : String
+            client_secret : String
                 The secret to authenticate with the Client ID.
-            use_service_principal : Bool
-                False by default, if set to true it will authenticate using power_bi_client_id and power_bi_secret.
         """        
         
         authority_url = 'https://login.microsoftonline.com/' + tenant_id + "/oauth2/token/"
