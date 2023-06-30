@@ -70,7 +70,7 @@ Right now the library is consuming endpoints from:
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Capacities_details.txt" target="_blank">Capacities</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Pipelines_details.txt" target="_blank">Pipelines (Preview)</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Scorecards_details.txt" target="_blank">Scorecards (Preview)</a>
-- <a href="https://github.com/ladataweb/SimplePBI/blob/main/Az_Pause_Resume_details.txt" target="_blank">Azure Pause and Resume resource(Preview)</a>
+- <a href="https://github.com/ladataweb/SimplePBI/blob/main/Az_Pause_Resume_details.txt" target="_blank">Azure Pause and Resume resource (Preview)</a>
 
 ## Complex requests
 If you want to get a deeper look on complex __Admin__ methods and unique methods. 

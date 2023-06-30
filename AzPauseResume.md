@@ -14,7 +14,7 @@ This code will create an Azpause object. The object itself contains the params a
 ## Resume and Pause resource
 ```python
 azure.resume_resource(subscriptionId, resourceGroupName, resourceType, resourceName)
-pause_resource(subscriptionId, resourceGroupName, resourceType, resourceName)
+azure.pause_resource(subscriptionId, resourceGroupName, resourceType, resourceName)
 ```
 This request returns a dict with 202 if the request was correct. You can get your values from your Azure Portal.
 Be sure to use the specific word for resourceType. You can use "FABRIC", "PBI" or "AAS" depending if you want to request Fabric, Power Bi Embedded or Azure Analysis Services
