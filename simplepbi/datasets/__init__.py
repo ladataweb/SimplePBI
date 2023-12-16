@@ -1166,3 +1166,137 @@ class Datasets():
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
+            
+    def get_query_scaleout_sync_status(self, dataset_id):
+        """Returns the query scale-out sync status for the specified dataset from My workspace.
+        ### Parameters
+        ----
+        dataset_id: str uuid
+            The Power Bi Dataset id. You can take it from PBI Service URL
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing data about scaleout sync dataset in the workspace.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/datasets/{}/queryScaleOut/syncStatus".format(dataset_id)
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+            
+    def get_query_scaleout_sync_status_in_group(self, workspace_id, dataset_id):
+        """Returns the query scale-out sync status for the specified dataset from the specified workspace.
+        ### Parameters
+        ----
+        workspace_id: str uuid
+            The Power Bi workspace id. You can take it from PBI Service URL
+        dataset_id: str uuid
+            The Power Bi Dataset id. You can take it from PBI Service URL
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing data about scaleout sync dataset in the workspace.
+        """
+        try:
+            url = "https://api.powerbi.com/v1.0/myorg/groups/{}/datasets/{}/queryScaleOut/syncStatus".format(workspace_id, dataset_id)
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+            
+    def trigger_query_scaleout_sync(self, dataset_id):
+        """Triggers a query scale-out sync of read-only replicas for the specified dataset from My workspace.
+        ### Parameters
+        ----
+        dataset_id: str uuid
+            The Power Bi Dataset id. You can take it from PBI Service URL        
+        ### Returns
+        ----
+        Response object from requests library. 202 OK
+        
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/datasets/{}/queryScaleOut/sync".format(dataset_id)
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}            
+            res = requests.post(url, headers = headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+            
+    def trigger_query_scaleout_sync_in_group(self, workspace_id, dataset_id):
+        """Triggers a query scale-out sync of read-only replicas for the specified dataset from the specified workspace.
+        ### Parameters
+        ----
+        workspace_id: str uuid
+            The Power Bi workspace id. You can take it from PBI Service URL
+        dataset_id: str uuid
+            The Power Bi Dataset id. You can take it from PBI Service URL        
+        ### Returns
+        ----
+        Response object from requests library. 202 OK
+        
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/groups/{}/datasets/{}/queryScaleOut/sync".format(workspace_id, dataset_id)
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}            
+            res = requests.post(url, headers = headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+            
+    def update_dataset_in_group(self, workspace_id, dataset_id, targetStorageMode=None, autoSyncReadOnlyReplicas=None, maxReadOnlyReplicas=None):
+        """Updates the properties for the specified dataset from the specified workspace. The user must be the dataset owner.
+        ### Parameters
+        ----
+        workspace_id: str uuid
+            The Power Bi workspace id. You can take it from PBI Service URL        
+        dataset_id: str uuid
+            The Power Bi Dataset id. You can take it from PBI Service URL
+        ### Request Body
+        ----
+        autoSyncReadOnlyReplicas: bool
+            Whether the dataset automatically syncs read-only replicas
+        maxReadOnlyReplicas: int
+            Maximum number of read-only replicas for the dataset (0-64, -1 for automatic number of replicas)
+        UpdateDatasetRequest: str
+            Update dataset request
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        """
+        try: 
+            url= "https://api.powerbi.com/v1.0/myorg/groups/{}/datasets/{}".format(workspace_id, dataset_id)
+            body = {
+                "queryScaleOutSettings":{}
+            }
+            
+            if targetStorageMode != None:
+                body["targetStorageMode"]=targetStorageMode
+            if autoSyncReadOnlyReplicas != None:
+                body["queryScaleOutSettings"]["autoSyncReadOnlyReplicas"]=autoSyncReadOnlyReplicas
+            if maxReadOnlyReplicas != None:
+                body["queryScaleOutSettings"]["maxReadOnlyReplicas"]=maxReadOnlyReplicas
+            if targetStorageMode==None and autoSyncReadOnlyReplicas==None and maxReadOnlyReplicas==None:
+                print("Error: You need to specify a parameter to modify.")                
+            else:
+                headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+                res = requests.patch(url, data = json.dumps(body), headers = headers)
+                res.raise_for_status()
+                return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)

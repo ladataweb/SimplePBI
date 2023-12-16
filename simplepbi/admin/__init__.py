@@ -1378,7 +1378,7 @@ class Admin():
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
                                                                                          
-    def get_activity_events_preview(self, activity_date=None, return_pandas=False):
+    def get_activity_events_preview(self, activity_date=None, return_pandas=False, filter_event=None):
         '''Returns a dict of pandas dataframe of audit activity events for a tenant.
         *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
         The continuation token is automtaically used to get all the results in the date.
@@ -1389,6 +1389,9 @@ class Admin():
             If the date is not specify it will return yesterday events by default.
         return_pandas: bool
             Flag to specify if you want to return a dict response or a pandas dataframe of events.
+        filter_event: query str
+            Filters the results based on a boolean condition, using 'Activity', 'UserId', or both properties. Supports only 'eq' and 'and' operators.
+            Ej: filter_event = "UserId eq 'ibarrau@ladataweb.com.ar' and Activity eq 'GetRefreshHistory'"
         ### Returns
         ----
         If return_pandas = True returns a Pandas dataframe concatenating iterations otherwise it returns a dict of the response
@@ -1418,10 +1421,12 @@ class Admin():
         start = activity_date.strftime("'%Y-%m-%dT%H:%M:00.000Z'")
         end = activity_date.strftime("'%Y-%m-%dT23:59:59.000Z'")
         url = "https://api.powerbi.com/v1.0/myorg/admin/activityevents?startDateTime={}&endDateTime={}".format(start, end)
+        if filter_event != None:
+            url = url + "&$filter={}".format(filter_event)
         ban = True   
         contar = 0    
         try:
-            while(ban):        
+            while(ban):
                 res = requests.get(url,
                     headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
                     )
@@ -1442,9 +1447,10 @@ class Admin():
                 contar = contar +1
                 print(res.json()["continuationUri"])
                 
-                if res.json()['activityEventEntities'] == [] or res.json()["continuationUri"] == None:
+                if res.json()["lastResultSet"] == True or res.json()["continuationUri"] == None:
                     ban=False
-                url = res.json()["continuationUri"]   
+                url = res.json()["continuationUri"]
+                print("last result set: ", res.json()["lastResultSet"])
             if return_pandas:
                 return df_total
             else:
@@ -1458,13 +1464,18 @@ class Admin():
             print("Catastrophic error.")
             raise SystemExit(e)
         except Exception as ex:
-            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+            print("HTTP Error: ", ex, "\nText: ", ex.text)
             
-    def get_activity_events_last_30_days_preview(self):
+    def get_activity_events_last_30_days_preview(self, filter_event):
         '''Returns a pandas dataframe of audit activity events for the last 30 days at the tenant.
         *** THIS can take a several minutes because it loops 30 days and pagination ***
         *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
         The continuation token is automtaically used to get all the results in the last 30 days starting yesterday.        
+        ### Parameter
+        ----
+        filter_event: query str
+            Filters the results based on a boolean condition, using 'Activity', 'UserId', or both properties. Supports only 'eq' and 'and' operators.
+            Ej: filter_event = "UserId eq 'ibarrau@ladataweb.com.ar' and Activity eq 'GetRefreshHistory'"        
         ### Returns
         ----
         Returns a Pandas dataframe concatenating iterations
@@ -1494,9 +1505,14 @@ class Admin():
            'WorkSpaceName', 'Workload', 'WorkspaceId'])
         # Loop last 30 days appending the result in a single dataframe
         for i in last_30_days:
-            df_temp = self.get_activity_events_preview(i, return_pandas=True)
+            df_temp = self.get_activity_events_preview(i, return_pandas=True, filter_event=filter_event)
             df = pd.concat([df, df_temp])
             print("\nStarting date: ", i, "...\n")
+        if 0 in df.columns:
+            # Drop 0 column of activities auto generated
+            df = df.drop(columns=[0])
+        # Remove NaN empty values of each type of activities auto generated
+        df = df.dropna(subset=['Activity'])
         return df
             
     def get_modified_workspaces_preview(self, excludePersonalWorkspaces=True, modifiedSince=None):

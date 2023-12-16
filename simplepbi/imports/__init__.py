@@ -421,7 +421,7 @@ class Imports():
         '''
         file_name = path.split("/")[-1]
         try:
-            pbix = requests.get(url="https://dev.azure.com/{}/{}/_apis/git/repositories/{}/items?path={}&download=true&api-version=6.0".format(organization, project, repository_id, path), auth=('user', pat))
+            pbix = requests.get(url="https://dev.azure.com/{}/{}/_apis/git/repositories/{}/items?path={}&download=true&api-version=6.0".format(organization, project, repository_id, path), auth=('user', devopsKey))
         except requests.exceptions.HTTPError as ex:
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:

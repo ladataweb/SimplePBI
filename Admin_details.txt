@@ -140,11 +140,16 @@ CLASSES
      |      Dict:
      |          A dictionary containing all the metadata built in the dataflow.
      |  
-     |  get_activity_events_last_30_days_preview(self)
+     |  get_activity_events_last_30_days_preview(self, filter_event)
      |      Returns a pandas dataframe of audit activity events for the last 30 days at the tenant.
      |      *** THIS can take a several minutes because it loops 30 days and pagination ***
      |      *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
      |      The continuation token is automtaically used to get all the results in the last 30 days starting yesterday.        
+     |      ### Parameter
+     |      ----
+     |      filter_event: query str
+     |          Filters the results based on a boolean condition, using 'Activity', 'UserId', or both properties. Supports only 'eq' and 'and' operators.
+     |          Ej: filter_event = "UserId eq 'ibarrau@ladataweb.com.ar' and Activity eq 'GetRefreshHistory'"        
      |      ### Returns
      |      ----
      |      Returns a Pandas dataframe concatenating iterations
@@ -152,7 +157,7 @@ CLASSES
      |      ----
      |      Maximum 200 requests per hour.
      |  
-     |  get_activity_events_preview(self, activity_date=None, return_pandas=False)
+     |  get_activity_events_preview(self, activity_date=None, return_pandas=False, filter_event=None)
      |      Returns a dict of pandas dataframe of audit activity events for a tenant.
      |      *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
      |      The continuation token is automtaically used to get all the results in the date.
@@ -163,6 +168,9 @@ CLASSES
      |          If the date is not specify it will return yesterday events by default.
      |      return_pandas: bool
      |          Flag to specify if you want to return a dict response or a pandas dataframe of events.
+     |      filter_event: query str
+     |          Filters the results based on a boolean condition, using 'Activity', 'UserId', or both properties. Supports only 'eq' and 'and' operators.
+     |          Ej: filter_event = "UserId eq 'ibarrau@ladataweb.com.ar' and Activity eq 'GetRefreshHistory'"
      |      ### Returns
      |      ----
      |      If return_pandas = True returns a Pandas dataframe concatenating iterations otherwise it returns a dict of the response

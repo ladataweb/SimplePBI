@@ -20,7 +20,11 @@ get_activity_events_preview(activity_date=None, return_pandas=False)
 This request returns a dict of audit activity events for a tenant. In order to make it easier to handle it contains a parameter to specify a single DAY. The original API params would be start and end date. This method will cover the whole specified day. If there is no day specify as a parameter, it will return the activity eventos for "Yesterday". It is using the Datetime library to get yesterday.
 The activities are also paginated by the original API. The request will handle the pagination automatically returning the whole day. This means that it can take a while to respond.
 There is a big limitation for this method. There is a maximum of 200 requests per hour. If you are getting that reach, it will send a 429 Error. Please notify the issue so we can take a look on how to handle this (getting back to star and end params)
-Finally there is an special param to adjust the response. You can check return_pandas to True if you want a complete dataframe ready to be inserted somewhere or to be analyzed. By default it is in False returning a dict in case you want to handle it by yourself.
+In addition, there is an special param to adjust the response. You can check return_pandas to True if you want a complete dataframe ready to be inserted somewhere or to be analyzed. By default it is in False returning a dict in case you want to handle it by yourself.
+Finally, you can now filter the request to get smaller results with specific results by activity or user. Each parameter is a string that can use "eq" or "and" operator. Let's see an example:
+```python
+get_activity_events_preview(activity_date=None, return_pandas=False, filter_event="Activity eq 'ViewReport' and UserId eq 'ibarrau@ladataweb.com.ar'")
+```
 
 ## Get User Artifact Access
 ```python

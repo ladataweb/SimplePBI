@@ -335,6 +335,30 @@ CLASSES
      |      Dict:
      |          A dictionary containing all the parameters in the dataset from workspace.
      |  
+     |  get_query_scaleout_sync_status(self, dataset_id)
+     |      Returns the query scale-out sync status for the specified dataset from My workspace.
+     |      ### Parameters
+     |      ----
+     |      dataset_id: str uuid
+     |          The Power Bi Dataset id. You can take it from PBI Service URL
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing data about scaleout sync dataset in the workspace.
+     |  
+     |  get_query_scaleout_sync_status_in_group(self, workspace_id, dataset_id)
+     |      Returns the query scale-out sync status for the specified dataset from the specified workspace.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The Power Bi workspace id. You can take it from PBI Service URL
+     |      dataset_id: str uuid
+     |          The Power Bi Dataset id. You can take it from PBI Service URL
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing data about scaleout sync dataset in the workspace.
+     |  
      |  get_refresh_history(self, dataset_id, top=None)
      |      Returns the refresh history for the specified dataset from My workspace.
      |      ### Parameters
@@ -430,6 +454,48 @@ CLASSES
      |      ### Request Body
      |      ----
      |      None
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK
+     |  
+     |  trigger_query_scaleout_sync(self, dataset_id)
+     |      Triggers a query scale-out sync of read-only replicas for the specified dataset from My workspace.
+     |      ### Parameters
+     |      ----
+     |      dataset_id: str uuid
+     |          The Power Bi Dataset id. You can take it from PBI Service URL        
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 202 OK
+     |  
+     |  trigger_query_scaleout_sync_in_group(self, workspace_id, dataset_id)
+     |      Triggers a query scale-out sync of read-only replicas for the specified dataset from the specified workspace.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The Power Bi workspace id. You can take it from PBI Service URL
+     |      dataset_id: str uuid
+     |          The Power Bi Dataset id. You can take it from PBI Service URL        
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 202 OK
+     |  
+     |  update_dataset_in_group(self, workspace_id, dataset_id, targetStorageMode=None, autoSyncReadOnlyReplicas=None, maxReadOnlyReplicas=None)
+     |      Updates the properties for the specified dataset from the specified workspace. The user must be the dataset owner.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The Power Bi workspace id. You can take it from PBI Service URL        
+     |      dataset_id: str uuid
+     |          The Power Bi Dataset id. You can take it from PBI Service URL
+     |      ### Request Body
+     |      ----
+     |      autoSyncReadOnlyReplicas: bool
+     |          Whether the dataset automatically syncs read-only replicas
+     |      maxReadOnlyReplicas: int
+     |          Maximum number of read-only replicas for the dataset (0-64, -1 for automatic number of replicas)
+     |      UpdateDatasetRequest: str
+     |          Update dataset request
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
