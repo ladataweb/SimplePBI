@@ -105,3 +105,8 @@ Filtering Activity Events. The request methods for getting Activity Events for a
 0.1.7 (16/12/2023)
 ------------------
 Fixing request for importing powerbi desktop file from Azure DevOps.
+
+0.1.8 (25/03/2024)
+------------------
+Adding new request for importing pbix from GitHub like the one for DevOps.
+New Object category. Adding all Push Dataset category requests.

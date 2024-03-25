@@ -20,6 +20,7 @@ import json
 import requests
 import io
 import os
+import base64
 from simplepbi import utils
 import pandas as pd
 from requests_toolbelt.multipart.encoder import MultipartEncoder
@@ -417,7 +418,7 @@ class Imports():
         ### Returns
         ----
         Dict:
-            Response 200 Ok
+            Response 200 or 202 Ok
         '''
         file_name = path.split("/")[-1]
         try:
@@ -428,6 +429,44 @@ class Imports():
             print("Request exception: ", e)
         try:
             res = self.simple_import_pbix_as_parameter(workspace_id, pbix.content, file_name)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+            
+    def simple_import_from_github(self, owner, repo, path, github_pat, workspace_id):
+        '''This function will import a PBIX file from GitHub to Power BI
+         ### Parameters
+        ----
+        owner: str
+            The account owner of the repository. The name is not case sensitive. For example: https://dev.azure.com/ibarrau/ the organization name is ibarrau
+        repo: str
+            The name of the repository without the .git extension. The name is not case sensitive.
+        path: str
+            The path of the file in GitHub. For example: Prod/PBITenantOverview.pbix
+        github_pat: str
+            The GitHub Personal Access Token. You can turn it on from Settings > Developer Settings > Personal Access Tokens
+        workspace_id: str uuid
+            The Power Bi workspace id. You can take it from PBI Service URL    
+        ### Returns
+        ----
+        Dict:
+            Response 202 Ok
+        '''
+        file_name = path.split("/")[-1]
+        try:
+            url = "https://api.github.com/repos/{}/{}/contents/{}".format(owner, repo, path)
+            pbix_str = requests.get(url, headers={'Accept': 'application/vnd.github+json', "Authorization": "Bearer {}".format(github_pat), 'X-GitHub-Api-Version': '2022-11-28' })
+            pbix_bytes = bytes(pbix_str.json()["content"], 'utf-8')
+            pbix = base64.decodebytes(pbix_bytes)
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+        try:
+            res = self.simple_import_pbix_as_parameter(workspace_id, pbix, file_name)
             res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:

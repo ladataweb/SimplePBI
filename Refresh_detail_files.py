@@ -11,6 +11,7 @@ from simplepbi import capacities
 from simplepbi import pipelines
 from simplepbi import scorecards
 from simplepbi import azpause
+from simplepbi import pushdatasets
 #from simplepbi import utils
 
 import pydoc
@@ -29,6 +30,7 @@ if __name__ == '__main__':
     pipe = pydoc.render_doc(pipelines, forceload=0, renderer=pydoc.plaintext)
     score = pydoc.render_doc(scorecards, forceload=0, renderer=pydoc.plaintext)
     azpau = pydoc.render_doc(azpause, forceload=0, renderer=pydoc.plaintext)
+    pushd = pydoc.render_doc(pushdatasets, forceload=0, renderer=pydoc.plaintext)
 
     a=open(r'Admin_details.txt', 'w')
     a.write(ad)
@@ -81,3 +83,7 @@ if __name__ == '__main__':
     az=open(r'Az_Pause_Resume_details.txt', 'w')
     az.write(azpau)
     az.close()
+    
+    pud=open(r'Push_Datasets_details.txt', 'w')
+    pud.write(pushd)
+    pud.close()

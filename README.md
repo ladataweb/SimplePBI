@@ -106,8 +106,6 @@ We are still developing the library. The following endpoints from admin are stil
 - Set and Remove LabelsAsAdmin
 ### Groups
 - Update group User
-### Datasets
-- Scaleout requests
 ### Reports
 - Export To File (full request, there is a smaller simpler one)
 - Get Export To File Status (regular and in groups)
@@ -126,8 +124,6 @@ We are still developing the library. The following endpoints from admin are stil
 ### Scorecards (preview)
 - Patch By Id 
 - Move Goals
-### Push Datasets
-- All requests
 ### Embed Token
 - All requests 
 ### Goals (preview)
