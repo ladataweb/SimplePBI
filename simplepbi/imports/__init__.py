@@ -437,7 +437,7 @@ class Imports():
             print("Request exception: ", e)
             
     def simple_import_from_github(self, owner, repo, path, github_pat, workspace_id):
-        '''This function will import a PBIX file from GitHub to Power BI
+        '''This function will import a PBIX file from GitHub to Power BI. The maximun size is 100Mb.
          ### Parameters
         ----
         owner: str
@@ -445,7 +445,7 @@ class Imports():
         repo: str
             The name of the repository without the .git extension. The name is not case sensitive.
         path: str
-            The path of the file in GitHub. For example: Prod/PBITenantOverview.pbix
+            The path of the file in GitHub. For example: /Prod/PBITenantOverview.pbix
         github_pat: str
             The GitHub Personal Access Token. You can turn it on from Settings > Developer Settings > Personal Access Tokens
         workspace_id: str uuid
@@ -458,15 +458,15 @@ class Imports():
         file_name = path.split("/")[-1]
         try:
             url = "https://api.github.com/repos/{}/{}/contents/{}".format(owner, repo, path)
-            pbix_str = requests.get(url, headers={'Accept': 'application/vnd.github+json', "Authorization": "Bearer {}".format(github_pat), 'X-GitHub-Api-Version': '2022-11-28' })
-            pbix_bytes = bytes(pbix_str.json()["content"], 'utf-8')
-            pbix = base64.decodebytes(pbix_bytes)
+            pbix_str = requests.get(url, headers={'Accept': 'application/vnd.github.raw+json', "Authorization": "Bearer {}".format(github_pat), 'X-GitHub-Api-Version': '2022-11-28' })
+            #pbix_bytes = bytes(pbix_str.json()["content"], 'utf-8')
+            #pbix = base64.decodebytes(pbix_bytes)
         except requests.exceptions.HTTPError as ex:
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
         try:
-            res = self.simple_import_pbix_as_parameter(workspace_id, pbix, file_name)
+            res = self.simple_import_pbix_as_parameter(workspace_id, pbix_str.content, file_name)
             res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:

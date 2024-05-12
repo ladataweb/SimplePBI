@@ -108,7 +108,7 @@ CLASSES
      |          Response 200 or 202 Ok
      |  
      |  simple_import_from_github(self, owner, repo, path, github_pat, workspace_id)
-     |      This function will import a PBIX file from GitHub to Power BI
+     |      This function will import a PBIX file from GitHub to Power BI. The maximun size is 100Mb.
      |       ### Parameters
      |      ----
      |      owner: str
@@ -116,7 +116,7 @@ CLASSES
      |      repo: str
      |          The name of the repository without the .git extension. The name is not case sensitive.
      |      path: str
-     |          The path of the file in GitHub. For example: Prod/PBITenantOverview.pbix
+     |          The path of the file in GitHub. For example: /Prod/PBITenantOverview.pbix
      |      github_pat: str
      |          The GitHub Personal Access Token. You can turn it on from Settings > Developer Settings > Personal Access Tokens
      |      workspace_id: str uuid

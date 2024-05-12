@@ -92,6 +92,7 @@ We are also adding new methods with the requests to help get new actions. Exampl
 - simple_import_pbix_as_parameter: import a pbix from api response content
 - simple_import_pbix_folder_in_group_preview: post a all pbix files in a local folder
 - simple_import_from_devops: import a pbix from azure devops repo
+- simple_import_from_github: import a pbix from azure github repo
 - simple_copy_reports_between_groups: copy report from workspace to a workspace
 - enhanced_refresh_dataset_in_group: a special request feature that not only eliminates the need for synchronous client connections to perform a refresh, but also unlocks enterprise-grade refresh capabilities.
 - get_activity_events_preview (already iterating): makes the get activity events specified by date easier

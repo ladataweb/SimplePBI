@@ -108,5 +108,9 @@ Fixing request for importing powerbi desktop file from Azure DevOps.
 
 0.1.8 (25/03/2024)
 ------------------
-Adding new request for importing pbix from GitHub like the one for DevOps.
+Adding new request for importing pbix from GitHub (less 1Mb) like the one for DevOps.
 New Object category. Adding all Push Dataset category requests.
+
+0.1.9 (12/05/2024)
+------------------
+Adding support for GitHub pbix importing up to 100Mb.
