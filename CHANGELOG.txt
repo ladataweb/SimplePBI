@@ -114,3 +114,7 @@ New Object category. Adding all Push Dataset category requests.
 0.1.9 (12/05/2024)
 ------------------
 Adding support for GitHub pbix importing up to 100Mb.
+
+0.1.10 (15/07/2024)
+------------------
+Adding new cool features. Getting tables, measures, columns and roles from a dataset in a group (semantic model in workspace)

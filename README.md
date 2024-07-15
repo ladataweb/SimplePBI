@@ -98,6 +98,10 @@ We are also adding new methods with the requests to help get new actions. Exampl
 - get_activity_events_preview (already iterating): makes the get activity events specified by date easier
 - get_user_artifact_access_preview (already iterating): makes the get user artifact access easier
 - get_widely shared_artifacts_published_to_web (already iterating): makes geting the published to web repos info easier
+- get_tables_from_dataset_in_group: get the tables names and other data columns in the semantic model from specific workspace 
+- get_measures_from_dataset_in_group: get the measures names and other data columns in the semantic model from specific workspace 
+- get_columns_from_dataset_in_group: get the columns names and other data columns in the semantic model from specific workspace 
+- get_tables_from_dataset_in_group: get the roles names and other data columns in the semantic model from specific workspace. The request only works with User and Passworkd credentials. Service Principal won't work due to API limitations.
 
 ## Small categories
 Small categories like Dataflow Storage Accounts and Available Features were moved to Groups and Admin.

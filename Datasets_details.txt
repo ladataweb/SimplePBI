@@ -191,6 +191,18 @@ CLASSES
      |      If return_pandas = True returns a Pandas dataframe concatenating iterations otherwise it returns a dict of the response
      |      Response object from requests library. 200 OK
      |  
+     |  get_columns_from_dataset_in_group(self, workspace_id, dataset_id)
+     |      Get all columns from specific dataset in a workspace
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The Power Bi workspace id. You can take it from PBI Service URL        
+     |      dataset_id: str uuid
+     |          The Power Bi Dataset id. You can take it from PBI Service URL        
+     |      ### Returns
+     |      ----
+     |      Response dict of measures from requests library. 200 OK
+     |  
      |  get_dataset(self, dataset_id)
      |      Returns the specified dataset from My workspace.
      |      ### Parameters
@@ -311,6 +323,18 @@ CLASSES
      |          The Power Bi Dataset id. You can take it from PBI Service URL
      |      ### Returns
      |  
+     |  get_measures_from_dataset_in_group(self, workspace_id, dataset_id)
+     |      Get all measures from specific dataset in a workspace
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The Power Bi workspace id. You can take it from PBI Service URL        
+     |      dataset_id: str uuid
+     |          The Power Bi Dataset id. You can take it from PBI Service URL        
+     |      ### Returns
+     |      ----
+     |      Response dict of measures from requests library. 200 OK
+     |  
      |  get_parameters(self, dataset_id)
      |      Returns a list of parameters for the specified dataset from My workspace.
      |      ### Parameters
@@ -410,6 +434,33 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a refresh schedule in a dataset from workspace.
+     |  
+     |  get_roles_from_dataset_in_group(self, workspace_id, dataset_id)
+     |      Get all roles from specific dataset in a workspace
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The Power Bi workspace id. You can take it from PBI Service URL        
+     |      dataset_id: str uuid
+     |          The Power Bi Dataset id. You can take it from PBI Service URL                
+     |      ### Limitations
+     |      ----
+     |          This request will only work for User and Password credentials. It won't work with Service Principal due to API limitations.
+     |      ### Returns
+     |      ----
+     |      Response dict of measures from requests library. 200 OK
+     |  
+     |  get_tables_from_dataset_in_group(self, workspace_id, dataset_id)
+     |      Get the tables from specific dataset in a workspace
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The Power Bi workspace id. You can take it from PBI Service URL        
+     |      dataset_id: str uuid
+     |          The Power Bi Dataset id. You can take it from PBI Service URL        
+     |      ### Returns
+     |      ----
+     |      Response dict of tables from requests library. 200 OK
      |  
      |  refresh_dataset(self, dataset_id, notifyOption)
      |      Triggers a refresh for the specified dataset from My workspace.

@@ -1300,3 +1300,128 @@ class Datasets():
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
+            
+    def get_tables_from_dataset_in_group(self, workspace_id, dataset_id):
+        """Get the tables from specific dataset in a workspace
+        ### Parameters
+        ----
+        workspace_id: str uuid
+            The Power Bi workspace id. You can take it from PBI Service URL        
+        dataset_id: str uuid
+            The Power Bi Dataset id. You can take it from PBI Service URL        
+        ### Returns
+        ----
+        Response dict of tables from requests library. 200 OK
+        """
+        try:
+            query = '''
+            EVALUATE SELECTCOLUMNS( 
+                		INFO.TABLES() 
+                		, "ID", [ID]
+                		, "Name", [Name]
+                		, "IsHidden", [IsHidden]
+                		, "ModifiedTime", [ModifiedTime]
+                		, "StructureModifiedTime", [StructureModifiedTime]
+                )
+            '''
+            diccio = None
+            diccio = self.execute_queries_in_group(workspace_id, dataset_id, query)
+            if diccio is None:
+                print("Error getting tables from dataset.")
+            return diccio
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+            
+    def get_measures_from_dataset_in_group(self, workspace_id, dataset_id):
+        """Get all measures from specific dataset in a workspace
+        ### Parameters
+        ----
+        workspace_id: str uuid
+            The Power Bi workspace id. You can take it from PBI Service URL        
+        dataset_id: str uuid
+            The Power Bi Dataset id. You can take it from PBI Service URL        
+        ### Returns
+        ----
+        Response dict of measures from requests library. 200 OK
+        """
+        try:
+            query = '''
+            DEFINE
+                VAR _tablas = SELECTCOLUMNS(INFO.TABLES(), "TableID", [ID], "Name", [Name])
+                VAR _measures = SELECTCOLUMNS(INFO.MEASURES(), "TableID", [TableID], "MeasureID", [ID], "MeasureName", [Name], "DataType", [DataType], "Expression", [Expression] )
+                VAR _ready_measures = SELECTCOLUMNS(NATURALINNERJOIN(_measures, _tablas), "TableID", [TableID], "Name", [Name], "ItemType", "Measure", "ItemID", [MeasureID], "ItemName", [MeasureName], "DataType", [DataType], "Expression", [Expression])
+            EVALUATE 
+                _ready_measures
+            '''
+            diccio = None
+            diccio = self.execute_queries_in_group(workspace_id, dataset_id, query)
+            if diccio is None:
+                print("Error getting tables from dataset.")
+            return diccio
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+            
+    def get_columns_from_dataset_in_group(self, workspace_id, dataset_id):
+        """Get all columns from specific dataset in a workspace
+        ### Parameters
+        ----
+        workspace_id: str uuid
+            The Power Bi workspace id. You can take it from PBI Service URL        
+        dataset_id: str uuid
+            The Power Bi Dataset id. You can take it from PBI Service URL        
+        ### Returns
+        ----
+        Response dict of measures from requests library. 200 OK
+        """
+        try:
+            query = '''
+            DEFINE
+                VAR _tablas = SELECTCOLUMNS(INFO.TABLES(), "TableID", [ID], "Name", [Name])
+                VAR _columnas = SELECTCOLUMNS(INFO.COLUMNS(), "TableID", [TableID], "ColumnID", [ID], "ColumnName", [ExplicitName], "ExplicitDataType", [ExplicitDataType])
+                VAR _ready_columns = SELECTCOLUMNS(NATURALINNERJOIN(_columnas, _tablas), "TableID", [TableID], "Name", [Name], "ItemType", "Column", "ItemID", [ColumnID], "ItemName", [ColumnName], "ExplicitDataType", [ExplicitDataType], "Expression", "")
+            EVALUATE 
+                _ready_columns
+            '''
+            diccio = None
+            diccio = self.execute_queries_in_group(workspace_id, dataset_id, query)
+            if diccio is None:
+                print("Error getting tables from dataset.")
+            return diccio
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+            
+    def get_roles_from_dataset_in_group(self, workspace_id, dataset_id):
+        """Get all roles from specific dataset in a workspace
+        ### Parameters
+        ----
+        workspace_id: str uuid
+            The Power Bi workspace id. You can take it from PBI Service URL        
+        dataset_id: str uuid
+            The Power Bi Dataset id. You can take it from PBI Service URL                
+        ### Limitations
+        ----
+            This request will only work for User and Password credentials. It won't work with Service Principal due to API limitations.
+        ### Returns
+        ----
+        Response dict of measures from requests library. 200 OK
+        """
+        try:
+            query = '''
+            EVALUATE 
+                INFO.ROLES()
+            '''
+            diccio = None
+            diccio = self.execute_queries_in_group(workspace_id, dataset_id, query)
+            if diccio is None:
+                print("Error getting tables from dataset.")
+            return diccio
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
