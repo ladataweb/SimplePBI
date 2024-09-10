@@ -118,3 +118,8 @@ Adding support for GitHub pbix importing up to 100Mb.
 0.1.10 (15/07/2024)
 ------------------
 Adding new cool features. Getting tables, measures, columns and roles from a dataset in a group (semantic model in workspace)
+
+0.1.11 (10/09/2024)
+------------------
+Adding Getting roles from a all datasets in a list of workspace or for a single workspace and dataset as admin.
+New autodocument feature. Create an html document by content or by tables from a semantic model at Datasets category.

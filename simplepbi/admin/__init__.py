@@ -1876,3 +1876,100 @@ class Admin():
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
+            
+    def get_datasets_roles_in_groups(self, workspace_id_list):
+        """Returns a list of workspaces and datasets with their roles (RLS). It uses Scanner API
+        ### Parameters
+        ----
+        workspace_id_list: uuid str[]
+            The Power Bi Workspace id. You can take it from PBI Service URL like ['xxx-xxx-xxx-xxx', 'yyy-yyy-yyy-yyy']
+        ### Limitations
+        ----
+        The list of workspaces can't contain more than 100 workspaces.        
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the roles in datasets in workspaces.
+        """
+        lista_workspaces=[]
+        lista_datasets=[]
+        
+        try:
+            scan_id = self.post_workspace_info(workspace_id_list, datasetSchema=True)
+            ssta = self.get_scan_status_preview(scan_id)
+            res = self.get_scan_result_preview(scan_id)
+                
+            for w in range(len(res['workspaces'])):
+                for d in range(len(res['workspaces'][w]['datasets'])):
+                    if "roles" in res['workspaces'][w]['datasets'][d].keys():
+                        item = [{ 
+                            "id": res['workspaces'][w]['datasets'][d]['id'],
+                            "name": res['workspaces'][w]['datasets'][d]['name'],
+                            "roles": res['workspaces'][w]['datasets'][d]['roles'] 
+                            }]
+                        lista_datasets.extend(item)
+                datasets = [{
+                    "id": res['workspaces'][w]['id'],
+                    "name": res['workspaces'][w]['name'],
+                    "datasets": lista_datasets 
+                    }]
+                lista_workspaces.extend(datasets)
+                lista_datasets=[]
+            workspaces = {"workspaces": lista_workspaces}
+            
+            return workspaces
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+            
+    def get_dataset_roles_in_group(self, workspace_id, dataset_id):
+        """Return a list of roles (RLS) at a dataset from a workspace. It uses Scanner API
+        ### Parameters
+        ----
+        workspace_id: uuid 
+            The Power Bi Workspace id. You can take it from PBI Service URL
+        dataset_id: uuid
+            The Power Bi Semantic model id. You can take it from PBI Service URL
+        ### Limitations
+        ----
+        The list of workspaces can't contain more than 100 workspaces.        
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the roles in datasets in workspaces.
+        """
+        lista_workspaces=[]
+        lista_datasets=[]
+        workspace_id_list = [workspace_id]
+        
+        try:
+            scan_id = self.post_workspace_info(workspace_id_list, datasetSchema=True)
+            ssta = self.get_scan_status_preview(scan_id)
+            res = self.get_scan_result_preview(scan_id)
+            
+            dataset = [ item for item in res['workspaces'][0]['datasets'] if item['id']==dataset_id ][0]
+                
+            if "roles" in dataset.keys():
+                item = [{ 
+                    "id": dataset['id'],
+                    "name": dataset['name'],
+                    "roles": dataset['roles'] 
+                    }]
+                lista_datasets.extend(item)
+                datasets = [{
+                    "id": res['workspaces'][0]['id'],
+                    "name": res['workspaces'][0]['name'],
+                    "datasets": lista_datasets 
+                    }]
+                lista_workspaces.extend(datasets)
+                lista_datasets=[]
+            else:
+                lista_workspaces = "The dataset in the workspace doesn't have created roles."
+            workspaces = {"workspaces": lista_workspaces}
+            
+            return workspaces
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)

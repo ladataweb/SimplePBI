@@ -102,6 +102,10 @@ We are also adding new methods with the requests to help get new actions. Exampl
 - get_measures_from_dataset_in_group: get the measures names and other data columns in the semantic model from specific workspace 
 - get_columns_from_dataset_in_group: get the columns names and other data columns in the semantic model from specific workspace 
 - get_tables_from_dataset_in_group: get the roles names and other data columns in the semantic model from specific workspace. The request only works with User and Passworkd credentials. Service Principal won't work due to API limitations.
+- get_dataset_roles_in_group: get all the roles from a single dataset in a specific workspace
+- get_datasets_roles_in_groups: get all the roles from all datasets in a list of workspaces
+- create_doc_by_content_dataset_in_group: generate an html code file or text with a document of semantic model in a workspace organized by content
+- create_doc_by_table_dataset_in_group: generate an html code file or text with a document of semantic model in a workspace organized by tables
 
 ## Small categories
 Small categories like Dataflow Storage Accounts and Available Features were moved to Groups and Admin.
@@ -136,8 +140,8 @@ We are still developing the library. The following endpoints from admin are stil
 - All requests
 
 # Next Steps (planned items)
-- Keep completing missing endpoints category.
 - Creating new awesome ideas.
-- Analyzing how to include embeding and pushing dataset requests.
+- Keep completing missing endpoints category.
+- Analyzing how to include embeding and Fabric requests.
 
 

@@ -341,6 +341,22 @@ CLASSES
      |      Dict:
      |          A dictionary containing all the users in the dataflow.
      |  
+     |  get_dataset_roles_in_group(self, workspace_id, dataset_id)
+     |      Return a list of roles (RLS) at a dataset from a workspace. It uses Scanner API
+     |      ### Parameters
+     |      ----
+     |      workspace_id: uuid 
+     |          The Power Bi Workspace id. You can take it from PBI Service URL
+     |      dataset_id: uuid
+     |          The Power Bi Semantic model id. You can take it from PBI Service URL
+     |      ### Limitations
+     |      ----
+     |      The list of workspaces can't contain more than 100 workspaces.        
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing all the roles in datasets in workspaces.
+     |  
      |  get_dataset_to_dataflows_links_in_group(self, workspace_id)
      |      Returns a list of upstream dataflows for datasets from the specified workspace.
      |      ### Parameters
@@ -396,6 +412,20 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the datasets in the workspace.
+     |  
+     |  get_datasets_roles_in_groups(self, workspace_id_list)
+     |      Returns a list of workspaces and datasets with their roles (RLS). It uses Scanner API
+     |      ### Parameters
+     |      ----
+     |      workspace_id_list: uuid str[]
+     |          The Power Bi Workspace id. You can take it from PBI Service URL like ['xxx-xxx-xxx-xxx', 'yyy-yyy-yyy-yyy']
+     |      ### Limitations
+     |      ----
+     |      The list of workspaces can't contain more than 100 workspaces.        
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing all the roles in datasets in workspaces.
      |  
      |  get_datasources(self, dataset_id)
      |      Returns a list of datasources for the specified dataset.
