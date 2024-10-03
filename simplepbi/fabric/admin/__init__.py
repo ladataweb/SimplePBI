@@ -97,7 +97,7 @@ class Items():
             res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             data = res.json()
-            while 'continuationToken' in data:
+            while 'continuationToken' in data and data['continuationToken'] != None:
                 url = "https://api.fabric.microsoft.com/v1/admin/items?continuationToken={}".format(data['continuationToken'])
                 res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
                 res.raise_for_status()
@@ -205,7 +205,7 @@ class Workspaces():
             res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             data = res.json()
-            while 'continuationToken' in data:
+            while 'continuationToken' in data and data['continuationToken'] != None:
                 url = "https://api.fabric.microsoft.com/v1/admin/workspaces?continuationToken={}".format(data['continuationToken'])
                 res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
                 res.raise_for_status()
@@ -275,7 +275,7 @@ class Users():
             res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             data = res.json()
-            while 'continuationToken' in data:
+            while 'continuationToken' in data and data['continuationToken'] != None:
                 url = "https://api.fabric.microsoft.com/v1/admin/users/{}/access?continuationToken={}".format(user_id, data['continuationToken'])
                 res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
                 res.raise_for_status()

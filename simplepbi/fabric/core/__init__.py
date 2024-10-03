@@ -749,7 +749,7 @@ class Workspaces():
             res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             data = res.json()
-            while 'continuationToken' in data:
+            while 'continuationToken' in data and data['continuationToken'] != None:
                 url = "https://api.fabric.microsoft.com/v1/workspaces?role={}&continuationToken={}".format(roles, data['continuationToken'])
                 res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
                 res.raise_for_status()
@@ -979,7 +979,7 @@ class Onelake():
             res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             data = res.json()
-            while 'continuationToken' in data:
+            while 'continuationToken' in data and data['continuationToken'] != None:
                 url = "https://api.fabric.microsoft.com/v1/workspaces/{}/items/{}/dataAccessRoles?continuationToken={}".format(workspace_id, item_id, data['continuationToken'])
                 res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
                 res.raise_for_status()
