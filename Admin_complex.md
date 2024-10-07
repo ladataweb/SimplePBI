@@ -115,3 +115,30 @@ That's why we have added this request for people working with Azure DevOps git r
 First you need a personal token access from your Azure Devops account. Click over your user icon (top right corner) > Personal Access Token. Then create a new one.
 Once you have it, collect all the information of the repo starting by organization name (you can get it from url), project name, repository id (usually the created repo name) and finally the path of the file starting with the folder like /Folder/Pbixfile.pbix
 All that information will be necessary to take the file from there and import it to the specified power bi workspace id.
+
+## Simple import from github
+```python
+- simple_import_from_github(self, owner, repo, path, github_pat, workspace_id) 
+```
+Data analysts might not be familiarized with repo technologies, but we can't deny that it's an amazing practise and they should start right away. 
+Now it's about the most popular Git repo web site support. If you are using GitHub you can use this request to publish/import your Pbix file from there automatically.
+First you need a personal access token (pat) from your GitHub account. Click over your user icon (top right corner) > settings > developer settings > Personal Access Token. Then create a new one.
+Once you have it, collect the long key token. You will also need the owner of the repo and the name. You can get it from URL, it usually is https://github.com/[owner]/[repo]. Finally the path of the file starting with the folder like /Folder/Pbixfile.pbix
+All that information will be necessary to take the file from there and import it to the specified power bi workspace id. 
+The request has a limitation of 100Mb file size.
+
+## Simple get Semantic model table, columns and measures info 
+```python
+- get_[ITEM]_from_dataset_in_group(self, workspace_id, dataset_id)
+```
+If you want to understand a published semantic model or build a custom documentation, theses requests might help. We have added three requests to help understand a dataset. 
+You can now get the Tables, Columns or Measures of a dataset with just the workspace id and dataset id.
+
+## Auto document semantic model by content or tables - html doc
+```python
+- create_doc_by_[TYPE]_dataset_in_group(self, workspace_id, dataset_id, doc_type='text', path=None )
+```
+You can now build an automatic html document from a semantic model. Don't waste time writing all down, this request will help you getting important meta data from the semantic model in order to keep document of the development.
+The request has two possible types, by content or by table. The main difference is that by content will separate the document in three sections tables, Model Tables, Columns and Measures. All them together. 
+On the other hand, the doc by tables will show the query definition, columns and measure table by table instead of all them together.
+With just workspace id and dataset id you only need to decide if you want to downloda a file with doc_type as "file" or if you just want the html code as string text.
