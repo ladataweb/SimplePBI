@@ -123,3 +123,7 @@ Adding new cool features. Getting tables, measures, columns and roles from a dat
 ------------------
 Adding Getting roles from a all datasets in a list of workspace or for a single workspace and dataset as admin.
 New autodocument feature. Create an html document by content or by tables from a semantic model at Datasets category.
+
+0.1.12 (07/10/2024)
+------------------
+Updating documentation adding definition of custom unique cool requests of our library.
