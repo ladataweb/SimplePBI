@@ -1,4 +1,12 @@
 # SimplePBI
+![downloads](https://img.shields.io/badge/downloads-93k-brightgreen) ![downloads](https://img.shields.io/badge/downloads-3,3k%2Fmonth-brightgreen) [![PayPal donate](https://img.shields.io/badge/paypal-donate-ff69b4?logo=paypal)][donate-url] [![Twitter][twitter-follow]][twitter-url]
+ 
+| [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)][donate-url] | Your help is appreciated. |
+|-|-|
+
+[twitter-url]: https://twitter.com/ignacho_07
+[twitter-follow]: https://img.shields.io/twitter/follow/chemerisuk.svg?style=social&label=Follow%20me
+[donate-url]: https://www.paypal.com/donate/?hosted_button_id=7A8YKN3HQ65LU
 
 This is a simple library that makes it easy to use the Power Bi REST API. One day SimplePBI will contain all the categories in the API (Admin, datasets, reports, etc).
 Feel free to check the doc to get a deeper understanding of a specific request: https://docs.microsoft.com/en-us/rest/api/power-bi/
@@ -138,8 +146,11 @@ We are still developing the library. The following endpoints from admin are stil
 - All requests 
 ### Goals (preview)
 - All requests
+### Fabric API
+- Core and Admin requests first
 
 # Next Steps (planned items)
+- Incorporate Fabric API requests
 - Creating new awesome ideas.
 - Keep completing missing endpoints category.
 - Analyzing how to include embeding and Fabric requests.
