@@ -20,6 +20,8 @@ import json
 import requests
 from simplepbi import utils
 import pandas as pd
+import os
+import base64
 
 class Items():
     """Simple library to use the  api and obtain items from it.
@@ -105,14 +107,12 @@ class Items():
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
-    def create_item(self, workspace_id, item_id, displayName, itemType, description=None):
+    def create_item(self, workspace_id, displayName, itemType, description=None, parts=None):
         """Creates an item in the specified workspace. Preview request, soon we'll add 'definition' parameter
         #### Parameters
         ----
         workspace_id: str uuid
             The workspace id. You can take it from Fabric URL
-        item_id: str uuid
-            The item id. You can take it from Fabric URL
         displayName: str
             The item display name. The display name must follow naming rules according to item type.
         itemType: str
@@ -136,9 +136,15 @@ To create a PowerBI item, the user must have the appropritate license. For more 
             }
             if description != None:
                 body["description"]=description
-            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}            
+            if parts != None:
+                body["definition"]={ "Parts": parts }
+            headers={'Content-Type': 'application/json; charset=utf-8', "Authorization": "Bearer {}".format(self.token)}
             res = requests.post(url, data = json.dumps(body), headers = headers)
             res.raise_for_status()
+            if res.status_code==202:
+                print("Request accepted, item provisioning in progress. Please wait. Operation id: ", res.headers['x-ms-operation-id'])
+                # Get operation state
+                LongRunningOperations(self.token).get_operation_state(res.headers['x-ms-operation-id'])                
             return res
         except requests.exceptions.HTTPError as ex:
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
@@ -163,14 +169,8 @@ To create a PowerBI item, the user must have the appropritate license. For more 
         
         try: 
             url= "https://api.fabric.microsoft.com/v1/workspaces/{workspaceId}/items/{}/getDefinition".format(workspace_id, item_id)
-            body = {
-                "displayName": displayName,
-                "type": item_type
-            }
-            if description != None:
-                body["description"]=description
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}            
-            res = requests.post(url, data = json.dumps(body), headers = headers)
+            res = requests.post(url, headers = headers)
             res.raise_for_status()
             return res
         except requests.exceptions.HTTPError as ex:
@@ -235,19 +235,188 @@ To create a PowerBI item, the user must have the appropritate license. For more 
             url= "https://api.fabric.microsoft.com/v1/workspaces/{}/items/{}/updateDefinition".format(workspace_id, item_id)
             body = {
                 "definition": {
-                    "parts": parts
-                    }
+                    "Parts": parts
+                }
             }
             if format != None:
                 body["format"]=format
-            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}            
+            headers={'Content-Type': 'application/json; charset=utf-8', "Authorization": "Bearer {}".format(self.token)}            
             res = requests.post(url, data = json.dumps(body), headers = headers)
-            res.raise_for_status()
+            res.raise_for_status()            
+            if res.status_code==202:
+                print("Request accepted, item provisioning in progress. Please wait. Operation id: ", res.headers['x-ms-operation-id'])
+                # Get operation state
+                LongRunningOperations(self.token).get_operation_state(res.headers['x-ms-operation-id'])                
             return res
         except requests.exceptions.HTTPError as ex:
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
+
+    def simple_deploy_semantic_model(self, workspace_id, item_path):
+        """Deploys the semantic model for the specified item.
+        #### Parameters
+        ----
+        workspace_id: str uuid
+            The workspace id. You can take it from Fabric URL
+        item_path: str 
+            The semantic model path until [name].SemanticModel folder like C:/Users/user/Desktop/[name].SemanticModel
+        ### Returns
+        ----
+        Response object from requests library. 202 OK
+        """
+        parts = []
+
+        item_name = item_path.split("/")[-1].split(".")[0]
+        if item_name == "":
+            raise Exception("Make sure the path doesn't en in / or \\ at the end.")
+        else:
+            print("Item name: ", item_name)
+
+        # Iterate through the files in the item_path
+        for root, dirs, files in os.walk(item_path):
+            if os.path.basename(root) == ".pbi":
+                continue
+            for file in files:
+                # Skip files with the name "item.*.json"
+                if file.startswith("item.") and file.endswith(".json"):
+                    continue
+                if file == "cache.abf":
+                    continue
+
+                # Get the file path relative to the project folder
+                file_path = os.path.relpath(os.path.join(root, file), item_path).replace("\\","/")
+
+                # Read the file contents
+                with open(os.path.join(root, file), "rb") as f:
+                    file_contents = f.read()
+
+                # Base64-encode the file contents
+                encoded_contents = base64.b64encode(file_contents).decode("utf-8")
+
+                # Add the file to the Parts array
+                parts.append({
+                    "Path": file_path,
+                    "Payload": encoded_contents,
+                    "PayloadType": "InlineBase64"
+                })
+
+        try:
+            # Get list of items
+            it = self.list_items(workspace_id)
+            id = [i['id'] for i in it['value'] if i['displayName']==item_name and i['type']=="SemanticModel" ]
+            if id == []:
+                # Create item
+                res = self.create_item(workspace_id, item_name, "SemanticModel", None, parts)
+            else:
+                # Update item definition
+                print("Updating semantic model id {} in workspace id {}".format(id[0], workspace_id))
+                res = self.update_item_definition(workspace_id, id[0], parts)            
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def simple_deploy_report(self, report_workspace_id, semantic_model_workspace_id, item_path):
+        """Deploys the semantic model for the specified item.
+        #### Parameters
+        ----
+        report_workspace_id: str uuid
+            The workspace id of the destination of the report deployment. You can take it from Fabric URL
+        item_path: str 
+            The semantic model path until [name].Report folder like C:/Users/user/Desktop/[name].Report
+        ### Returns
+        ----
+        Response object from requests library. 202 OK
+        """
+        parts = []
+
+        item_name = item_path.split("/")[-1].split(".")[0]
+        if item_name == "":
+            raise Exception("Make sure the path doesn't en in / or \\ at the end.")
+        else:
+            print("Item name: ", item_name)
+
+        # Iterate through the files in the item_path
+        for root, dirs, files in os.walk(item_path):
+            # Skip folders with the name ".pbi"
+            if os.path.basename(root) == ".pbi":
+                continue
+
+            for file in files:
+                # Skip files with the name "item.*.json"
+                if file.startswith("item.") and file.endswith(".json"):
+                    continue
+                if file == "cache.abf":
+                    continue
+                if file.endswith(".pbir"):
+                    # Load the JSON file
+                    with open(item_path +'/definition.pbir', 'r') as f:
+                        pbir_json = json.load(f)
+                        
+                    # Remove the "byPath" item
+                    semantic_model_name = pbir_json['datasetReference']['byPath']['path'].split("/")[-1].split(".")[0]                    
+                    print("Looking for id of semantic model {} in workspace id {} related to the report".format(semantic_model_name, semantic_model_workspace_id))
+                    try:
+                        it = self.list_items(semantic_model_workspace_id)
+                        semantic_model_id = [i['id'] for i in it['value'] if i['displayName']==semantic_model_name and i['type']=="SemanticModel" ]
+                        if semantic_model_id == []:
+                            raise Exception("Semantic Model {} does not exist in the specified workspace.".format(semantic_model_name))
+                    except Exception as e:
+                        print("Error: ", e)
+                        
+                    del pbir_json['datasetReference']['byPath']
+                    
+                    # Add a new JSON object to the "byConnection" property
+                    pbir_json['datasetReference']['byConnection'] = {
+                        "connectionString": None,
+                        "pbiServiceModelId": None,
+                        "pbiModelVirtualServerName": "sobe_wowvirtualserver",
+                        "pbiModelDatabaseName": semantic_model_id[0],
+                        "name": "EntityDataSource",
+                        "connectionType": "pbiServiceXmlaStyleLive"
+                    }
+                    # Convert the PBIR JSON object to a string
+                    pbir_json_str = json.dumps(pbir_json)
+                    
+                    # Convert the string to UTF-8 bytes
+                    file_contents = pbir_json_str.encode('utf-8')
+                else:            
+                    # Read the file contents
+                    with open(os.path.join(root, file), "rb") as f:
+                        file_contents = f.read()
+                
+                # Get the file path relative to the project folder
+                file_path = os.path.relpath(os.path.join(root, file), item_path).replace("\\","/")
+            
+                # Base64-encode the file contents
+                encoded_contents = base64.b64encode(file_contents).decode("utf-8")
+
+                # Add the file to the Parts array
+                parts.append({
+                    "Path": file_path,
+                    "Payload": encoded_contents,
+                    "PayloadType": "InlineBase64"
+                })
+
+        try:
+            # Get list of items
+            it = self.list_items(report_workspace_id)
+            id = [i['id'] for i in it['value'] if i['displayName']==item_name and i['type']=="Report" ]
+            if id == []:
+                # Create item
+                res = self.create_item(report_workspace_id, item_name, "Report", None, parts)
+            else:
+                # Update item definition
+                print("Updating report id {} in workspace id {}".format(id[0], report_workspace_id))
+                res = self.update_item_definition(report_workspace_id, id[0], parts)            
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+                
        
 class Git():
     """Simple library to use the  api and obtain items from it.
@@ -994,4 +1163,43 @@ class Onelake():
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
 
+class LongRunningOperations():
+    """Simple library to use the Long Running Operations api and obtain operation status from it.
+    """
+
+    def __init__(self, token):
+        """Create a simplePBI object to request operations API
+        Args:
+            token: String
+                Bearer Token to use the Rest API
+        """
+        self.token = token
+    def get_operation_state(self, operation_id):
+        """Returns the current state of the long running operation
+        #### Parameters
+        ----
+        operation_id: str uuid
+            The operation id from the header of a run operation.
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing the state of the operation
+        """
+        headers = {'Content-Type': 'application/json; charset=utf-8', "Authorization": "Bearer {}".format(self.token)}
+        res = requests.get("https://api.fabric.microsoft.com/v1/operations/{}".format(operation_id), headers=headers)
+        return res.text
     
+    def get_operation_result(self, operation_id):
+        """Returns the result of the long running operation
+        #### Parameters
+        ----
+        operation_id: str uuid
+            The operation id from the header of a run operation.
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing the state of the operation
+        """
+        headers = {'Content-Type': 'application/json; charset=utf-8', "Authorization": "Bearer {}".format(self.token)}
+        res = requests.get("https://api.fabric.microsoft.com/v1/operations/{}/result".format(operation_id), headers=headers)
+        return res.text
