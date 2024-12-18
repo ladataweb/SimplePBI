@@ -12,6 +12,8 @@ from simplepbi import pipelines
 from simplepbi import scorecards
 from simplepbi import azpause
 from simplepbi import pushdatasets
+from simplepbi.fabric import core
+from simplepbi.fabric import adminfab
 #from simplepbi import utils
 
 import pydoc
@@ -31,6 +33,8 @@ if __name__ == '__main__':
     score = pydoc.render_doc(scorecards, forceload=0, renderer=pydoc.plaintext)
     azpau = pydoc.render_doc(azpause, forceload=0, renderer=pydoc.plaintext)
     pushd = pydoc.render_doc(pushdatasets, forceload=0, renderer=pydoc.plaintext)
+    adfab = pydoc.render_doc(adminfab, forceload=0, renderer=pydoc.plaintext)
+    coree = pydoc.render_doc(core, forceload=0, renderer=pydoc.plaintext)
 
     a=open(r'Admin_details.txt', 'w')
     a.write(ad)
@@ -87,3 +91,11 @@ if __name__ == '__main__':
     pud=open(r'Push_Datasets_details.txt', 'w')
     pud.write(pushd)
     pud.close()
+    
+    afab=open(r'Fabric_Admin_details.txt', 'w')
+    afab.write(adfab)
+    afab.close()
+    
+    corefab=open(r'Fabric_Core_details.txt', 'w')
+    corefab.write(coree)
+    corefab.close()

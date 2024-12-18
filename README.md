@@ -8,9 +8,12 @@
 [twitter-follow]: https://img.shields.io/twitter/follow/chemerisuk.svg?style=social&label=Follow%20me
 [donate-url]: https://www.paypal.com/donate/?hosted_button_id=7A8YKN3HQ65LU
 
-This is a simple library that makes it easy to use the Power Bi REST API. One day SimplePBI will contain all the categories in the API (Admin, datasets, reports, etc).
-Feel free to check the doc to get a deeper understanding of a specific request: https://docs.microsoft.com/en-us/rest/api/power-bi/
-<br>We are doing our best to make this library useful for the community. This project is not a remunerable job for us. It's a public community project. Please be patient if you submit an issue and it's not fixed right away. It's a way to express our passion of sharing knowledge.
+This is a simple library that makes it easy to use the Power Bi REST API and Fabric REST API. We have cover more than 80% of PowerBi request and now we are working with Microsoft Fabric too. One day SimplePBI will contain all the categories in both APIs, our at least that's our vision dream.
+Feel free to check the doc to get a deeper understanding of a specific request: 
+- Power Bi Doc: https://learn.microsoft.com/en-us/rest/api/power-bi/
+- Fabric Doc: https://learn.microsoft.com/en-us/rest/api/fabric/articles/using-fabric-apis
+
+We are doing our best to make this library useful for the community. This project is not a remunerable job for us. It's a public community open source project. It's a way to express our passion of sharing knowledge. Please be patient if you submit an issue and it's not fixed right away.
 <br>Each category is an Object. This means we need to initialize an object to start using its methods. In order to create them we need the Bearer token that can be obtain from a Token Object. 
 Let's see how we can create an Admin Object to try the requests in that category.
 
@@ -18,6 +21,7 @@ Let's see how we can create an Admin Object to try the requests in that category
 # Import library
 from simplepbi import token
 from simplepbi import admin
+from simplepbi.fabric import adminfab
 ```
 
 We always need to import token object to create the object to run requests. Then we can pick the object of the Power Bi Rest API category we need. For instance "admin".
@@ -46,6 +50,9 @@ tok = token.Token(tenant_id, app_client_id, username, password, None, use_servic
 tok = token.Token(tenant_id, app_client_id, None, None, app_secret_key, use_service_principal=True)
 
 ad = admin.Admin(tok.token)
+
+it = adminfab.Items(tok.token)
+
 ```
 
 As you can see the Token object contains a token attribute with the Bearer used by Azure to run rest methods. That attribute will be user to create the category objects like admin.
@@ -57,12 +64,15 @@ Once we create our Object like admin, we can start using the requests adding the
 All_Datasets = ad.get_datasets()
 
 Datasets_In_Groups = ad.get_datasets_in_group(workspace_id)
+
+Items_In_Workspace = it.list_items(workspace_id)
+
 ```
 
 The library get requests will return a response object .json() that python reads it as a Dict.
 
 ## Preview methods
-There are some methods in the classes that still need more testing. Those will have a "preview" at the end of the name. Please let us know if something goes wrong with those.
+There are some methods in the classes that still need more testing. Those will have a "preview" at the end of the name. Please let us know if something goes wrong with those. All Fabric requests are in "preview" even though they don't have the clarification at the name.
 
 ## Current Categories
 Right now the library is consuming endpoints from: 
@@ -80,6 +90,8 @@ Right now the library is consuming endpoints from:
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Scorecards_details.txt" target="_blank">Scorecards (Preview)</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Az_Pause_Resume_details.txt" target="_blank">Azure Pause and Resume resource (Preview)</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Push_Datasets_details.txt" target="_blank">Push Datasets</a>
+- <a href="https://github.com/ladataweb/SimplePBI/blob/main/Fabric_Admin_details.txt" target="_blank">Fabric Admin</a>
+- <a href="https://github.com/ladataweb/SimplePBI/blob/main/Fabric_Core_details.txt" target="_blank">Fabric Core</a>
 
 ## Complex requests
 If you want to get a deeper look on complex __Admin__ methods and unique methods. 
@@ -147,12 +159,14 @@ We are still developing the library. The following endpoints from admin are stil
 ### Goals (preview)
 - All requests
 ### Fabric API
-- Core and Admin requests first
+- Admin (External data shares, labels and tenants)
+- Core (Capacities, connections, deployment pipelines, external data shares, gateways, managed private endpoints)
+- All other categories
 
 # Next Steps (planned items)
-- Incorporate Fabric API requests
+- Complete Fabric API requests for admin and core.
 - Creating new awesome ideas.
 - Keep completing missing endpoints category.
-- Analyzing how to include embeding and Fabric requests.
+- Keep updating and building power bi ideas.
 
 

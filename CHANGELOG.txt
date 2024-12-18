@@ -70,7 +70,7 @@ Change Log
 0.1.0 (03/10/2022)
 ------------------
 - Adding pipelines and scorecards category requests.
-- All componentes category are now available with a little missing endpoints
+- All component categories are now available with a little missing endpoints
 - Completing at least 80% of request for all most frequent items at Power Bi. The only categories unavailables are push datasets and embedding.
 - Bug fixing requests 
 
@@ -127,3 +127,7 @@ New autodocument feature. Create an html document by content or by tables from a
 0.1.12 (07/10/2024)
 ------------------
 Updating documentation adding definition of custom unique cool requests of our library.
+
+1.0.1 (18/12/2024)
+------------------
+New release and milestone completed. Our PowerBi backlog is mostly completed and we have added Fabric API. The Fabric categories involved are admin (adminfab) and core.
