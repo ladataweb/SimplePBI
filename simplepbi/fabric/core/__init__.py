@@ -253,25 +253,17 @@ To create a PowerBI item, the user must have the appropritate license. For more 
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
 
-    def simple_deploy_semantic_model(self, workspace_id, item_path):
-        """Deploys the semantic model for the specified item.
+    def build_semantic_model_parts(self, item_path):
+        """Build the parts of semantic model for the specified item.
         #### Parameters
         ----
-        workspace_id: str uuid
-            The workspace id. You can take it from Fabric URL
         item_path: str 
-            The semantic model path until [name].SemanticModel folder like C:/Users/user/Desktop/[name].SemanticModel
+            The semantic model path until [name].Report folder like C:/Users/user/Desktop/[name].SemanticModel or .Dataset
         ### Returns
         ----
-        Response object from requests library. 202 OK
-        """
-        parts = []
-
-        item_name = item_path.split("/")[-1].split(".")[0]
-        if item_name == "":
-            raise Exception("Make sure the path doesn't en in / or \\ at the end.")
-        else:
-            print("Item name: ", item_name)
+        Dict with parts of the semantic model
+        """ 
+        parts = []        
 
         # Iterate through the files in the item_path
         for root, dirs, files in os.walk(item_path):
@@ -300,6 +292,27 @@ To create a PowerBI item, the user must have the appropritate license. For more 
                     "Payload": encoded_contents,
                     "PayloadType": "InlineBase64"
                 })
+        return parts
+
+    def simple_deploy_semantic_model(self, workspace_id, item_path):
+        """Deploys the semantic model for the specified item.
+        #### Parameters
+        ----
+        workspace_id: str uuid
+            The workspace id. You can take it from Fabric URL
+        item_path: str 
+            The semantic model path until [name].SemanticModel folder like C:/Users/user/Desktop/[name].SemanticModel
+        ### Returns
+        ----
+        Response object from requests library. 202 OK
+        """
+        
+        item_name = item_path.split("/")[-1].split(".")[0]
+        if item_name == "":
+            raise Exception("Make sure the path doesn't en in / or \\ at the end.")
+        else:
+            print("Item name: ", item_name)
+        parts = self.build_semantic_model_parts(item_path)
 
         try:
             # Get list of items
@@ -317,27 +330,22 @@ To create a PowerBI item, the user must have the appropritate license. For more 
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
-
-    def simple_deploy_report(self, report_workspace_id, semantic_model_workspace_id, item_path):
-        """Deploys the semantic model for the specified item.
+            
+    def build_report_parts(self, semantic_model_workspace_id, item_path):
+        """Build the parts of report for the specified item.
         #### Parameters
         ----
-        report_workspace_id: str uuid
-            The workspace id of the destination of the report deployment. You can take it from Fabric URL
+        semantic_model_workspace_id: str uuid
+            The workspace id of the semantic model of a report. You can take it from Fabric URL
         item_path: str 
             The semantic model path until [name].Report folder like C:/Users/user/Desktop/[name].Report
         ### Returns
         ----
-        Response object from requests library. 202 OK
-        """
+        Dict with parts of the report
+        """     
+        
         parts = []
-
-        item_name = item_path.split("/")[-1].split(".")[0]
-        if item_name == "":
-            raise Exception("Make sure the path doesn't en in / or \\ at the end.")
-        else:
-            print("Item name: ", item_name)
-
+        
         # Iterate through the files in the item_path
         for root, dirs, files in os.walk(item_path):
             # Skip folders with the name ".pbi"
@@ -399,6 +407,28 @@ To create a PowerBI item, the user must have the appropritate license. For more 
                     "Payload": encoded_contents,
                     "PayloadType": "InlineBase64"
                 })
+        return parts
+
+    def simple_deploy_report(self, report_workspace_id, semantic_model_workspace_id, item_path):
+        """Deploys the semantic model for the specified item.
+        #### Parameters
+        ----
+        report_workspace_id: str uuid
+            The workspace id of the destination of the report deployment. You can take it from Fabric URL
+        item_path: str 
+            The semantic model path until [name].Report folder like C:/Users/user/Desktop/[name].Report
+        ### Returns
+        ----
+        Response object from requests library. 202 OK
+        """       
+
+        item_name = item_path.split("/")[-1].split(".")[0]
+        if item_name == "":
+            raise Exception("Make sure the path doesn't en in / or \\ at the end.")
+        else:
+            print("Item name: ", item_name)
+
+        parts = self.build_report_parts(semantic_model_workspace_id, item_path)
 
         try:
             # Get list of items

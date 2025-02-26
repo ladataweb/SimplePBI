@@ -131,3 +131,7 @@ Updating documentation adding definition of custom unique cool requests of our l
 1.0.1 (18/12/2024)
 ------------------
 New release and milestone completed. Our PowerBi backlog is mostly completed and we have added Fabric API. The Fabric categories involved are admin (adminfab) and core.
+
+1.0.2 (26/02/2025)
+------------------
+Refactor of code separating the parts build for semantic model and reports deploys.

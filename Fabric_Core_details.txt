@@ -164,6 +164,28 @@ CLASSES
      |          token: String
      |              Bearer Token to use the Rest API
      |  
+     |  build_report_parts(self, semantic_model_workspace_id, item_path)
+     |      Build the parts of report for the specified item.
+     |      #### Parameters
+     |      ----
+     |      semantic_model_workspace_id: str uuid
+     |          The workspace id of the semantic model of a report. You can take it from Fabric URL
+     |      item_path: str 
+     |          The semantic model path until [name].Report folder like C:/Users/user/Desktop/[name].Report
+     |      ### Returns
+     |      ----
+     |      Dict with parts of the report
+     |  
+     |  build_semantic_model_parts(self, item_path)
+     |      Build the parts of semantic model for the specified item.
+     |      #### Parameters
+     |      ----
+     |      item_path: str 
+     |          The semantic model path until [name].Report folder like C:/Users/user/Desktop/[name].SemanticModel or .Dataset
+     |      ### Returns
+     |      ----
+     |      Dict with parts of the semantic model
+     |  
      |  create_item(self, workspace_id, displayName, itemType, description=None, parts=None)
      |      Creates an item in the specified workspace. Preview request, soon we'll add 'definition' parameter
      |              #### Parameters
