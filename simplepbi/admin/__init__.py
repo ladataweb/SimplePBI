@@ -1,4 +1,4 @@
-'''.
+r'''.
            @@@@@@@@@@
        @@@@..........@@@@
     @@@         .        @@@
@@ -20,6 +20,7 @@ import json
 import requests
 from simplepbi import utils
 from datetime import date, timedelta
+import io
 import pandas as pd
 
 class Admin():
@@ -57,7 +58,7 @@ class Admin():
                 url = url + "&$top={}".format(top)
             if skip != None:
                 url = url + "&$skip={}".format(skip) 
-            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res = requests.get(url.replace("?&", "?"), headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             return res.json()
         except requests.exceptions.HTTPError as ex:
@@ -94,7 +95,7 @@ class Admin():
                 url = url + "&$skip={}".format(skip)   
             if top != None:
                 url = url + "&$top={}".format(top)
-            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res = requests.get(url.replace("?&", "?"), headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             return res.json()
         except requests.exceptions.HTTPError as ex:
@@ -188,7 +189,7 @@ class Admin():
                 url = url + "&$top={}".format(top)
             if skip != None:
                 url = url + "&$skip={}".format(skip)  
-            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res = requests.get(url.replace("?&", "?"), headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             return res.json()
         except requests.exceptions.HTTPError as ex:
@@ -221,7 +222,7 @@ class Admin():
                 url = url + "&$top={}".format(top)
             if skip != None:
                 url = url + "&$skip={}".format(skip) 
-            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res = requests.get(url.replace("?&", "?"), headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             return res.json()
         except requests.exceptions.HTTPError as ex:
@@ -275,7 +276,7 @@ class Admin():
                 url = url + "&$filter={}".format(filter)
             if skip != None:
                 url = url + "&$skip={}".format(skip)                
-            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res = requests.get(url.replace("?&", "?"), headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             return res.json()
         except requests.exceptions.HTTPError as ex:
@@ -355,7 +356,7 @@ class Admin():
                 "emailAddress": emailAddress 
             }
             if name != None:
-                body["name"]=displayName            
+                body["name"]=name            
                 
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
             
@@ -394,7 +395,7 @@ class Admin():
                 url = url + "&$top={}".format(top)
             if skip != None:
                 url = url + "&$skip={}".format(skip)  
-            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res = requests.get(url.replace("?&", "?"), headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             return res.json()
         except requests.exceptions.HTTPError as ex:
@@ -427,7 +428,7 @@ class Admin():
                 url = url + "&$top={}".format(top)
             if skip != None:
                 url = url + "&$skip={}".format(skip) 
-            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res = requests.get(url.replace("?&", "?"), headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             return res.json()
         except requests.exceptions.HTTPError as ex:
@@ -500,7 +501,7 @@ class Admin():
                 url = url + "&$top={}".format(top)
             if skip != None:
                 url = url + "&$skip={}".format(skip)  
-            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res = requests.get(url.replace("?&", "?"), headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             return res.json()
         except requests.exceptions.HTTPError as ex:
@@ -533,7 +534,7 @@ class Admin():
                 url = url + "&$top={}".format(top)
             if skip != None:
                 url = url + "&$skip={}".format(skip) 
-            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res = requests.get(url.replace("?&", "?"), headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             return res.json()
         except requests.exceptions.HTTPError as ex:
@@ -769,7 +770,7 @@ class Admin():
                 url = url + "&$filter={}".format(filter)
             if skip != None:
                 url = url + "&$skip={}".format(skip) 
-            res = requests.get(url, headers={'Content-Type': 'capacitielication/json', "Authorization": "Bearer {}".format(self.token)})
+            res = requests.get(url.replace("?&", "?"), headers={'Content-Type': 'capacitielication/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             return res.json()
         except requests.exceptions.HTTPError as ex:
@@ -886,7 +887,7 @@ class Admin():
                 url = url + "&$top={}".format(top)
             if skip != None:
                 url = url + "&$skip={}".format(skip)  
-            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res = requests.get(url.replace("?&", "?"), headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             return res.json()
         except requests.exceptions.HTTPError as ex:
@@ -942,7 +943,7 @@ class Admin():
                 url = url + "&$top={}".format(top)
             if skip != None:
                 url = url + "&$skip={}".format(skip)  
-            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res = requests.get(url.replace("?&", "?"), headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             return res.json()
         except requests.exceptions.HTTPError as ex:
@@ -975,7 +976,7 @@ class Admin():
                 url = url + "&$filter={}".format(filter)            
             if skip != None:
                 url = url + "&$skip={}".format(skip)  
-            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res = requests.get(url.replace("?&", "?"), headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             return res.json()
         except requests.exceptions.HTTPError as ex:
@@ -1426,31 +1427,36 @@ class Admin():
         ban = True   
         contar = 0    
         try:
+            print("Getting activity events for date: ", activity_date, "... running iterations...")
             while(ban):
                 res = requests.get(url,
                     headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
                     )
+                res.raise_for_status()
                 if return_pandas:
                     js = json.dumps(res.json()["activityEventEntities"])
-                    df = pd.read_json(js)
-                    #print(df.head())
-                    df_total = pd.concat([df_total, df], sort=True, ignore_index=True)
-                    print("Building dataframe iteration: ", str(contar))
-                    #print(df_total.head())
+                    df = pd.read_json(io.StringIO(js))
+                    if not df.empty and not df.isna().all(axis=None):
+                        if not df_total.empty:
+                            df_total = pd.concat([df_total, df], sort=True, ignore_index=True)
+                        else:
+                            df_total = df.copy()
+                    #print("Building dataframe iteration: ", str(contar))
                 else:
                     if res.json()["activityEventEntities"]:                
                         #append_value(dict_total, "activityEventEntities", res.json()["activityEventEntities"][0])
                         list_total.extend(res.json()["activityEventEntities"])
-                        print("Building dict iteration: ", str(contar))
+                        #print("Building dict iteration: ", str(contar))
                     
-                print(res.status_code)
+                #print(res.status_code)
                 contar = contar +1
-                print(res.json()["continuationUri"])
+                #print(res.json()["continuationUri"])
                 
                 if res.json()["lastResultSet"] == True or res.json()["continuationUri"] == None:
                     ban=False
                 url = res.json()["continuationUri"]
-                print("last result set: ", res.json()["lastResultSet"])
+                #print("last result set: ", res.json()["lastResultSet"])
+            print("Total iterations: ", contar)
             if return_pandas:
                 return df_total
             else:
@@ -1461,16 +1467,16 @@ class Admin():
         except requests.exceptions.TooManyRedirects:
             print("ERROR: Bad URL try a different one")
         except requests.exceptions.RequestException as e:
-            print("Catastrophic error.")
+            print("Catastrophic error:", e)
             raise SystemExit(e)
         except Exception as ex:
             print("HTTP Error: ", ex, "\nText: ", ex.text)
             
-    def get_activity_events_last_30_days_preview(self, filter_event):
-        '''Returns a pandas dataframe of audit activity events for the last 30 days at the tenant.
-        *** THIS can take a several minutes because it loops 30 days and pagination ***
+    def get_activity_events_last_28_days_preview(self, filter_event=None):
+        '''Returns a pandas dataframe of audit activity events for the last 28 days at the tenant.
+        *** THIS can take a several minutes because it loops 28 days and pagination ***
         *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
-        The continuation token is automtaically used to get all the results in the last 30 days starting yesterday.        
+        The continuation token is automtaically used to get all the results in the last 28 days starting yesterday.
         ### Parameter
         ----
         filter_event: query str
@@ -1482,12 +1488,12 @@ class Admin():
         ### Limitations
         ----
         Maximum 200 requests per hour.
-        '''  
-        
+        '''
+
         # Getting last 30 days
         today = date.today() - timedelta(days=1)
         last_30_days = []
-        for i in range(30):
+        for i in range(27):
             last_30_days.append((today - timedelta(days=i)).strftime("%Y-%m-%d"))
 
         # Creating an empty DataFrame with the structure needed    
@@ -1505,9 +1511,11 @@ class Admin():
            'WorkSpaceName', 'Workload', 'WorkspaceId'])
         # Loop last 30 days appending the result in a single dataframe
         for i in last_30_days:
-            df_temp = self.get_activity_events_preview(i, return_pandas=True, filter_event=filter_event)
+            if filter_event == None:    
+                df_temp = self.get_activity_events_preview(i, return_pandas=True)
+            else:
+                df_temp = self.get_activity_events_preview(i, return_pandas=True, filter_event=filter_event)
             df = pd.concat([df, df_temp])
-            print("\nStarting date: ", i, "...\n")
         if 0 in df.columns:
             # Drop 0 column of activities auto generated
             df = df.drop(columns=[0])

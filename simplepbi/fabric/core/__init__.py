@@ -1,4 +1,4 @@
-'''.
+r'''.
            @@@@@@@@@@
        @@@@..........@@@@
     @@@         .        @@@
@@ -15,12 +15,12 @@
 @   .       .         . *******@
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 '''
-
 import json
 import requests
 from simplepbi import utils
 import pandas as pd
 import os
+import io
 import base64
 
 class Items():
@@ -62,12 +62,16 @@ class Items():
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
                       
-    def list_items(self, workspace_id):
+    def list_items(self, workspace_id, return_pandas=False, type=None):
         """Returns a list of items from the specified workspace.
         ### Parameters
         ----
         workspace_id: str uuid
             The workspace id. You can take it from Fabric URL
+        return_pandas: bool
+            If True, returns a pandas DataFrame with the items. Default is False, returns a dictionary. 
+        type: str
+            The type of items to return. If None, returns all item types.
         ### Returns
         ----
         Dict:
@@ -75,9 +79,24 @@ class Items():
         """
         try:
             url = "https://api.fabric.microsoft.com/v1/workspaces/{}/items".format(workspace_id)
+            if type != None:
+                url += "?type={}".format(type)
             res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
-            return res.json()
+            data = res.json()
+            while 'continuationToken' in data and data['continuationToken'] != None:
+                url = "https://api.fabric.microsoft.com/v1/workspaces/{}/items?continuationToken={}".format(workspace_id, data['continuationToken'])
+                if type != None:
+                    url += "&type={}".format(type)
+                res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+                res.raise_for_status()
+                data.update(res.json())
+                data.pop('continuationToken')
+            if return_pandas:
+                js = json.dumps(data['value'])
+                return pd.DataFrame(pd.read_json(io.StringIO(js)))
+            else:
+                return data            
         except requests.exceptions.HTTPError as ex:
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
@@ -168,7 +187,7 @@ To create a PowerBI item, the user must have the appropritate license. For more 
         """
         
         try: 
-            url= "https://api.fabric.microsoft.com/v1/workspaces/{workspaceId}/items/{}/getDefinition".format(workspace_id, item_id)
+            url= "https://api.fabric.microsoft.com/v1/workspaces/{}/items/{}/getDefinition".format(workspace_id, item_id)
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}            
             res = requests.post(url, headers = headers)
             res.raise_for_status()
@@ -932,7 +951,7 @@ class Workspaces():
             print("Request exception: ", e)
 
     # List Workspaces by workspace role getting all paginated results from continuationToken in a single dictionary or pandas dataframe
-    def list_workspaces(self, roles, return_pandas=False):
+    def list_workspaces(self, return_pandas=False, roles=None):
         """Returns a list of workspaces for the specified role.
         #### Parameters
         ----
@@ -944,7 +963,9 @@ class Workspaces():
             A dictionary containing all the workspaces.
         """
         try:
-            url = "https://api.fabric.microsoft.com/v1/workspaces?role={}".format(roles)
+            url = "https://api.fabric.microsoft.com/v1/workspaces"
+            if roles != None:
+                url = "https://api.fabric.microsoft.com/v1/workspaces?role={}".format(roles)
             res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             data = res.json()
@@ -955,7 +976,8 @@ class Workspaces():
                 data.update(res.json())
                 data.pop('continuationToken')
             if return_pandas:
-                return pd.DataFrame(data)
+                js = json.dumps(data['value'])
+                return pd.DataFrame(pd.read_json(io.StringIO(js)))
             else:
                 return data
         except requests.exceptions.HTTPError as ex:
@@ -1185,7 +1207,8 @@ class Onelake():
                 data.update(res.json())
                 data.pop('continuationToken')
             if return_pandas:
-                return pd.DataFrame(data)
+                js = json.dumps(data['value'])
+                return pd.DataFrame(pd.read_json(io.StringIO(js)))
             else:
                 return data
         except requests.exceptions.HTTPError as ex:
@@ -1233,3 +1256,436 @@ class LongRunningOperations():
         headers = {'Content-Type': 'application/json; charset=utf-8', "Authorization": "Bearer {}".format(self.token)}
         res = requests.get("https://api.fabric.microsoft.com/v1/operations/{}/result".format(operation_id), headers=headers)
         return res.text
+    
+class Folders():
+    """Simple library to use the Folders api and obtain folder information from it.
+    """
+    def __init__(self, token):
+        """Create a simplePBI object to request operations API
+        Args:
+            token: String
+                Bearer Token to use the Rest API
+        """
+        self.token = token
+
+    def create_folder(self, workspace_id, folder_name):
+        """Creates a folder in the specified workspace.
+        #### Parameters
+        ----
+        workspace_id: str uuid
+            The workspace id. You can take it from Fabric URL
+        folder_name: string
+            The folder name.
+        ### Returns
+        ----
+        Response object from requests library. 201 OK
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/workspaces/{}/folders".format(workspace_id)
+            body = {
+                "name": folder_name
+            }
+            headers = {'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.post(url, data=json.dumps(body), headers=headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e) 
+
+    def delete_folder(self, workspace_id, folder_id):
+        """Deletes the specified folder in the specified workspace.
+        #### Parameters
+        ----
+        workspace_id: str uuid
+            The workspace id. You can take it from Fabric URL
+        folder_id: str uuid
+            The folder id. You can take it from Fabric URL
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/workspaces/{}/folders/{}".format(workspace_id, folder_id)
+            headers = {'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.delete(url, headers=headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def get_folder(self, workspace_id, folder_id):
+        """Returns the specified folder in the specified workspace.
+        #### Parameters
+        ----
+        workspace_id: str uuid
+            The workspace id. You can take it from Fabric URL
+        folder_id: str uuid
+            The folder id. You can take it from Fabric URL
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing a folder in the workspace.
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/workspaces/{}/folders/{}".format(workspace_id, folder_id)
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def list_folders(self, workspace_id):
+        """Returns a list of folders in the specified workspace.
+        #### Parameters
+        ----
+        workspace_id: str uuid
+            The workspace id. You can take it from Fabric URL
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing all the folders in the workspace.
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/workspaces/{}/folders".format(workspace_id)
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            data = res.json()
+            while 'continuationToken' in data and data['continuationToken'] != None:
+                url = "https://api.fabric.microsoft.com/v1/workspaces/{}/folders?continuationToken={}".format(workspace_id, data['continuationToken'])
+                res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+                res.raise_for_status()
+                data.update(res.json())
+                data.pop('continuationToken')
+            return data
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def update_folder(self, workspace_id, folder_id, displayName):
+        """Updates the specified folder in the specified workspace.
+        #### Parameters
+        ----
+        workspace_id: str uuid
+            The workspace id. You can take it from Fabric URL
+        folder_id: str uuid
+            The folder id. You can take it from Fabric URL
+        displayName: str
+            The new display name for the folder.
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/workspaces/{}/folders/{}".format(workspace_id, folder_id)
+            body = {
+                "displayName": displayName
+            }
+            headers = {'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.patch(url, data=json.dumps(body), headers=headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def move_folder(self, workspace_id, folder_id, new_parent_folder_id):
+        """Moves the specified folder to a new parent folder in the specified workspace.
+        #### Parameters
+        ----
+        workspace_id: str uuid
+            The workspace id. You can take it from Fabric URL
+        folder_id: str uuid
+            The folder id. You can take it from Fabric URL
+        new_parent_folder_id: str uuid
+            The new parent folder id.
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/workspaces/{}/folders/{}/move".format(workspace_id, folder_id)
+            body = {
+                "targetFolderId": new_parent_folder_id
+            }
+            headers = {'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.post(url, data=json.dumps(body), headers=headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+class Connections():
+    """Simple library to use the Connections api and obtain connection information from it.
+    """
+    def __init__(self, token):
+        """Create a simplePBI object to request operations API
+        Args:
+            token: String
+                Bearer Token to use the Rest API
+        """
+        self.token = token
+
+    def create_connection(self, body_connection):
+        """Creates a new connection in the specified workspace.
+        #### Parameters
+        ----
+        workspace_id: str uuid
+            The workspace id. You can take it from Fabric URL
+        body_connection: dict
+            The body of the connection to create. Make sure you read https://learn.microsoft.com/en-us/rest/api/fabric/core/connections/create-connection?tabs=HTTP
+            Possible types { CreateCloudConnectionRequest, CreateOnPremisesConnectionRequest, CreateVirtualNetworkGatewayConnectionRequest }
+        ### Returns
+        ----
+        Response object from requests library. 201 Created
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/connections"
+            body = body_connection
+            headers = {'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.post(url, data=json.dumps(body), headers=headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def delete_connection(self, connection_id):
+        """Deletes the specified connection.
+        #### Parameters
+        ----
+        connection_id: str uuid
+            The connection id. You can take it from Fabric URL
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/connections/{}".format(connection_id)
+            headers = {'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.delete(url, headers=headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def get_connection(self, connection_id):
+        """Returns the specified connection.
+        #### Parameters
+        ----
+        connection_id: str uuid
+            The connection id. You can take it from Fabric URL
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing the connection information.
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/connections/{}".format(connection_id)
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def list_connections(self):
+        """Returns a list of all connections.
+        ### Returns
+        ----
+        List[Dict]:
+            A list of dictionaries, each containing information about a connection.
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/connections"
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            data = res.json()
+            while 'continuationToken' in data and data['continuationToken'] != None:
+                url = "https://api.fabric.microsoft.com/v1/connections?continuationToken={}".format(data['continuationToken'])
+                res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+                res.raise_for_status()
+                data.update(res.json())
+                data.pop('continuationToken')
+
+            return res.json()
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def update_connection(self, connection_id, body_connection):
+        """Updates the specified connection.
+        #### Parameters
+        ----
+        connection_id: str uuid
+            The connection id. You can take it from Fabric URL
+        body_connection: dict
+            The body of the connection to update. Make sure you read https://learn.microsoft.com/en-us/rest/api/fabric/core/connections/update-connection?tabs=HTTP
+            Possible types { UpdateOnPremisesGatewayConnectionRequest, UpdateOnPremisesGatewayPersonalConnectionRequest, UpdatePersonalCloudConnectionRequest, UpdateShareableCloudConnectionRequest, UpdateVirtualNetworkGatewayConnectionRequest }
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/connections/{}".format(connection_id)
+            body = body_connection
+            headers = {'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.patch(url, data=json.dumps(body), headers=headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def add_coonection_role_assignment(self, connection_id, principal_id, principal_type, role):
+        """Adds a role assignment to the specified connection.
+        #### Parameters
+        ----
+        connection_id: str uuid
+            The connection id. You can take it from Fabric URL
+        principal_id: str uuid
+            The principal id.
+        principal_type: string
+            The principal type. { "User", "Group", "ServicePrincipal", "ServicePrincipalProfile" }
+        role: string
+            The role. { "Owner", "User", "UserWithReshare" }
+        ### Returns
+        ----
+        Response object from requests library. 201 Created
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/connections/{}/roleAssignments".format(connection_id)
+            body = {
+                "principal": {
+                    "id": principal_id,
+                    "type": principal_type
+                },
+                "role": role
+            }
+            headers = {'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.post(url, data=json.dumps(body), headers=headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def list_connection_role_assignments(self, connection_id):
+        """Lists all role assignments for the specified connection.
+        #### Parameters
+        ----
+        connection_id: str uuid
+            The connection id. You can take it from Fabric URL
+        ### Returns
+        ----
+        List[Dict]:
+            A list of dictionaries, each containing information about a role assignment.
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/connections/{}/roleAssignments".format(connection_id)
+            headers = {'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.get(url, headers=headers)
+            res.raise_for_status()
+            data = res.json()
+            while 'continuationToken' in data and data['continuationToken'] != None:
+                url = "https://api.fabric.microsoft.com/v1/connections/{}/roleAssignments?continuationToken={}".format(connection_id, data['continuationToken'])
+                res = requests.get(url, headers=headers)
+                res.raise_for_status()
+                data.update(res.json())
+                data.pop('continuationToken')
+            return data
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e) 
+
+    def delete_connection_role_assignment(self, connection_id, connection_role_assignment_id):
+        """Deletes the specified role assignment from the connection.
+        #### Parameters
+        ----
+        connection_id: str uuid
+            The connection id. You can take it from Fabric URL
+        connection_role_assignment_id: str uuid
+            The role assignment id.
+        ### Returns
+        ----
+        Response object from requests library. 204 No Content
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/connections/{}/roleAssignments/{}".format(connection_id, connection_role_assignment_id)
+            headers = {'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.delete(url, headers=headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def get_connection_role_assignment(self, connection_id, connection_role_assignment_id):
+        """Returns the specified role assignment from the connection.
+        #### Parameters
+        ----
+        connection_id: str uuid
+            The connection id. You can take it from Fabric URL
+        connection_role_assignment_id: str uuid
+            The role assignment id.
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing the role assignment information.
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/connections/{}/roleAssignments/{}".format(connection_id, connection_role_assignment_id)
+            headers = {'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.get(url, headers=headers)
+            res.raise_for_status()
+            return res.json()
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e) 
+
+    def update_connection_role_assignment(self, connection_id, connection_role_assignment_id, role):
+        """Updates the specified role assignment from the connection.
+        #### Parameters
+        ----
+        connection_id: str uuid
+            The connection id. You can take it from Fabric URL
+        connection_role_assignment_id: str uuid
+            The role assignment id.
+        role: string
+            The role. { "Owner", "User", "UserWithReshare" }
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/connections/{}/roleAssignments/{}".format(connection_id, connection_role_assignment_id)
+            body = {
+                "role": role
+            }
+            headers = {'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.patch(url, data=json.dumps(body), headers=headers)
+            res.raise_for_status()            
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)

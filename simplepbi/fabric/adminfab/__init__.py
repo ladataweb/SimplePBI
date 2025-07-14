@@ -1,4 +1,4 @@
-'''.
+r'''.
            @@@@@@@@@@
        @@@@..........@@@@
     @@@         .        @@@
@@ -19,6 +19,7 @@
 import json
 import requests
 from simplepbi import utils
+import io
 import pandas as pd
 
 class Items():
@@ -104,7 +105,8 @@ class Items():
                 data.update(res.json())
                 data.pop('continuationToken')
             if return_pandas:
-                return pd.DataFrame(data)
+                js = json.dumps(data['value'])
+                return pd.DataFrame(pd.read_json(io.StringIO(js)))
             else:
                 return data
         except requests.exceptions.HTTPError as ex:
@@ -212,7 +214,8 @@ class Workspaces():
                 data.update(res.json())
                 data.pop('continuationToken')
             if return_pandas:
-                return pd.DataFrame(data)
+                js = json.dumps(data['value'])
+                return pd.DataFrame(pd.read_json(io.StringIO(js)))
             else:
                 return data
         except requests.exceptions.HTTPError as ex:
@@ -282,7 +285,8 @@ class Users():
                 data.update(res.json())
                 data.pop('continuationToken')
             if return_pandas:
-                return pd.DataFrame(data)
+                js = json.dumps(data['value'])
+                return pd.DataFrame(pd.read_json(io.StringIO(js)))
             else:
                 return data
         except requests.exceptions.HTTPError as ex:

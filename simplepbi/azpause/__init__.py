@@ -82,7 +82,7 @@ class Azpause():
         try:
             if resourceType == "FABRIC":
                 resource = "Microsoft.Fabric/capacities"
-                version = "2022-07-01-preview"
+                version = "2023-11-01"
             elif resourceType == "AAS":
                 resource = "Microsoft.AnalysisServices/servers"
                 version = "2017-08-01"
@@ -123,7 +123,7 @@ class Azpause():
         try:
             if resourceType == "FABRIC":
                 resource = "Microsoft.Fabric/capacities"
-                version = "2022-07-01-preview"
+                version = "2023-11-01"
             elif resourceType == "AAS":
                 resource = "Microsoft.AnalysisServices/servers"
                 version = "2017-08-01"

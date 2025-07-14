@@ -1,4 +1,4 @@
-'''.
+r'''.
            @@@@@@@@@@
        @@@@..........@@@@
     @@@         .        @@@
@@ -1325,15 +1325,15 @@ class Datasets():
                 		, "StructureModifiedTime", [StructureModifiedTime]
                 )
             '''
-            diccio = None
-            diccio = self.execute_queries_in_group(workspace_id, dataset_id, query)
+            diccio = "The request was limitated by Microsoft. Power Bi Rest API can't query INFO.DAX Functions for now. We are sorry about this."
+            #diccio = self.execute_queries_in_group(workspace_id, dataset_id, query)
             if diccio is None:
                 print("Error getting tables from dataset.")
             return diccio
         except requests.exceptions.HTTPError as ex:
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
-            print("Request exception: ", e)
+            print("Request exception: ", e)        
             
     def get_measures_from_dataset_in_group(self, workspace_id, dataset_id):
         """Get all measures from specific dataset in a workspace
@@ -1358,8 +1358,8 @@ class Datasets():
             EVALUATE 
                 	_measures_with_type
             '''
-            diccio = None
-            diccio = self.execute_queries_in_group(workspace_id, dataset_id, query)
+            diccio = "The request was limitated by Microsoft. Power Bi Rest API can't query INFO.DAX Functions for now. We are sorry about this."
+            #diccio = self.execute_queries_in_group(workspace_id, dataset_id, query)
             if diccio is None:
                 print("Error getting tables from dataset.")
             return diccio
@@ -1391,8 +1391,8 @@ class Datasets():
         		EVALUATE 
         			_columns_with_type
             '''
-            diccio = None
-            diccio = self.execute_queries_in_group(workspace_id, dataset_id, query)
+            diccio = "The request was limitated by Microsoft. Power Bi Rest API can't query INFO.DAX Functions for now. We are sorry about this."
+            #diccio = self.execute_queries_in_group(workspace_id, dataset_id, query)
             if diccio is None:
                 print("Error getting tables from dataset.")
             return diccio
@@ -1421,8 +1421,8 @@ class Datasets():
             EVALUATE 
                 INFO.ROLES()
             '''
-            diccio = None
-            diccio = self.execute_queries_in_group(workspace_id, dataset_id, query)
+            diccio = "The request was limitated by Microsoft. Power Bi Rest API can't query INFO.DAX Functions for now. We are sorry about this."
+            #diccio = self.execute_queries_in_group(workspace_id, dataset_id, query)
             if diccio is None:
                 print("Error getting tables from dataset.")
             return diccio
@@ -1451,6 +1451,9 @@ class Datasets():
         ----
         Returns a string of text of an html code to paste on a file or the literal file in the path specified
         """
+        if 1 == 1:
+            return "The request was limitated by Microsoft. Power Bi Rest API can't query INFO.DAX Functions for now. We are sorry about this."
+
         try:
             # Get Dataset details
             print("Getting Semantic Model Details...")
@@ -1896,6 +1899,9 @@ class Datasets():
         ----
         Returns a string of text of an html code to paste on a file or the literal file in the path specified
         """
+        if 1==1:
+            return "The request was limitated by Microsoft. Power Bi Rest API can't query INFO.DAX Functions for now. We are sorry about this."
+
         try:
             # Get Dataset details
             print("Getting Semantic Model Details...")

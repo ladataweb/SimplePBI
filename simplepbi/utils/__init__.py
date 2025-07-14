@@ -1,4 +1,4 @@
-'''.
+r'''.
            @@@@@@@@@@
        @@@@..........@@@@
     @@@         .        @@@
@@ -18,6 +18,7 @@
 
 import json
 import pandas as pd
+import io
 
 '''
 class Utils():
@@ -81,7 +82,7 @@ def to_pandas(response_dict, father_node):
         Returns the dict response converted in a Pandas DataFrame.
     '''
     js = json.dumps(response_dict[father_node])
-    df = pd.read_json(js)
+    df = pd.read_json(io.StringIO(js))
     return df 
 
 def get_artifact_from_scan_preview(scan_result, artifact):
