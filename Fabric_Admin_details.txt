@@ -30,20 +30,20 @@ CLASSES
         Items
         Users
         Workspaces
-    
+
     class Domains(builtins.object)
      |  Domains(token)
-     |  
+     |
      |  Simple library to use the api and obtain domains from it.
-     |  
+     |
      |  Methods defined here:
-     |  
+     |
      |  __init__(self, token)
      |      Create a simplePBI object to request domains API
      |      Args:
      |          token: String
      |              Bearer Token to use the Rest API
-     |  
+     |
      |  assign_domain_workspaces(self, domain_id, workspaces_id)
      |      Assigns the specified domain to the specified workspaces.
      |      ### Parameters
@@ -55,7 +55,7 @@ CLASSES
      |      ### Returns
      |      ----
      |          A successful response.
-     |  
+     |
      |  assign_domain_workspaces_principals(self, domain_id, principals)
      |      Assigns the specified domain to the specified principals.
      |      ### Parameters
@@ -67,7 +67,7 @@ CLASSES
      |      ### Returns
      |      ----
      |          A successful response.
-     |  
+     |
      |  assign_domains_workspaces(self, domain_id, capacities_id)
      |      Assigns the specified domain to the specified capacity.
      |      ### Parameters
@@ -79,7 +79,7 @@ CLASSES
      |      ### Returns
      |      ----
      |          A successful response.
-     |  
+     |
      |  create_domain(self, display_name, description=None, parent_domain_id=None)
      |      Creates a domain.
      |      ### Parameters
@@ -93,7 +93,7 @@ CLASSES
      |      ### Returns
      |      ----
      |          A successful response.
-     |  
+     |
      |  delete_domain(self, domain_id)
      |      Deletes the specified domain.
      |      ### Parameters
@@ -103,7 +103,7 @@ CLASSES
      |      ### Returns
      |      ----
      |          A successful response.
-     |  
+     |
      |  get_domain(self, domain_id)
      |      Returns the specified domain.
      |      ### Parameters
@@ -114,7 +114,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing the domain.
-     |  
+     |
      |  list_domain_workspaces(self, domain_id)
      |      Returns a list of workspaces for the specified domain.
      |      ### Parameters
@@ -125,7 +125,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the workspaces.
-     |  
+     |
      |  list_domains(self, non_empty_only=None)
      |      Returns a list of domains.
      |      ### Parameters
@@ -136,7 +136,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the domains.
-     |  
+     |
      |  role_assignments_bulk_assign(self, domain_id, role, principals)
      |      Assigns the specified role to the specified principals in the specified domain.
      |      ### Parameters
@@ -150,7 +150,7 @@ CLASSES
      |      ### Returns
      |      ----
      |          A successful response.
-     |  
+     |
      |  role_assignments_bulk_unassign(self, domain_id, role, principals)
      |      Unassigns the specified role from the specified principals in the specified domain.
      |      ### Parameters
@@ -164,7 +164,7 @@ CLASSES
      |      ### Returns
      |      ----
      |          A successful response.
-     |  
+     |
      |  unassign_all_domain_workspaces(self, domain_id)
      |      Unassigns the specified domain from all workspaces.
      |      ### Parameters
@@ -174,7 +174,7 @@ CLASSES
      |      ### Returns
      |      ----
      |          A successful response.
-     |  
+     |
      |  unassign_domain_workspaces(self, domain_id, workspaces_id)
      |      Unassigns the specified domain from the specified workspaces.
      |      ### Parameters
@@ -186,7 +186,7 @@ CLASSES
      |      ### Returns
      |      ----
      |          A successful response.
-     |  
+     |
      |  update_domain(self, domain_id, contributors_scope, display_name, description=None)
      |      Updates the specified domain.
      |      ### Parameters
@@ -202,29 +202,29 @@ CLASSES
      |      ### Returns
      |      ----
      |          A successful response.
-     |  
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
-     |  
+     |
      |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
+     |      dictionary for instance variables
+     |
      |  __weakref__
-     |      list of weak references to the object (if defined)
-    
+     |      list of weak references to the object
+
     class Items(builtins.object)
      |  Items(token)
-     |  
+     |
      |  Simple library to use the  api and obtain admin requests from it.
-     |  
+     |
      |  Methods defined here:
-     |  
+     |
      |  __init__(self, token)
      |      Create a simplePBI object to request fabric admin API
      |      Args:
      |          token: String
      |              Bearer Token to use the Rest API
-     |  
+     |
      |  get_item(self, workspace_id, item_id, type)
      |      Returns the specified item from the specified workspace.
      |      ### Parameters
@@ -233,7 +233,7 @@ CLASSES
      |          The workspace id. You can take it from PBI Service URL
      |      item_id: str uuid
      |          The item id. You can take it from PBI Service URL
-     |      type: str 
+     |      type: str
      |          The type of the item. When querying for the following types, this parameter is required: { Report, Dashboard, SemanticModel, App, Dataflow }
      |      ### Returns
      |      ----
@@ -243,7 +243,7 @@ CLASSES
      |      ----
      |      This API is supported for a number of item types, find the supported item types here.
      |      https://learn.microsoft.com/en-us/rest/api/fabric/articles/item-management/item-management-overview
-     |  
+     |
      |  list_item_access_details(self, workspace_id, item_id, type=None)
      |      Returns a list of users (including groups and service principals) and lists their workspace roles.
      |      ### Parameters
@@ -258,7 +258,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the users who have access to the item.
-     |  
+     |
      |  list_items(self, workspace_id=None, capacity_id=None, type=None, status=None, return_pandas=False)
      |      Returns a list of items for the specified workspace, capacity, type, and status.
      |      ### Parameters
@@ -279,29 +279,29 @@ CLASSES
      |      ----
      |      This API is supported for a number of item types, find the supported item types here.
      |      https://learn.microsoft.com/en-us/rest/api/fabric/articles/item-management/item-management-overview
-     |  
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
-     |  
+     |
      |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
+     |      dictionary for instance variables
+     |
      |  __weakref__
-     |      list of weak references to the object (if defined)
-    
+     |      list of weak references to the object
+
     class Users(builtins.object)
      |  Users(token)
-     |  
+     |
      |  Simple library to use the api and obtain users from it.
-     |  
+     |
      |  Methods defined here:
-     |  
+     |
      |  __init__(self, token)
      |      Create a simplePBI object to request fabric users API
      |      Args:
      |          token: String
      |              Bearer Token to use the Rest API
-     |  
+     |
      |  list_access_entities(self, user_id, type=None, return_pandas=False)
      |      Returns a list of access entities for the specified user.
      |      ### Parameters
@@ -314,29 +314,29 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the access entities.
-     |  
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
-     |  
+     |
      |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
+     |      dictionary for instance variables
+     |
      |  __weakref__
-     |      list of weak references to the object (if defined)
-    
+     |      list of weak references to the object
+
     class Workspaces(builtins.object)
      |  Workspaces(token)
-     |  
+     |
      |  Simple library to use the api and obtain workspaces from it.
-     |  
+     |
      |  Methods defined here:
-     |  
+     |
      |  __init__(self, token)
      |      Create a simplePBI object to request fabric core workspaces API
      |      Args:
      |          token: String
      |              Bearer Token to use the Rest API
-     |  
+     |
      |  get_workspace(self, workspace_id)
      |      Returns the specified workspace.
      |      #### Parameters
@@ -347,7 +347,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a workspace.
-     |  
+     |
      |  list_workspace_access_details(self, workspace_id)
      |      Returns a list of users (including groups and service principals) and lists their workspace roles.
      |      ### Parameters
@@ -358,7 +358,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the users who have access to the workspace.
-     |  
+     |
      |  list_workspaces(self, capacity_id=None, name=None, state=None, type=None, return_pandas=False)
      |      Returns a list of workspaces
      |      ### Parameters
@@ -375,16 +375,16 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the workspaces.
-     |  
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
-     |  
+     |
      |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
+     |      dictionary for instance variables
+     |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
 FILE
-    c:\users\ibarrau\documents\github\simplepbi\simplepbi\fabric\adminfab\__init__.py
+    c:\users\ignaciobarrau\documents\github\simplepbi\simplepbi\fabric\adminfab\__init__.py
 

@@ -27,20 +27,20 @@ PACKAGE CONTENTS
 CLASSES
     builtins.object
         Admin
-    
+
     class Admin(builtins.object)
      |  Admin(token)
-     |  
+     |
      |  Simple library to use the Power BI api and obtain datasets from it.
-     |  
+     |
      |  Methods defined here:
-     |  
+     |
      |  __init__(self, token)
      |      Create a simplePBI object to request admin API
      |      Args:
      |          token: String
      |              Bearer Token to use the Power Bi Rest API
-     |  
+     |
      |  add_encryption_key_preview(self, activate, isDefault, keyVaultKeyIdentifier, name)
      |      Adds an encryption key for Power BI workspaces assigned to a capacity.
      |      *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
@@ -56,11 +56,11 @@ CLASSES
      |      keyVaultKeyIdentifier: str
      |          The URI that uniquely specifies an encryption key in Azure Key Vault.
      |      name:
-     |          The name of the encryption key        
+     |          The name of the encryption key
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  add_user_to_group(self, workspace_id, groupUserAccessRight, emailAddress, displayName=None, graphId=None, identifier=None, principalType=None)
      |      Grants user permissions to the specified workspace.
      |      This API call only supports updating workspaces in the new workspace experience and adding a user principle.
@@ -85,7 +85,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  assign_workspaces_to_capacity_preview(self, tagetCapacityObjectId, workspacesToAssign)
      |      Assigns the specified workspaces to the specified Premium capacity.
      |      *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
@@ -94,7 +94,7 @@ CLASSES
      |      ### Request Body
      |      ----
      |      capacityMigrationAssignments: Assignment contract for migrating workspaces to premium capacity as tenant admin
-     |      
+     |
      |      targetCapacityObjectId: str
      |          The premium capacity ID
      |      workspacesToAssign: str[]
@@ -102,7 +102,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  delete_user_from_group(self, workspace_id, user)
      |      Removes user permissions from the specified workspace.
      |      This API call only supports updating workspaces in the new workspace experience and adding a user principle.
@@ -115,10 +115,10 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  delete_user_from_pipeline(self, pipeline_id, identifier)
      |      Removes user permissions from a specified deployment pipeline.
-     |      
+     |
      |      ### Parameters
      |      ----
      |      pipeline_id: str uuid
@@ -128,7 +128,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  export_dataflow(self, dataflow_id)
      |      Exports the definition for the specified dataflow to a JSON file.
      |      ### Parameters
@@ -139,24 +139,24 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the metadata built in the dataflow.
-     |  
-     |  get_activity_events_last_30_days_preview(self, filter_event)
-     |      Returns a pandas dataframe of audit activity events for the last 30 days at the tenant.
-     |      *** THIS can take a several minutes because it loops 30 days and pagination ***
+     |
+     |  get_activity_events_last_28_days_preview(self, filter_event=None)
+     |      Returns a pandas dataframe of audit activity events for the last 28 days at the tenant.
+     |      *** THIS can take a several minutes because it loops 28 days and pagination ***
      |      *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
-     |      The continuation token is automtaically used to get all the results in the last 30 days starting yesterday.        
+     |      The continuation token is automtaically used to get all the results in the last 28 days starting yesterday.
      |      ### Parameter
      |      ----
      |      filter_event: query str
      |          Filters the results based on a boolean condition, using 'Activity', 'UserId', or both properties. Supports only 'eq' and 'and' operators.
-     |          Ej: filter_event = "UserId eq 'ibarrau@ladataweb.com.ar' and Activity eq 'GetRefreshHistory'"        
+     |          Ej: filter_event = "UserId eq 'ibarrau@ladataweb.com.ar' and Activity eq 'GetRefreshHistory'"
      |      ### Returns
      |      ----
      |      Returns a Pandas dataframe concatenating iterations
      |      ### Limitations
      |      ----
      |      Maximum 200 requests per hour.
-     |  
+     |
      |  get_activity_events_preview(self, activity_date=None, return_pandas=False, filter_event=None)
      |      Returns a dict of pandas dataframe of audit activity events for a tenant.
      |      *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
@@ -177,7 +177,7 @@ CLASSES
      |      ### Limitations
      |      ----
      |      Maximum 200 requests per hour.
-     |  
+     |
      |  get_apps(self, top)
      |      Returns a list of apps for the organization.
      |      ### Parameters
@@ -188,7 +188,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the apps in the tenant.
-     |  
+     |
      |  get_apps_users(self, app_id)
      |      Returns a list of users that have access to the specified app (Preview).
      |      ### Parameters
@@ -199,13 +199,13 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the users in the app.
-     |  
+     |
      |  get_available_features(self)
      |      Returns a list of available features for the user.
      |      ### Returns
      |      -------
      |      200 ok. A dict with the features.
-     |  
+     |
      |  get_capacities(self, expand=None)
      |      Returns a list of capacities for the organization.
      |      ### Parameters
@@ -216,7 +216,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the capacities in the tenant.
-     |  
+     |
      |  get_capacities_users(self, capacity_id)
      |      Returns a list of users that have access to the specified capacitie (Preview).
      |      ### Parameters
@@ -227,7 +227,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the users in the capacity.
-     |  
+     |
      |  get_dashboard_subscriptions_preview(self, dashboard_id)
      |      Returns a list of subscriptions along with subscribees that the dashboard subscribed to. This is a preview API call.
      |      ### Parameters
@@ -241,7 +241,7 @@ CLASSES
      |      ### Limitations
      |      ----
      |      Maximum 200 requests per hour.
-     |  
+     |
      |  get_dashboards(self, expand=None, filter=None, skip=None, top=None)
      |      Returns a list of dashboards for the organization.
      |      ### Parameters
@@ -250,15 +250,15 @@ CLASSES
      |          Expands related entities inline, receives a comma-separated list of data types. Supported: users, reports, dashboards, datasets, dataflows, workbooks
      |      filter: string
      |          Filters the results based on a boolean condition
-     |      skip: int 
+     |      skip: int
      |          Skips the first n results. Use with top to fetch results beyond the first 5000.
      |      top: int
-     |          Returns only the first n results. 
+     |          Returns only the first n results.
      |      ### Returns
      |      ----
      |      Dict:
      |          A dictionary containing all the dashboards in the tenant.
-     |  
+     |
      |  get_dashboards_in_group(self, workspace_id, filter=None, skip=None, top=None)
      |      Returns a list of dashboards from the specified workspace.
      |      ### Parameters
@@ -267,7 +267,7 @@ CLASSES
      |          The Power Bi workspace id. You can take it from PBI Service URL
      |      filter: string
      |          Filters the results based on a boolean condition
-     |      skip: int 
+     |      skip: int
      |          Skips the first n results. Use with top to fetch results beyond the first 5000.
      |      top: int
      |          Returns only the first n results. This parameter is mandatory and must be in the range of 1-5000.
@@ -275,7 +275,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the dashboards in the workspace.
-     |  
+     |
      |  get_dashboards_users(self, dashboard_id)
      |      Returns a list of users that have access to the specified dashboard (Preview).
      |      ### Parameters
@@ -286,7 +286,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the users in the dashboard.
-     |  
+     |
      |  get_dataflow_datasources(self, dataflow_id)
      |      Returns a list of datasources for the specified dataflow.
      |      ### Parameters
@@ -297,14 +297,14 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the datasources in the dataflow.
-     |  
+     |
      |  get_dataflows(self, filter=None, skip=None, top=None)
      |      Returns a list of dataflows for the organization.
      |      ### Parameters
      |      ----
      |      filter: string
      |          Filters the results based on a boolean condition
-     |      skip: int 
+     |      skip: int
      |          Skips the first n results. Use with top to fetch results beyond the first 5000.
      |      top: int
      |          Returns only the first n results. This parameter is mandatory and must be in the range of 1-5000.
@@ -312,7 +312,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the dataflows in the tenant.
-     |  
+     |
      |  get_dataflows_in_group(self, workspace_id, filter=None, skip=None, top=None)
      |      Returns a list of dataflows from the specified workspace.
      |      ### Parameters
@@ -321,7 +321,7 @@ CLASSES
      |          The Power Bi workspace id. You can take it from PBI Service URL
      |      filter: string
      |          Filters the results based on a boolean condition
-     |      skip: int 
+     |      skip: int
      |          Skips the first n results. Use with top to fetch results beyond the first 5000.
      |      top: int
      |          Returns only the first n results. This parameter is mandatory and must be in the range of 1-5000.
@@ -329,7 +329,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the dataflows in the workspace.
-     |  
+     |
      |  get_dataflows_users(self, dataflow_id)
      |      Returns a list of users that have access to the specified dataflow (Preview).
      |      ### Parameters
@@ -340,23 +340,23 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the users in the dataflow.
-     |  
+     |
      |  get_dataset_roles_in_group(self, workspace_id, dataset_id)
      |      Return a list of roles (RLS) at a dataset from a workspace. It uses Scanner API
      |      ### Parameters
      |      ----
-     |      workspace_id: uuid 
+     |      workspace_id: uuid
      |          The Power Bi Workspace id. You can take it from PBI Service URL
      |      dataset_id: uuid
      |          The Power Bi Semantic model id. You can take it from PBI Service URL
      |      ### Limitations
      |      ----
-     |      The list of workspaces can't contain more than 100 workspaces.        
+     |      The list of workspaces can't contain more than 100 workspaces.
      |      ### Returns
      |      ----
      |      Dict:
      |          A dictionary containing all the roles in datasets in workspaces.
-     |  
+     |
      |  get_dataset_to_dataflows_links_in_group(self, workspace_id)
      |      Returns a list of upstream dataflows for datasets from the specified workspace.
      |      ### Parameters
@@ -367,7 +367,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the upstream dataflows in the dataset from a workspace
-     |  
+     |
      |  get_dataset_users(self, dataset_id)
      |      Returns a list of users that have access to the specified dataset (Preview).
      |      ### Parameters
@@ -378,14 +378,14 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the users in the dataset.
-     |  
+     |
      |  get_datasets(self, filter=None, skip=None, top=None)
      |      Returns a list of datasets for the organization..
      |      ### Parameters
      |      ----
      |      filter: string
      |          Filters the results based on a boolean condition
-     |      skip: int 
+     |      skip: int
      |          Skips the first n results. Use with top to fetch results beyond the first 5000.
      |      top: int
      |          Returns only the first n results. This parameter is mandatory and must be in the range of 1-5000.
@@ -393,7 +393,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the datasets in the tenant.
-     |  
+     |
      |  get_datasets_in_group(self, workspace_id, expand=None, filter=None, skip=None, top=None)
      |      Returns a list of datasets from the specified workspace.
      |      ### Parameters
@@ -404,7 +404,7 @@ CLASSES
      |          Expands related entities inline, receives a comma-separated list of data types. Supported: users, reports, dashboards, datasets, dataflows, workbooks
      |      filter: string
      |          Filters the results based on a boolean condition
-     |      skip: int 
+     |      skip: int
      |          Skips the first n results. Use with top to fetch results beyond the first 5000.
      |      top: int
      |          Returns only the first n results. This parameter is mandatory and must be in the range of 1-5000.
@@ -412,7 +412,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the datasets in the workspace.
-     |  
+     |
      |  get_datasets_roles_in_groups(self, workspace_id_list)
      |      Returns a list of workspaces and datasets with their roles (RLS). It uses Scanner API
      |      ### Parameters
@@ -421,12 +421,12 @@ CLASSES
      |          The Power Bi Workspace id. You can take it from PBI Service URL like ['xxx-xxx-xxx-xxx', 'yyy-yyy-yyy-yyy']
      |      ### Limitations
      |      ----
-     |      The list of workspaces can't contain more than 100 workspaces.        
+     |      The list of workspaces can't contain more than 100 workspaces.
      |      ### Returns
      |      ----
      |      Dict:
      |          A dictionary containing all the roles in datasets in workspaces.
-     |  
+     |
      |  get_datasources(self, dataset_id)
      |      Returns a list of datasources for the specified dataset.
      |      ### Parameters
@@ -437,7 +437,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the datasources in the dataset.
-     |  
+     |
      |  get_encryption_keys(self, expand=None, filter=None, skip=None, top=None)
      |      Returns the encryption keys for the tenant.
      |      ### Parameters
@@ -446,7 +446,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the refreshables in the tenant.
-     |  
+     |
      |  get_group(self, group_id, expand=None)
      |      Returns a workspace for the organization.
      |      ### Parameters
@@ -459,7 +459,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the workspaces in the organization.
-     |  
+     |
      |  get_groups(self, top, expand=None, filter=None, skip=None)
      |      Returns a workspace for the organization.
      |      ### Parameters
@@ -470,13 +470,13 @@ CLASSES
      |          Expands related entities inline, receives a comma-separated list of data types. Supported: users, reports, dashboards, datasets, dataflows, workbooks
      |      filter: string
      |          Filters the results based on a boolean condition
-     |      skip: int 
+     |      skip: int
      |          Skips the first n results. Use with top to fetch results beyond the first 5000.
      |      ### Returns
      |      ----
      |      Dict:
      |          A dictionary containing all the workspaces in the organization.
-     |  
+     |
      |  get_groups_users(self, group_id)
      |      Returns a list of users that have access to the specified workspace. This is a preview API call.
      |      ### Parameters
@@ -487,7 +487,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the users in the workspace.
-     |  
+     |
      |  get_imports(self, expand=None, filter=None, skip=None, top=None)
      |      Returns a list of imports for the organization.
      |      ### Parameters
@@ -496,7 +496,7 @@ CLASSES
      |          Expands related entities inline, receives a comma-separated list of data types. Supported: users, reports, imports, datasets, dataflows, workbooks
      |      filter: string
      |          Filters the results based on a boolean condition
-     |      skip: int 
+     |      skip: int
      |          Skips the first n results. Use with top to fetch results beyond the first 5000.
      |      top: int
      |          Returns only the first n results. This parameter is mandatory and must be in the range of 1-5000.
@@ -504,7 +504,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the imports in the tenant.
-     |  
+     |
      |  get_modified_workspaces_preview(self, excludePersonalWorkspaces=True, modifiedSince=None)
      |      Gets a list of workspace IDs in the organization. This is a preview API call.
      |      *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
@@ -514,12 +514,12 @@ CLASSES
      |          Whether to exclude personal workspaces
      |      modifiedSince: str-datetime
      |          format %Y-%m-%dT%H:%M:00.000Z
-     |          
+     |
      |      ### Returns
      |      ----
      |      Dict:
      |          Returns a list of list that contains groups of maximum 100 workspaces.
-     |  
+     |
      |  get_orphan_dataflows_preview(self)
      |      Returns a list of all dataflows that are not used by a dataset.
      |          *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
@@ -530,7 +530,7 @@ CLASSES
      |      ----
      |      List:
      |          A list containing all the dataflows without a dataset connected.
-     |  
+     |
      |  get_pipelines(self, expand=None, filter=None, skip=None, top=None)
      |      Returns a list of pipelines for the organization.
      |      ### Parameters
@@ -539,7 +539,7 @@ CLASSES
      |          Expands related entities inline, receives a comma-separated list of data types. Supported: users, reports, pipelines, datasets, dataflows, workbooks
      |      filter: string
      |          Filters the results based on a boolean condition
-     |      skip: int 
+     |      skip: int
      |          Skips the first n results. Use with top to fetch results beyond the first 5000.
      |      top: int
      |          Returns only the first n results. This parameter is mandatory and must be in the range of 1-5000.
@@ -547,7 +547,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the pipelines in the tenant.
-     |  
+     |
      |  get_pipelines_users(self, pipeline_id)
      |      Returns a list of users that have access to the specified pipeline (Preview).
      |      ### Parameters
@@ -558,7 +558,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the users in the pipeline.
-     |  
+     |
      |  get_refreshable_capacity(self, capacity_id, refreshable_id, expand=None)
      |      Returns the specified refreshable for the specified capacity that the user has access to.
      |      Power BI retains a seven-day refresh history for each dataset, up to a maximum of sixty refreshes.
@@ -574,7 +574,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the refreshables in the capacity.
-     |  
+     |
      |  get_refreshables(self, expand=None, filter=None, skip=None, top=None)
      |      Returns a list of refreshables for the organization.
      |      ### Parameters
@@ -585,13 +585,13 @@ CLASSES
      |          Expands related entities inline, receives a comma-separated list of data types. Supported: users, reports, refreshables, datasets, dataflows, workbooks
      |      filter: string
      |          Filters the results based on a boolean condition
-     |      skip: int 
+     |      skip: int
      |          Skips the first n results. Use with top to fetch results beyond the first 5000.
      |      ### Returns
      |      ----
      |      Dict:
      |          A dictionary containing all the refreshables in the tenant.
-     |  
+     |
      |  get_refreshables_capacity(self, capacity_id, top, expand=None, filter=None, skip=None)
      |      Returns a list of refreshables for the specified capacity that the user has access to.
      |      Power BI retains a seven-day refresh history for each dataset, up to a maximum of sixty refreshes.
@@ -605,13 +605,13 @@ CLASSES
      |          Expands related entities inline, receives a comma-separated list of data types. Supported: users, reports, dashboards, datasets, dataflows, workbooks
      |      filter: string
      |          Filters the results based on a boolean condition
-     |      skip: int 
+     |      skip: int
      |          Skips the first n results. Use with top to fetch results beyond the first 5000.
      |      ### Returns
      |      ----
      |      Dict:
      |          A dictionary containing all the users in the capacity.
-     |  
+     |
      |  get_report_subscriptions_preview(self, report_id)
      |      Returns a list of subscriptions along with subscribees that the report subscribed to. This is a preview API call.
      |      ### Parameters
@@ -625,14 +625,14 @@ CLASSES
      |      ### Limitations
      |      ----
      |      Maximum 200 requests per hour.
-     |  
+     |
      |  get_reports(self, filter=None, skip=None, top=None)
      |      Returns a list of reports for the organization.
      |      ### Parameters
      |      ----
      |      filter: string
      |          Filters the results based on a boolean condition
-     |      skip: int 
+     |      skip: int
      |          Skips the first n results. Use with top to fetch results beyond the first 5000.
      |      top: int
      |          Returns only the first n results. This parameter is mandatory and must be in the range of 1-5000.
@@ -640,7 +640,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the reports in the tenant.
-     |  
+     |
      |  get_reports_in_group(self, workspace_id, filter=None, skip=None, top=None)
      |      Returns a list of reports from the specified workspace.
      |      ### Parameters
@@ -649,7 +649,7 @@ CLASSES
      |          The Power Bi workspace id. You can take it from PBI Service URL
      |      filter: string
      |          Filters the results based on a boolean condition
-     |      skip: int 
+     |      skip: int
      |          Skips the first n results. Use with top to fetch results beyond the first 5000.
      |      top: int
      |          Returns only the first n results. This parameter is mandatory and must be in the range of 1-5000.
@@ -657,7 +657,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the reports in the workspace.
-     |  
+     |
      |  get_reports_users(self, report_id)
      |      Returns a list of users that have access to the specified report (Preview).
      |      ### Parameters
@@ -668,31 +668,31 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the users in the report.
-     |  
+     |
      |  get_scan_result_preview(self, scan_id)
      |      Gets the scan result for the specified scan. This is a preview API call.
      |          *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
      |      ### Parameters
      |      ----
      |      scan_id: str uui
-     |          The scan id obtained from posting workspaces info        
+     |          The scan id obtained from posting workspaces info
      |      ### Returns
      |      ----
      |      str:
      |          Returns the status of the scan. Succeeded means you are ready to request scans.
-     |  
+     |
      |  get_scan_status_preview(self, scan_id)
      |      Gets the scan status for the specified scan. This is a preview API call.
      |          *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
      |      ### Parameters
      |      ----
      |      scan_id: str uui
-     |          The scan id obtained from posting workspaces info        
+     |          The scan id obtained from posting workspaces info
      |      ### Returns
      |      ----
      |      str:
      |          Returns the status of the scan. Succeeded means you are ready to request scans.
-     |  
+     |
      |  get_tenant_settings(self)
      |      Returns a list of the tenant settings.
      |      ### Returns
@@ -702,7 +702,7 @@ CLASSES
      |      ### Limitations
      |      ----
      |      Maximum 200 requests per hour.
-     |  
+     |
      |  get_tiles(self, dashboard_id)
      |      Returns a list of tiles within the specified dashboard.
      |      ### Parameters
@@ -713,7 +713,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the tiles in the dashboard.
-     |  
+     |
      |  get_unused_artifacts(self, workspace_id)
      |      Returns a list of artifacts from the specified workspace with last used date.
      |      ### Parameters
@@ -724,7 +724,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the artifacts in the workspace.
-     |  
+     |
      |  get_upstream_dataflows_in_group(self, workspace_id, dataflow_id)
      |      Returns a list of upstream dataflows for the specified dataflow.
      |      ### Parameters
@@ -737,11 +737,11 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the dataflows in the workspace.
-     |  
+     |
      |  get_user_artifact_access_preview(self, userGraphId, return_pandas=False)
      |      Returns a list of artifacts that the given user have access to (Preview).
      |      *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
-     |      
+     |
      |      ### Parameters
      |      ----
      |      userGraphId: str uuid
@@ -754,7 +754,7 @@ CLASSES
      |      ### Limitations
      |      ----
      |      Maximum 200 requests per hour.
-     |  
+     |
      |  get_user_subscriptions_preview(self, user_id)
      |      Returns a list of subscriptions that the given user has subscribed to (preview).
      |      ### Parameters
@@ -768,7 +768,7 @@ CLASSES
      |      ### Limitations
      |      ----
      |      Maximum 200 requests per hour.
-     |  
+     |
      |  get_widely_shared_artifacts_links_shared_to_whole_organization(self)
      |      Returns a list of artifacts shared to the whole organization through links.
      |      ### Returns
@@ -778,7 +778,7 @@ CLASSES
      |      ### Limitations
      |      ----
      |      Maximum 200 requests per hour.
-     |  
+     |
      |  get_widely_shared_artifacts_published_to_web(self)
      |      Returns a list of artifacts shared through published to web.
      |      ### Returns
@@ -788,20 +788,20 @@ CLASSES
      |      ### Limitations
      |      ----
      |      Maximum 200 requests per hour.
-     |  
+     |
      |  post_workspace_info(self, workspaces, lineage=True, datasourceDetails=True, datasetSchema=True, datasetExpressions=True, getArtifactUsers=True)
      |      Initiates a call to receive metadata for the requested list of workspaces. This is a preview API call.
      |      *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
      |      ### Parameters
      |      ----
      |      ### Request Body
-     |      ----        
+     |      ----
      |      workspaces: str[]
      |          List of the workspace IDs to ask for scan (it can't contain more than 100 workspaces)
      |      ### Returns
      |      ----
      |      Scan id in uuid format. 202 OK
-     |  
+     |
      |  restore_deleted_group(self, workspace_id, emailAddress, name=None)
      |      Restores a deleted workspace.
      |      This API call only supports restoring workspaces in the new workspace experience.
@@ -820,7 +820,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  rotate_encryption_key_preview(self, tenantKeyId, keyVaultKeyIdentifier)
      |      Adds an encryption key for Power BI workspaces assigned to a capacity.
      |      *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
@@ -829,26 +829,26 @@ CLASSES
      |      tenantKeyId: str uuid
      |          The tenant key ID
      |      ### Request Body
-     |      ----        
+     |      ----
      |      keyVaultKeyIdentifier: str
      |          The URI that uniquely specifies an encryption key in Azure Key Vault.
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  unassign_workspaces_from_capacity_preview(self, workspacesToAssign)
      |      Unassigns the specified workspaces from capacity.
      |      *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
      |      ### Parameters
      |      ----
      |      ### Request Body
-     |      ----        
+     |      ----
      |      workspacesToAssign: str[]
      |          List of the workspace IDs to be migrated to premium capacity
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  update_group_preview(self, workspace_id, capacityId=None, dashboards=None, dataflowStorageId=None, dataflows=None, datasets=None, description=None, isOnDedicatedCapacity=None, isReadOnly=None, name=None, pipelineId=None, reports=None, state=None, typee=None, users=None, workbooks=None)
      |      Updates the properties of the specified workspace.
      |      *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
@@ -894,10 +894,10 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  update_user_in_pipeline(self, pipeline_id, identifier, principalType, accessRight)
      |      Grants user permissions to a specified deployment pipeline.
-     |      
+     |
      |      ### Parameters
      |      ----
      |      pipeline_id:
@@ -913,16 +913,16 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
-     |  
+     |
      |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
+     |      dictionary for instance variables
+     |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
 FILE
-    c:\users\ibarrau\documents\github\simplepbi\simplepbi\admin\__init__.py
+    c:\users\ignaciobarrau\documents\github\simplepbi\simplepbi\admin\__init__.py
 

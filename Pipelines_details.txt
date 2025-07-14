@@ -27,21 +27,21 @@ PACKAGE CONTENTS
 CLASSES
     builtins.object
         Pipelines
-    
+
     class Pipelines(builtins.object)
      |  Pipelines(token)
-     |  
+     |
      |  Simple library to use the Power BI api and obtain pipelines from it. The user must have administrator rights or assign permissions on the pipeline.
-     |  
+     |
      |  Methods defined here:
-     |  
+     |
      |  __init__(self, token)
      |      Create a simplePBI object to request pipelines API. The user must have administrator rights or assign permissions on the pipeline.
      |      *** THIS OBJECT IS IN PREVIEW IN SIMPLEPBI ***
      |      Args:
      |          token: String
      |              Bearer Token to use the Power Bi Rest API
-     |  
+     |
      |  assign_workspace_to_pipeline_preview(self, pipeline_id, stageOrder, workspace_id)
      |      Assigns the specified workspace to the specified deployment pipeline stage.
      |      ### Parameters
@@ -63,7 +63,7 @@ CLASSES
      |      You must be an admin of the specified workspace.
      |      The specified workspace isn't assigned to any other deployment pipeline.
      |      This operation will fail if there's an active deployment operation.
-     |  
+     |
      |  create_pipeline_preview(self, displayName, description=None)
      |      Creates a new deployment pipeline.
      |      ### Parameters
@@ -78,7 +78,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 201 Created OK
-     |  
+     |
      |  delete_pipeline_preview(self, pipeline_id)
      |      Deletes the specified deployment pipeline.
      |      ### Parameters
@@ -88,7 +88,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  delete_pipeline_user_preview(self, pipeline_id, identifier)
      |      Removes user permissions from the specified deployment pipeline.
      |      ### Parameters
@@ -100,7 +100,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  deploy_all_preview(self, pipeline_id, sourceStageOrder, isBackwardDeployment=None, newWorkspace=None, options=None, updateAppSettings=None)
      |      Deploys all supported items from the source stage of the specified deployment pipeline. To learn about items that aren't supported in deployment pipelines, see Unsupported items.
      |      ### Parameters
@@ -121,11 +121,11 @@ CLASSES
      |          Update org app in the target workspace settings
      |      ### Returns
      |      ----
-     |      Response object from requests library. 202 Accepted OK     
+     |      Response object from requests library. 202 Accepted OK
      |      ### Limitations
      |      ----
      |      Maximum 300 deployed items per request.
-     |  
+     |
      |  get_pipeline(self, pipeline_id)
      |      Returns the specified deployment pipeline.
      |      ### Parameters
@@ -136,7 +136,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the pipelines in the organization.
-     |  
+     |
      |  get_pipeline_operation(self, pipeline_id, operation_id)
      |      Returns the details of the specified deploy operation performed on the specified deployment pipeline, including the deployment execution plan.
      |      ### Parameters
@@ -149,7 +149,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing an operation of the pipeline in the organization.
-     |  
+     |
      |  get_pipeline_operations(self, pipeline_id)
      |      Returns a list of the up-to-20 most recent deploy operations performed on the specified deployment pipeline.
      |      ### Parameters
@@ -160,7 +160,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing most recent operations of the deploy pipelines in the organization.
-     |  
+     |
      |  get_pipeline_stage_artifacts(self, pipeline_id, stageOrder)
      |      Returns the supported items from the workspace assigned to the specified stage of the specified deployment pipeline. To learn about items that aren't supported in deployment pipelines, see Unsupported items.
      |      ### Parameters
@@ -173,7 +173,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing items from the workspace assigned to the specified stage of the specified deployment pipeline.
-     |  
+     |
      |  get_pipeline_stages(self, pipeline_id)
      |      Returns the stages of the specified deployment pipeline.
      |      ### Parameters
@@ -184,7 +184,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing stages of a deploy pipeline.
-     |  
+     |
      |  get_pipeline_users(self, pipeline_id)
      |      Returns a list of users that have access to the specified deployment pipeline.
      |      ### Parameters
@@ -195,7 +195,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a list of users with access to the deploy pipeline.
-     |  
+     |
      |  get_pipelines(self)
      |      Returns a list of deployment pipelines that the user has access to.
      |      ### Parameters
@@ -205,7 +205,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the pipelines in the organization.
-     |  
+     |
      |  selective_deploy_preview(self, pipeline_id, sourceStageOrder, dashboards, dataflows, datamarts, datasets, isBackwardDeployment=None, newWorkspace=None, options=None, updateAppSettings=None)
      |      Deploys the specified items from the source stage of the specified deployment pipeline.
      |      ### Parameters
@@ -234,11 +234,11 @@ CLASSES
      |          Update org app in the target workspace settings
      |      ### Returns
      |      ----
-     |      Response object from requests library. 202 Accepted OK     
+     |      Response object from requests library. 202 Accepted OK
      |      ### Limitations
      |      ----
      |      Maximum 300 deployed items per request.
-     |  
+     |
      |  unassign_workspace_preview(self, pipeline_id, stageOrder)
      |      Unassigns the workspace from the specified stage in the specified deployment pipeline.
      |      ### Parameters
@@ -250,7 +250,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  update_pipeline_preview(self, pipeline_id, displayName, description=None)
      |      Updates the specified deployment pipeline.
      |      ### Parameters
@@ -266,7 +266,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  update_pipeline_user_preview(self, pipeline_id, identifier, principalType, accessRight)
      |      Updates the specified deployment pipeline.
      |      ### Parameters
@@ -284,16 +284,16 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
-     |  
+     |
      |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
+     |      dictionary for instance variables
+     |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
 FILE
-    c:\users\ibarrau\documents\github\simplepbi\simplepbi\pipelines\__init__.py
+    c:\users\ignaciobarrau\documents\github\simplepbi\simplepbi\pipelines\__init__.py
 

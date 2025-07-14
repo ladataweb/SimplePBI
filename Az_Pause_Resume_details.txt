@@ -27,17 +27,17 @@ PACKAGE CONTENTS
 CLASSES
     builtins.object
         Azpause
-    
+
     class Azpause(builtins.object)
      |  Azpause(tenant_id, client_id, client_secret)
-     |  
+     |
      |  Simple library to use the Azure management resource to pause or resume AAS and PBI Embedded.
-     |  
+     |
      |  Methods defined here:
-     |  
+     |
      |  __init__(self, tenant_id, client_id, client_secret)
      |      Create a SimplePBI azpause object to get authentication token and methods.
-     |      
+     |
      |      Service principal authentication (set use_service_principal to True)
      |          Provide:    tenant_id
      |                      client_id
@@ -49,7 +49,7 @@ CLASSES
      |              Client ID (also known as App ID)
      |          client_secret : String
      |              The secret to authenticate with the Client ID.
-     |  
+     |
      |  pause_resource(self, subscriptionId, resourceGroupName, resourceType, resourceName)
      |      Function to pause Azure Analysis Services or PowerBi Embedded capacity
      |      ### Parameters
@@ -69,7 +69,7 @@ CLASSES
      |      ### Limitations
      |      ----
      |      Service principal authentication isn't supported.
-     |  
+     |
      |  resume_resource(self, subscriptionId, resourceGroupName, resourceType, resourceName)
      |      Function to resume Azure Analysis Services or PowerBi Embedded capacity
      |      ### Parameters
@@ -89,16 +89,16 @@ CLASSES
      |      ### Limitations
      |      ----
      |      Service principal authentication isn't supported.
-     |  
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
-     |  
+     |
      |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
+     |      dictionary for instance variables
+     |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
 FILE
-    c:\users\ibarrau\documents\github\simplepbi\simplepbi\azpause\__init__.py
+    c:\users\ignaciobarrau\documents\github\simplepbi\simplepbi\azpause\__init__.py
 

@@ -27,7 +27,7 @@ classifiers = [
 setup(
     name='SimplePBI',
     packages=find_packages(),
-    version='1.0.2',
+    version='1.0.3',
     project_urls={
         'Documentation': 'https://docs.microsoft.com/en-us/rest/api/power-bi/',
         'Say Thanks!': 'https://www.ladataweb.com.ar/contacto.html',
@@ -47,5 +47,5 @@ setup(
         'pandas',
         'requests-toolbelt'
     ],
-    keywords=['Power BI Rest API', 'Power BI', 'PBI', 'LaDataWeb', 'Azure', 'Data', 'Python', 'Fabric', 'Microsoft Fabric', 'Fabric Rest API']
+    keywords=['Power BI Rest API', 'Power BI', 'Power Bi API', 'PBI', 'LaDataWeb', 'Azure', 'Data', 'Python', 'Fabric', 'Microsoft Fabric', 'Fabric Rest API', 'Fabric API']
 )

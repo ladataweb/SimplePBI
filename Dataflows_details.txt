@@ -27,26 +27,26 @@ PACKAGE CONTENTS
 CLASSES
     builtins.object
         Dataflows
-    
+
     class Dataflows(builtins.object)
      |  Dataflows(token)
-     |  
+     |
      |  Simple library to use the Power BI api and obtain dataflows from it.
-     |  
+     |
      |  Methods defined here:
-     |  
+     |
      |  __init__(self, token)
      |      Create a simplePBI object to request admin API
      |      Args:
      |          token: String
      |              Bearer Token to use the Power Bi Rest API
-     |  
+     |
      |  cancel_dataflow_transaction_in_group_preview(self, workspace_id, dataflow_id, transaction_id)
      |      Attempts to Cancel the specified transactions.
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
-     |          The Power Bi workspace id. You can take it from PBI Service URL        
+     |          The Power Bi workspace id. You can take it from PBI Service URL
      |      dataflow_id: str uuid
      |          The Power Bi dataflow id. You can take it from PBI Service URL
      |      transaction_id: str uuid
@@ -54,7 +54,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 202 OK
-     |  
+     |
      |  delete_dataflow_in_group(self, workspace_id, dataflow_id)
      |      Deletes the specified dataflow from the specified workspace.
      |      ### Parameters
@@ -64,7 +64,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  get_dataflow_in_group(self, workspace_id, dataflow_id)
      |      Returns a single dataflow from the specified workspace.
      |      ### Parameters
@@ -77,7 +77,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a dataflow in the workspace.
-     |  
+     |
      |  get_dataflow_transaction_in_group(self, workspace_id, dataflow_id)
      |      Returns a list of transactions for the specified dataflow.
      |      ### Parameters
@@ -90,7 +90,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the transactions in the dataflow from the workspace.
-     |  
+     |
      |  get_dataflows_in_group(self, workspace_id)
      |      Returns a list of all dataflows from the specified workspace.
      |      ### Parameters
@@ -101,7 +101,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the dataflows in the workspace.
-     |  
+     |
      |  get_datasources_in_group(self, workspace_id, dataflow_id)
      |      Returns a list of datasources for the specified dataflow.
      |      ### Parameters
@@ -114,7 +114,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the datasources in the dataflow from the workspace.
-     |  
+     |
      |  get_upstream_dataflow_in_group(self, workspace_id, dataflow_id)
      |      Returns a list of upstream dataflows for dataflows from the specified workspace.
      |      ### Parameters
@@ -125,14 +125,14 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all upstream dataflows in the dataflow from a workspace
-     |  
+     |
      |  refresh_dataflow_in_group(self, workspace_id, dataflow_id, notifyOption, processType=None)
      |      Triggers a refresh for the specified dataflow. The only supported mail notification options are either in case of failure, or none. MailOnCompletion is not supported.
-     |      
+     |
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
-     |          The Power Bi workspace id. You can take it from PBI Service URL        
+     |          The Power Bi workspace id. You can take it from PBI Service URL
      |      dataflow_id: str uuid
      |          The Power Bi dataflow id. You can take it from PBI Service URL
      |      processType: str uuid
@@ -144,7 +144,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 202 OK
-     |  
+     |
      |  update_dataflow_preview(self, workspace_id, dataflow_id, allowNativeQueries=None, computeEngineBehavior=None, description=None, name=None)
      |      Update dataflow properties, capabilities and settings.
      |      ### Parameters
@@ -157,7 +157,7 @@ CLASSES
      |      ----
      |      allowNativeQueries: bool
      |          Allow native queries
-     |      computeEngineBehavior: str 
+     |      computeEngineBehavior: str
      |          Compute Engine Behavior. Examples: "computeOptimized", "computeOn" or "computeDisabled"
      |      description: str
      |          New description for the dataflow
@@ -169,9 +169,9 @@ CLASSES
      |      ### Limitations
      |      ----
      |      The limit on the number of time slots per day depends on whether a Premium or Shared capacity is used.
-     |  
+     |
      |  update_refresh_schedule_in_group_preview(self, workspace_id, dataflow_id, NotifyOption=None, days=None, enabled=None, localTimeZoneId=None, times=None)
-     |      Creates or updates the specified dataflow refresh schedule configuration.    
+     |      Creates or updates the specified dataflow refresh schedule configuration.
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
@@ -196,16 +196,16 @@ CLASSES
      |      ### Limitations
      |      ----
      |      The limit on the number of time slots per day depends on whether a Premium or Shared capacity is used.
-     |  
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
-     |  
+     |
      |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
+     |      dictionary for instance variables
+     |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
 FILE
-    c:\users\ibarrau\documents\github\simplepbi\simplepbi\dataflows\__init__.py
+    c:\users\ignaciobarrau\documents\github\simplepbi\simplepbi\dataflows\__init__.py
 

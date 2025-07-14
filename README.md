@@ -92,6 +92,8 @@ Right now the library is consuming endpoints from:
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Push_Datasets_details.txt" target="_blank">Push Datasets</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Fabric_Admin_details.txt" target="_blank">Fabric Admin</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Fabric_Core_details.txt" target="_blank">Fabric Core</a>
+- <a href="#" target="_blank">Fabric Data Pipelines</a>
+- <a href="#" target="_blank">Fabric Semantic Models</a>
 
 ## Complex requests
 If you want to get a deeper look on complex __Admin__ methods and unique methods. 
@@ -118,14 +120,10 @@ We are also adding new methods with the requests to help get new actions. Exampl
 - get_activity_events_preview (already iterating): makes the get activity events specified by date easier
 - get_user_artifact_access_preview (already iterating): makes the get user artifact access easier
 - get_widely shared_artifacts_published_to_web (already iterating): makes geting the published to web repos info easier
-- get_tables_from_dataset_in_group: get the tables names and other data columns in the semantic model from specific workspace 
-- get_measures_from_dataset_in_group: get the measures names and other data columns in the semantic model from specific workspace 
-- get_columns_from_dataset_in_group: get the columns names and other data columns in the semantic model from specific workspace 
-- get_tables_from_dataset_in_group: get the roles names and other data columns in the semantic model from specific workspace. The request only works with User and Passworkd credentials. Service Principal won't work due to API limitations.
 - get_dataset_roles_in_group: get all the roles from a single dataset in a specific workspace
 - get_datasets_roles_in_groups: get all the roles from all datasets in a list of workspaces
-- create_doc_by_content_dataset_in_group: generate an html code file or text with a document of semantic model in a workspace organized by content
-- create_doc_by_table_dataset_in_group: generate an html code file or text with a document of semantic model in a workspace organized by tables
+- create_doc_by_content_dataset_in_group (deprecated by Rest API source): generate an html code file or text with a document of semantic model in a workspace organized by content
+- create_doc_by_table_dataset_in_group (deprecated by Rest API source): generate an html code file or text with a document of semantic model in a workspace organized by tables
 
 ## Small categories
 Small categories like Dataflow Storage Accounts and Available Features were moved to Groups and Admin.
@@ -160,7 +158,7 @@ We are still developing the library. The following endpoints from admin are stil
 - All requests
 ### Fabric API
 - Admin (External data shares, labels and tenants)
-- Core (Capacities, connections, deployment pipelines, external data shares, gateways, managed private endpoints)
+- Core (Capacities, deployment pipelines, external data shares, gateways, managed private endpoints)
 - All other categories
 
 # Next Steps (planned items)

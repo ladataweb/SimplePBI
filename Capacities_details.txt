@@ -27,20 +27,20 @@ PACKAGE CONTENTS
 CLASSES
     builtins.object
         Capacities
-    
+
     class Capacities(builtins.object)
      |  Capacities(token)
-     |  
+     |
      |  Simple library to use the Power BI api and obtain capacities from it. The user must have administrator rights or assign permissions on the capacity.
-     |  
+     |
      |  Methods defined here:
-     |  
+     |
      |  __init__(self, token)
      |      Create a simplePBI object to request capacities API. The user must have administrator rights or assign permissions on the capacity.
      |      Args:
      |          token: String
      |              Bearer Token to use the Power Bi Rest API
-     |  
+     |
      |  assign_myworkspaces_to_capacity(self, tagetCapacityObjectId)
      |      Assigns My workspace to the specified capacity. To unassign My workspace from a capacity, provide an empty GUID (00000000-0000-0000-0000-000000000000) as the capacityId. This requires Admin rights or permissions on the capacity.
      |      ### Parameters
@@ -52,7 +52,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  assign_to_capacity(self, tagetCapacityObjectId, workspacesToAssign)
      |      Assigns the specified workspace to the specified capacity. To unassign My workspace from a capacity, provide an empty GUID (00000000-0000-0000-0000-000000000000) as the capacityId. This requires Admin rights or permissions on the capacity.
      |      ### Parameters
@@ -66,7 +66,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  get_capacities(self)
      |      Returns a list of capacities that the user has access to.
      |      ### Parameters
@@ -76,7 +76,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the capacities in My workspace.
-     |  
+     |
      |  get_capacity_assignment_status(self)
      |      Gets the status of the My workspace assignment-to-capacity operation.
      |      ### Parameters
@@ -86,7 +86,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the CapacityAssignmentStatus in My workspace.
-     |  
+     |
      |  get_capacity_assignment_status_in_group(self, workspace_id)
      |      Gets the status of the assignment-to-capacity operation for the specified workspace.
      |      ### Parameters
@@ -97,7 +97,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the CapacityAssignmentStatus in the workspace.
-     |  
+     |
      |  get_refreshable_capacity(self, capacity_id, refreshable_id, expand=None)
      |      Returns the specified refreshable for the specified capacity that the user has access to.
      |      Power BI retains a seven-day refresh history for each dataset, up to a maximum of sixty refreshes.
@@ -113,7 +113,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the refreshables in the capacity.
-     |  
+     |
      |  get_refreshables(self, top, expand=None, filter=None, skip=None)
      |      Returns a list of refreshables for the organization.
      |      ### Parameters
@@ -124,13 +124,13 @@ CLASSES
      |          Expands related entities inline, receives a comma-separated list of data types. Supported: users, reports, refreshables, datasets, dataflows, workbooks
      |      filter: string
      |          Filters the results based on a boolean condition
-     |      skip: int 
+     |      skip: int
      |          Skips the first n results. Use with top to fetch results beyond the first 5000.
      |      ### Returns
      |      ----
      |      Dict:
      |          A dictionary containing all the refreshables in the tenant.
-     |  
+     |
      |  get_refreshables_capacity(self, capacity_id, top, expand=None, filter=None, skip=None)
      |      Returns a list of users that have access to the specified capacitie (Preview).
      |      ### Parameters
@@ -143,13 +143,13 @@ CLASSES
      |          Expands related entities inline, receives a comma-separated list of data types. Supported: users, reports, dashboards, datasets, dataflows, workbooks
      |      filter: string
      |          Filters the results based on a boolean condition
-     |      skip: int 
+     |      skip: int
      |          Skips the first n results. Use with top to fetch results beyond the first 5000.
      |      ### Returns
      |      ----
      |      Dict:
      |          A dictionary containing all the users in the capacity.
-     |  
+     |
      |  get_workload(self, capacity_id, workloadName)
      |      Returns the current state of a workload. If the workload is enabled, the percentage of maximum memory that the workload can consume is also returned.
      |      Workload APIs aren't relevant for Embedded Gen2 capacities.
@@ -163,7 +163,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the capacities in My workspace.
-     |  
+     |
      |  get_workloads(self, capacity_id)
      |      Returns the current state of the specified capacity workloads. If a workload is enabled, the percentage of maximum memory that the workload can consume is also returned.
      |      ### Parameters
@@ -174,7 +174,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the capacities in My workspace.
-     |  
+     |
      |  patch_workload_preview(self, capacityId, workloadName, state, maxMemoryPercentageSetByUser=None)
      |      Changes the state of a specific workload to Enabled or Disabled. When enabling a workload, specify the percentage of maximum memory that the workload can consume.
      |      *** THIS REQUEST IS IN PREVIEW IN SIMPLEPBI ***
@@ -193,16 +193,16 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
-     |  
+     |
      |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
+     |      dictionary for instance variables
+     |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
 FILE
-    c:\users\ibarrau\documents\github\simplepbi\simplepbi\capacities\__init__.py
+    c:\users\ignaciobarrau\documents\github\simplepbi\simplepbi\capacities\__init__.py
 

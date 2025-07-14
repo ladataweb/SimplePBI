@@ -27,20 +27,20 @@ PACKAGE CONTENTS
 CLASSES
     builtins.object
         Reports
-    
+
     class Reports(builtins.object)
      |  Reports(token)
-     |  
+     |
      |  Simple library to use the Power BI api and obtain reports from it.
-     |  
+     |
      |  Methods defined here:
-     |  
+     |
      |  __init__(self, token)
      |      Create a simplePBI object to request admin API
      |      Args:
      |          token: String
      |              Bearer Token to use the Power Bi Rest API
-     |  
+     |
      |  clone_report(self, report_id, name, target_dataset_id=None, target_workspace_id=None)
      |      Clones the specified report from "My Workspace".
      |      If after cloning the report and its dataset reside in two different upgraded workspaces or "My Workspace", a shared dataset will be created in the report's workspace.
@@ -60,7 +60,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  clone_report_in_group(self, workspace_id, report_id, name, target_dataset_id=None, target_workspace_id=None)
      |      Clones the specified report from the specified workspace.
      |      If after cloning the report and its dataset reside in two different upgraded workspaces or "My Workspace", a shared dataset will be created in the report's workspace.
@@ -68,7 +68,7 @@ CLASSES
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
-     |          The Power Bi workspace id. You can take it from PBI Service URL   
+     |          The Power Bi workspace id. You can take it from PBI Service URL
      |      report_id: str uuid
      |          The Power Bi report id. You can take it from PBI Service URL
      |      ### Request Body
@@ -82,7 +82,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  delete_report(self, report_id)
      |      Deletes the specified report from My workspace.
      |      ### Parameters
@@ -92,19 +92,19 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  delete_report_in_group(self, workspace_id, report_id)
      |      Deletes the specified report from the specified workspace.
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
-     |          The Power Bi workspace id. You can take it from PBI Service URL   
+     |          The Power Bi workspace id. You can take it from PBI Service URL
      |      report_id: str uuid
      |          The Power Bi report id. You can take it from PBI Service URL
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  export_report(self, report_id)
      |      Exports the specified report from "My Workspace" to a .pbix file.
      |      Note: As a workaround for fixing timeout issues, you can set preferClientRouting to true.
@@ -122,7 +122,7 @@ CLASSES
      |      ### Restrictions
      |      ----
      |      Export of a report with Power BI service live connection after calling rebind report is not supported. Refer to Download a report from the Power BI service to Power BI Desktop for requirements and limitations.
-     |  
+     |
      |  export_report_in_group(self, workspace_id, report_id)
      |      Exports the specified report from the specified workspace to a .pbix file.
      |      Note: As a workaround for fixing timeout issues, you can set preferClientRouting to true.
@@ -140,7 +140,7 @@ CLASSES
      |      ### Restrictions
      |      ----
      |      Export of a report with Power BI service live connection after calling rebind report is not supported. Refer to Download a report from the Power BI service to Power BI Desktop for requirements and limitations.
-     |  
+     |
      |  get_datasources(self, report_id)
      |      Returns a list of data sources for the specified report from My workspace.
      |      GetReportDatasources is supported only for RDL reports.
@@ -152,7 +152,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the datasources in the report from My workspace.
-     |  
+     |
      |  get_datasources_in_group(self, workspace_id, report_id)
      |      Returns a list of data sources for the specified report from the specified workspace
      |      GetReportDatasources is supported only for RDL reports
@@ -166,7 +166,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the datasources in the report from the workspace.
-     |  
+     |
      |  get_page(self, report_id, page_name)
      |      Returns the specified page within the specified report from "My Workspace".
      |      ### Parameters
@@ -179,7 +179,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a page in My workspace.
-     |  
+     |
      |  get_page_in_group(self, workspace_id, report_id, page_name)
      |      Returns the specified page within the specified report from the specified workspace.
      |      ### Parameters
@@ -189,12 +189,12 @@ CLASSES
      |      report_id: str uuid
      |          The Power Bi report id. You can take it from PBI Service URL
      |      page_name: str
-     |          The Page Name in the URL 
+     |          The Page Name in the URL
      |      ### Returns
      |      ----
      |      Dict:
      |          A dictionary containing a page in the workspace.
-     |  
+     |
      |  get_pages(self, report_id)
      |      Returns a list of pages within the specified report from "My Workspace".
      |      ### Parameters
@@ -205,7 +205,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the pages in a reports from My workspace.
-     |  
+     |
      |  get_pages_in_group(self, workspace_id, report_id)
      |      Returns a list of pages within the specified report from the specified workspace.
      |      ### Parameters
@@ -218,7 +218,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the pages in a report from a workspace.
-     |  
+     |
      |  get_report(self, report_id)
      |      Returns the specified report from My workspace.
      |      ### Parameters
@@ -229,7 +229,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a report in My workspace.
-     |  
+     |
      |  get_report_in_group(self, workspace_id, report_id)
      |      Returns the specified report from the specified workspace.
      |      ### Parameters
@@ -242,7 +242,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a report in the workspace.
-     |  
+     |
      |  get_reports(self)
      |      Returns a list of reports from My workspace.
      |      ### Parameters
@@ -252,7 +252,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the reports in My workspace.
-     |  
+     |
      |  get_reports_in_group(self, workspace_id)
      |      Returns a list of reports from the specified workspace.
      |      ### Parameters
@@ -263,7 +263,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the reports in the workspace.
-     |  
+     |
      |  rebind_report_in_group_preview(self, workspace_id, report_id, dataset_id)
      |      Rebinds the specified report from the specified workspace to the requested dataset.
      |      If the dataset resides in a different upgraded workspace or in "My Workspace", a shared dataset will be created in the report's workspace.
@@ -271,7 +271,7 @@ CLASSES
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
-     |          The Power Bi workspace id. You can take it from PBI Service URL        
+     |          The Power Bi workspace id. You can take it from PBI Service URL
      |      report_id: str uuid
      |          The Power Bi report id. You can take it from PBI Service URL
      |      ### Request Body
@@ -281,13 +281,13 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  rebind_report_preview(self, report_id, dataset_id)
      |      Rebinds the specified report from "My Workspace" to the requested dataset.
      |      If the dataset resides in a different upgraded workspace, a shared dataset will be created in "My Workspace".
      |      Reports with live connection will lose the live connection when rebinding, and will have a direct binding to the target dataset.
      |      ### Parameters
-     |      ----       
+     |      ----
      |      report_id: str uuid
      |          The Power Bi report id. You can take it from PBI Service URL
      |      ### Request Body
@@ -297,7 +297,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  simple_copy_reports_between_groups(self, workspace_id_origin, report_id, workspace_id_destination, datasetDisplayName=None, nameConflict='CreateOrOverwrite', overrideModelLabel=None, overrideReportLabel=None)
      |      Download and upload a power bi report from one workspace to another. Pbix must have a size lower than 1gb
      |      ### Parameters
@@ -306,14 +306,14 @@ CLASSES
      |          The Power Bi workspace id from origin and from destination. You can take it from PBI Service URL
      |      report_id: str uud
      |          The Power Bi report id to migrate. You can take it from PBI Service URL
-     |      datasetDisplayName: str 
+     |      datasetDisplayName: str
      |          The display name of the dataset should include file extension
      |      nameConflict: str
      |          Specifies what to do if a dataset with the same name already exists. The default value is Ignore. You can also use CreateOrOverwrite,GenerateUniqueName or Overwrite
      |      overrideModelLabel: str
      |          Determines whether to override the existing label on a model when republishing a Power BI .pbix file. The service default value is true.
      |      overrideReportLabel: str
-     |          Whether to override the existing label on a report when republishing a Power BI .pbix file. The service default value is true.            
+     |          Whether to override the existing label on a report when republishing a Power BI .pbix file. The service default value is true.
      |      ### Returns
      |      ----
      |      Dict:
@@ -321,7 +321,7 @@ CLASSES
      |      ### Restrictions
      |      ----
      |      Export of a report with Power BI service live connection after calling rebind report is not supported. Refer to Download a report from the Power BI service to Power BI Desktop for requirements and limitations.
-     |  
+     |
      |  simple_export_file(self, report_id, fileFormat, filename_path, includeHiddenPages=False)
      |      Exports the specified report from "My Workspace" to a .pbix file.
      |      Note: As a workaround for fixing timeout issues, you can set preferClientRouting to true.
@@ -339,7 +339,7 @@ CLASSES
      |      ### Restrictions
      |      ----
      |      Export of a report with Power BI service live connection after calling rebind report is not supported. Refer to Download a report from the Power BI service to Power BI Desktop for requirements and limitations.
-     |  
+     |
      |  simple_export_file_in_group(self, workspace_id, report_id, fileFormat, filename_path, includeHiddenPages=False)
      |      Exports the specified report from the specified workspace to a .pbix file.
      |      Note: As a workaround for fixing timeout issues, you can set preferClientRouting to true.
@@ -359,7 +359,7 @@ CLASSES
      |      ### Restrictions
      |      ----
      |      Export of a report with Power BI service live connection after calling rebind report is not supported. Refer to Download a report from the Power BI service to Power BI Desktop for requirements and limitations.
-     |  
+     |
      |  simple_export_report(self, report_id, filename_path)
      |      Exports the specified report from "My Workspace" to a .pbix file.
      |      Note: As a workaround for fixing timeout issues, you can set preferClientRouting to true.
@@ -377,7 +377,7 @@ CLASSES
      |      ### Restrictions
      |      ----
      |      Export of a report with Power BI service live connection after calling rebind report is not supported. Refer to Download a report from the Power BI service to Power BI Desktop for requirements and limitations.
-     |  
+     |
      |  simple_export_report_in_group(self, workspace_id, report_id, filename_path)
      |      Exports the specified report from the specified workspace to a .pbix file.
      |      Note: As a workaround for fixing timeout issues, you can set preferClientRouting to true.
@@ -397,13 +397,13 @@ CLASSES
      |      ### Restrictions
      |      ----
      |      Export of a report with Power BI service live connection after calling rebind report is not supported. Refer to Download a report from the Power BI service to Power BI Desktop for requirements and limitations.
-     |  
+     |
      |  take_over_report_in_group_preview(self, workspace_id, report_id)
      |      Transfers ownership over the specified PAGINATED REPORT to the current authorized user.
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
-     |          The Power Bi workspace id. You can take it from PBI Service URL        
+     |          The Power Bi workspace id. You can take it from PBI Service URL
      |      report_id: str uuid
      |          The Power Bi report id. You can take it from PBI Service URL
      |      ### Request Body
@@ -412,16 +412,16 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
-     |  
+     |
      |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
+     |      dictionary for instance variables
+     |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
 FILE
-    c:\users\ibarrau\documents\github\simplepbi\simplepbi\reports\__init__.py
+    c:\users\ignaciobarrau\documents\github\simplepbi\simplepbi\reports\__init__.py
 

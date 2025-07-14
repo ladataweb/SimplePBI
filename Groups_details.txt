@@ -27,20 +27,20 @@ PACKAGE CONTENTS
 CLASSES
     builtins.object
         Groups
-    
+
     class Groups(builtins.object)
      |  Groups(token)
-     |  
+     |
      |  Simple library to use the Power BI api and obtain groups from it.
-     |  
+     |
      |  Methods defined here:
-     |  
+     |
      |  __init__(self, token)
      |      Create a simplePBI object to request admin API
      |      Args:
      |          token: String
      |              Bearer Token to use the Power Bi Rest API
-     |  
+     |
      |  add_user_group(self, workspace_id, groupUserAccessRight, emailAddress, displayName=None, graphId=None, identifier=None, principalType=None)
      |      Grants the specified user the specified permissions to the specified workspace.
      |      When user permissions to a workspace have been recently updated, the new permissions might not be immediately available through API calls. To refresh user permissions, use the Refresh User Permissions API call.
@@ -65,7 +65,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  assign_to_dataflow_storage(self, workspace_id, dataflow_storage_id)
      |      Assigns the specified workspace to the specified dataflow storage account.
      |      To perform this operation, the user must be an admin on the specified workspace and the Power BI dataflow storage account must be enabled.
@@ -73,7 +73,7 @@ CLASSES
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
-     |          The Power Bi workspace id. You can take it from PBI Service URL        
+     |          The Power Bi workspace id. You can take it from PBI Service URL
      |      ### Request Body
      |      ----
      |      dataflow_storage_id: str uuid
@@ -81,7 +81,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  create_group_preview(self, name, workspaceV2=None)
      |      Creates a new workspace.
      |      ### Parameters
@@ -95,7 +95,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  delete_group_preview(self, workspace_id)
      |      Deletes the specified workspace.
      |      ### Parameters
@@ -105,7 +105,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  delete_user_in_group(self, workspace_id, user)
      |      Deletes the specified user permissions from the specified workspace.
      |      ### Parameters
@@ -117,14 +117,14 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  get_dataflow_storage_account(self)
-     |      Returns a list of dataflow storage accounts that the user has access to.        
+     |      Returns a list of dataflow storage accounts that the user has access to.
      |      ### Returns
      |      ----
      |      Dict:
      |          A dictionary containing all the dataflow storage accounts that the user has access to.
-     |  
+     |
      |  get_groups(self)
      |      Returns a list of workspaces the user has access to.
      |      When user permissions to a workspace have been recently updated, the new permissions might not be immediately available through API calls. To refresh user permissions, use the Refresh User Permissions API call.
@@ -135,7 +135,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing the groups of the user.
-     |  
+     |
      |  get_groups_users(self, workspace_id)
      |      Returns a list of users that have access to the specified workspace.
      |      When user permissions to a workspace have been recently updated, the new permissions might not be immediately available through API calls. As a result, this API call might return an HTTP 401 error when a user has permissions to a workspace. To refresh user permissions, use the Refresh User Permissions API call.
@@ -147,16 +147,16 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the users in the workspace.
-     |  
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
-     |  
+     |
      |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
+     |      dictionary for instance variables
+     |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
 FILE
-    c:\users\ibarrau\documents\github\simplepbi\simplepbi\groups\__init__.py
+    c:\users\ignaciobarrau\documents\github\simplepbi\simplepbi\groups\__init__.py
 

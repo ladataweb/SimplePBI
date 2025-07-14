@@ -26,26 +26,268 @@ PACKAGE CONTENTS
 
 CLASSES
     builtins.object
+        Connections
+        Folders
         Git
         Items
         LongRunningOperations
         Onelake
         Scheduler
         Workspaces
-    
+
+    class Connections(builtins.object)
+     |  Connections(token)
+     |
+     |  Simple library to use the Connections api and obtain connection information from it.
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, token)
+     |      Create a simplePBI object to request operations API
+     |      Args:
+     |          token: String
+     |              Bearer Token to use the Rest API
+     |
+     |  add_coonection_role_assignment(self, connection_id, principal_id, principal_type, role)
+     |      Adds a role assignment to the specified connection.
+     |      #### Parameters
+     |      ----
+     |      connection_id: str uuid
+     |          The connection id. You can take it from Fabric URL
+     |      principal_id: str uuid
+     |          The principal id.
+     |      principal_type: string
+     |          The principal type. { "User", "Group", "ServicePrincipal", "ServicePrincipalProfile" }
+     |      role: string
+     |          The role. { "Owner", "User", "UserWithReshare" }
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 201 Created
+     |
+     |  create_connection(self, body_connection)
+     |      Creates a new connection in the specified workspace.
+     |      #### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from Fabric URL
+     |      body_connection: dict
+     |          The body of the connection to create. Make sure you read https://learn.microsoft.com/en-us/rest/api/fabric/core/connections/create-connection?tabs=HTTP
+     |          Possible types { CreateCloudConnectionRequest, CreateOnPremisesConnectionRequest, CreateVirtualNetworkGatewayConnectionRequest }
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 201 Created
+     |
+     |  delete_connection(self, connection_id)
+     |      Deletes the specified connection.
+     |      #### Parameters
+     |      ----
+     |      connection_id: str uuid
+     |          The connection id. You can take it from Fabric URL
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK
+     |
+     |  delete_connection_role_assignment(self, connection_id, connection_role_assignment_id)
+     |      Deletes the specified role assignment from the connection.
+     |      #### Parameters
+     |      ----
+     |      connection_id: str uuid
+     |          The connection id. You can take it from Fabric URL
+     |      connection_role_assignment_id: str uuid
+     |          The role assignment id.
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 204 No Content
+     |
+     |  get_connection(self, connection_id)
+     |      Returns the specified connection.
+     |      #### Parameters
+     |      ----
+     |      connection_id: str uuid
+     |          The connection id. You can take it from Fabric URL
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing the connection information.
+     |
+     |  get_connection_role_assignment(self, connection_id, connection_role_assignment_id)
+     |      Returns the specified role assignment from the connection.
+     |      #### Parameters
+     |      ----
+     |      connection_id: str uuid
+     |          The connection id. You can take it from Fabric URL
+     |      connection_role_assignment_id: str uuid
+     |          The role assignment id.
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing the role assignment information.
+     |
+     |  list_connection_role_assignments(self, connection_id)
+     |      Lists all role assignments for the specified connection.
+     |      #### Parameters
+     |      ----
+     |      connection_id: str uuid
+     |          The connection id. You can take it from Fabric URL
+     |      ### Returns
+     |      ----
+     |      List[Dict]:
+     |          A list of dictionaries, each containing information about a role assignment.
+     |
+     |  list_connections(self)
+     |      Returns a list of all connections.
+     |      ### Returns
+     |      ----
+     |      List[Dict]:
+     |          A list of dictionaries, each containing information about a connection.
+     |
+     |  update_connection(self, connection_id, body_connection)
+     |      Updates the specified connection.
+     |      #### Parameters
+     |      ----
+     |      connection_id: str uuid
+     |          The connection id. You can take it from Fabric URL
+     |      body_connection: dict
+     |          The body of the connection to update. Make sure you read https://learn.microsoft.com/en-us/rest/api/fabric/core/connections/update-connection?tabs=HTTP
+     |          Possible types { UpdateOnPremisesGatewayConnectionRequest, UpdateOnPremisesGatewayPersonalConnectionRequest, UpdatePersonalCloudConnectionRequest, UpdateShareableCloudConnectionRequest, UpdateVirtualNetworkGatewayConnectionRequest }
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK
+     |
+     |  update_connection_role_assignment(self, connection_id, connection_role_assignment_id, role)
+     |      Updates the specified role assignment from the connection.
+     |      #### Parameters
+     |      ----
+     |      connection_id: str uuid
+     |          The connection id. You can take it from Fabric URL
+     |      connection_role_assignment_id: str uuid
+     |          The role assignment id.
+     |      role: string
+     |          The role. { "Owner", "User", "UserWithReshare" }
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables
+     |
+     |  __weakref__
+     |      list of weak references to the object
+
+    class Folders(builtins.object)
+     |  Folders(token)
+     |
+     |  Simple library to use the Folders api and obtain folder information from it.
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, token)
+     |      Create a simplePBI object to request operations API
+     |      Args:
+     |          token: String
+     |              Bearer Token to use the Rest API
+     |
+     |  create_folder(self, workspace_id, folder_name)
+     |      Creates a folder in the specified workspace.
+     |      #### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from Fabric URL
+     |      folder_name: string
+     |          The folder name.
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 201 OK
+     |
+     |  delete_folder(self, workspace_id, folder_id)
+     |      Deletes the specified folder in the specified workspace.
+     |      #### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from Fabric URL
+     |      folder_id: str uuid
+     |          The folder id. You can take it from Fabric URL
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK
+     |
+     |  get_folder(self, workspace_id, folder_id)
+     |      Returns the specified folder in the specified workspace.
+     |      #### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from Fabric URL
+     |      folder_id: str uuid
+     |          The folder id. You can take it from Fabric URL
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing a folder in the workspace.
+     |
+     |  list_folders(self, workspace_id)
+     |      Returns a list of folders in the specified workspace.
+     |      #### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from Fabric URL
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing all the folders in the workspace.
+     |
+     |  move_folder(self, workspace_id, folder_id, new_parent_folder_id)
+     |      Moves the specified folder to a new parent folder in the specified workspace.
+     |      #### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from Fabric URL
+     |      folder_id: str uuid
+     |          The folder id. You can take it from Fabric URL
+     |      new_parent_folder_id: str uuid
+     |          The new parent folder id.
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK
+     |
+     |  update_folder(self, workspace_id, folder_id, displayName)
+     |      Updates the specified folder in the specified workspace.
+     |      #### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from Fabric URL
+     |      folder_id: str uuid
+     |          The folder id. You can take it from Fabric URL
+     |      displayName: str
+     |          The new display name for the folder.
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables
+     |
+     |  __weakref__
+     |      list of weak references to the object
+
     class Git(builtins.object)
      |  Git(token)
-     |  
+     |
      |  Simple library to use the  api and obtain items from it.
-     |  
+     |
      |  Methods defined here:
-     |  
+     |
      |  __init__(self, token)
      |      Create a simplePBI object to request fabric item API
      |      Args:
      |          token: String
      |              Bearer Token to use the Rest API
-     |  
+     |
      |  commit_to_git(self, workspace_id, mode, comment, workspaceHead, items=None)
      |      Commits the changes made in the workspace to the connected remote branch.
      |      #### Parameters
@@ -56,7 +298,7 @@ CLASSES
      |          The mode for the commit operation.
      |      comment: string
      |              Caller-free comment for this commit. Maximum length is 300 characters. If no comment is provided by the caller, use the default Git provider comment.
-     |      workspaceHead: str 
+     |      workspaceHead: str
      |              Full SHA hash that the workspace is synced to. The hash can be retrieved from the Git Status API.
      |      items: itemsIdentifier[]
      |          Specific items to commit. This is relevant only for Selective commit mode. The items can be retrieved from the Git Status API.
@@ -64,7 +306,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 202 OK
-     |  
+     |
      |  connect_git_repo(self, workspace_id, organization, project, repository, branch, directory_name, git_provider_type)
      |      Connects the workspace to an Azure DevOps repository.
      |      #### Parameters
@@ -86,7 +328,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 202 OK
-     |  
+     |
      |  disconnect_git_repo(self, workspace_id)
      |      Disconnects the workspace from an Azure DevOps repository.
      |      #### Parameters
@@ -96,7 +338,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 202 OK
-     |  
+     |
      |  get_git_connection(self, workspace_id)
      |      Returns git connection details for the specified workspace.
      |      ### Parameters
@@ -107,7 +349,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a item in the workspace.
-     |  
+     |
      |  get_git_status(self, workspace_id)
      |      Returns the Git status of items in the workspace, that can be committed to Git.
      |      ### Parameters
@@ -118,7 +360,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a item in the workspace.
-     |  
+     |
      |  update_from_git(self, workspace_id, item_id, remoteCommitHash, conflictResolution, allowOverrideItems, workspaceHead)
      |      Updates the workspace with commits pushed to the connected branch.
      |      #### Parameters
@@ -136,56 +378,56 @@ CLASSES
      |          Automatically written by simplepbi. Options to be used in the update from Git operation. For now just overrideitems
      |      allowOverrideItems: bool
      |          User consent to override incoming items during the update from Git process. When incoming items are present and the allow override items is not specified or is provided as false, the update operation will not start. Default value is false.
-     |      workspace_head: str 
+     |      workspace_head: str
      |              Full SHA hash that the workspace is synced to. The hash can be retrieved from the Git Status API.
      |      ### Returns
      |      ----
      |      Response object from requests library. 202 OK
-     |  
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
-     |  
+     |
      |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
+     |      dictionary for instance variables
+     |
      |  __weakref__
-     |      list of weak references to the object (if defined)
-    
+     |      list of weak references to the object
+
     class Items(builtins.object)
      |  Items(token)
-     |  
+     |
      |  Simple library to use the  api and obtain items from it.
-     |  
+     |
      |  Methods defined here:
-     |  
+     |
      |  __init__(self, token)
      |      Create a simplePBI object to request fabric item API
      |      Args:
      |          token: String
      |              Bearer Token to use the Rest API
-     |  
+     |
      |  build_report_parts(self, semantic_model_workspace_id, item_path)
      |      Build the parts of report for the specified item.
      |      #### Parameters
      |      ----
      |      semantic_model_workspace_id: str uuid
      |          The workspace id of the semantic model of a report. You can take it from Fabric URL
-     |      item_path: str 
+     |      item_path: str
      |          The semantic model path until [name].Report folder like C:/Users/user/Desktop/[name].Report
      |      ### Returns
      |      ----
      |      Dict with parts of the report
-     |  
+     |
      |  build_semantic_model_parts(self, item_path)
      |      Build the parts of semantic model for the specified item.
      |      #### Parameters
      |      ----
-     |      item_path: str 
+     |      item_path: str
      |          The semantic model path until [name].Report folder like C:/Users/user/Desktop/[name].SemanticModel or .Dataset
      |      ### Returns
      |      ----
      |      Dict with parts of the semantic model
-     |  
+     |
      |  create_item(self, workspace_id, displayName, itemType, description=None, parts=None)
      |      Creates an item in the specified workspace. Preview request, soon we'll add 'definition' parameter
      |              #### Parameters
@@ -205,7 +447,7 @@ CLASSES
      |              ----
      |              To create a non-PowerBI Fabric item the workspace must be on a supported Fabric capacity type. For more information see Microsoft Fabric license types.
      |      To create a PowerBI item, the user must have the appropritate license. For more information see Microsoft Fabric license types.
-     |  
+     |
      |  delete_item(self, workspace_id, item_id)
      |      Deletes the specified item from the specified workspace.
      |      ### Parameters
@@ -217,7 +459,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  get_item(self, workspace_id, item_id)
      |      Returns the specified item from the specified workspace.
      |      ### Parameters
@@ -234,7 +476,7 @@ CLASSES
      |      ----
      |      This API is supported for a number of item types, find the supported item types here.
      |      https://learn.microsoft.com/en-us/rest/api/fabric/articles/item-management/item-management-overview
-     |  
+     |
      |  get_item_definition(self, workspace_id, item_id)
      |      Returns the specified item definition.
      |      #### Parameters
@@ -242,49 +484,53 @@ CLASSES
      |      workspace_id: str uuid
      |          The workspace id. You can take it from Fabric URL
      |      item_id: str uuid
-     |          The item id. You can take it from Fabric URL        
+     |          The item id. You can take it from Fabric URL
      |      ### Returns
      |      ----
-     |      Response object from requests library. 200 OK        
+     |      Response object from requests library. 200 OK
      |      ### Limitations
      |      ----
      |      This API is blocked for an item with an encrypted sensitivity label.
-     |  
-     |  list_items(self, workspace_id)
+     |
+     |  list_items(self, workspace_id, return_pandas=False, type=None)
      |      Returns a list of items from the specified workspace.
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
      |          The workspace id. You can take it from Fabric URL
+     |      return_pandas: bool
+     |          If True, returns a pandas DataFrame with the items. Default is False, returns a dictionary.
+     |      type: str
+     |          The type of items to return. If None, returns all item types.
      |      ### Returns
      |      ----
      |      Dict:
      |          A dictionary containing all the items in the workspace.
-     |  
+     |
      |  simple_deploy_report(self, report_workspace_id, semantic_model_workspace_id, item_path)
      |      Deploys the semantic model for the specified item.
      |      #### Parameters
      |      ----
      |      report_workspace_id: str uuid
      |          The workspace id of the destination of the report deployment. You can take it from Fabric URL
-     |      item_path: str 
+     |      item_path: str
      |          The semantic model path until [name].Report folder like C:/Users/user/Desktop/[name].Report
      |      ### Returns
      |      ----
      |      Response object from requests library. 202 OK
-     |  
+     |
      |  simple_deploy_semantic_model(self, workspace_id, item_path)
      |      Deploys the semantic model for the specified item.
      |      #### Parameters
      |      ----
      |      workspace_id: str uuid
      |          The workspace id. You can take it from Fabric URL
-     |      item_path: str 
+     |      item_path: str
      |          The semantic model path until [name].SemanticModel folder like C:/Users/user/Desktop/[name].SemanticModel
      |      ### Returns
      |      ----
      |      Response object from requests library. 202 OK
-     |  
+     |
      |  update_item(self, workspace_id, item_id, displayName=None, description=None)
      |      Updates the properties of the specified item.
      |      #### Parameters
@@ -300,7 +546,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  update_item_definition(self, workspace_id, item_id, parts, format=None)
      |      Overrides the definition for the specified item.
      |      #### Parameters
@@ -311,35 +557,35 @@ CLASSES
      |          The item id. You can take it from Fabric URL
      |      parts: ItemDefinitionPart[]
      |          A list of definition parts. part, payload and payloadtype description. Read API Docs for more details.
-     |      format: str 
+     |      format: str
      |              The format of the item definition.
-     |      
+     |
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
-     |  
+     |
      |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
+     |      dictionary for instance variables
+     |
      |  __weakref__
-     |      list of weak references to the object (if defined)
-    
+     |      list of weak references to the object
+
     class LongRunningOperations(builtins.object)
      |  LongRunningOperations(token)
-     |  
+     |
      |  Simple library to use the Long Running Operations api and obtain operation status from it.
-     |  
+     |
      |  Methods defined here:
-     |  
+     |
      |  __init__(self, token)
      |      Create a simplePBI object to request operations API
      |      Args:
      |          token: String
      |              Bearer Token to use the Rest API
-     |  
+     |
      |  get_operation_result(self, operation_id)
      |      Returns the result of the long running operation
      |      #### Parameters
@@ -350,7 +596,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing the state of the operation
-     |  
+     |
      |  get_operation_state(self, operation_id)
      |      Returns the current state of the long running operation
      |      #### Parameters
@@ -361,29 +607,29 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing the state of the operation
-     |  
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
-     |  
+     |
      |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
+     |      dictionary for instance variables
+     |
      |  __weakref__
-     |      list of weak references to the object (if defined)
-    
+     |      list of weak references to the object
+
     class Onelake(builtins.object)
      |  Onelake(token)
-     |  
+     |
      |  Simple library to use the onelake api and obtain items from it.
-     |  
+     |
      |  Methods defined here:
-     |  
+     |
      |  __init__(self, token)
      |      Create a simplePBI object to request onelake API
      |      Args:
      |          token: String
      |              Bearer Token to use the Rest API
-     |  
+     |
      |  create_shortcut(self, workspace_id, item_id, name, path, target, shortcut_conflict_policy=None)
      |      Creates a shortcut in the specified workspace.
      |      #### Parameters
@@ -403,7 +649,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 201 OK
-     |  
+     |
      |  delete_shortcut(self, workspace_id, item_id, shortcut_path, shortcut_name)
      |      Deletes the specified shortcut from the specified workspace.
      |      #### Parameters
@@ -419,7 +665,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  get_shortcut(self, workspace_id, item_id, shortcut_path, shortcut_name)
      |      Returns the specified shortcut from the specified workspace.
      |      #### Parameters
@@ -436,7 +682,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a shortcut in the workspace.
-     |  
+     |
      |  list_data_access_roles(self, workspace_id, item_id, return_pandas=False)
      |      Returns a list of data access roles for the specified item in the specified workspace.
      |      #### Parameters
@@ -449,29 +695,29 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the data access roles in the workspace.
-     |  
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
-     |  
+     |
      |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
+     |      dictionary for instance variables
+     |
      |  __weakref__
-     |      list of weak references to the object (if defined)
-    
+     |      list of weak references to the object
+
     class Scheduler(builtins.object)
      |  Scheduler(token)
-     |  
+     |
      |  Simple library to use the api and obtain job scheduler from it.
-     |  
+     |
      |  Methods defined here:
-     |  
+     |
      |  __init__(self, token)
      |      Create a simplePBI object to request fabric job scheduler API
      |      Args:
      |          token: String
      |              Bearer Token to use the Rest API
-     |  
+     |
      |  cancel_item_job_instance(self, workspace_id, item_id, job_instance_id)
      |      Cancels the specified job instance for the specified item.
      |      #### Parameters
@@ -485,7 +731,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 202 OK
-     |  
+     |
      |  get_item_job_instance(self, workspace_id, item_id, job_instance_id)
      |      Returns the specified job instance for the specified item.
      |      #### Parameters
@@ -500,7 +746,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a job instance in the workspace.
-     |  
+     |
      |  run_on_demand_item_job(self, workspace_id, item_id, jobType)
      |      Run on-demand item job instance.
      |      #### Parameters
@@ -511,34 +757,34 @@ CLASSES
      |          The item id. You can take it from Fabric URL
      |      jobType: string
      |          The job type, for now just "DefaultJob"
-     |      executionData: str 
-     |              Execution data for the job. Preview parameter, a working progress from the API      
+     |      executionData: str
+     |              Execution data for the job. Preview parameter, a working progress from the API
      |      ### Returns
      |      ----
      |      Response object from requests library. 202 OK
-     |  
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
-     |  
+     |
      |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
+     |      dictionary for instance variables
+     |
      |  __weakref__
-     |      list of weak references to the object (if defined)
-    
+     |      list of weak references to the object
+
     class Workspaces(builtins.object)
      |  Workspaces(token)
-     |  
+     |
      |  Simple library to use the api and obtain workspaces from it.
-     |  
+     |
      |  Methods defined here:
-     |  
+     |
      |  __init__(self, token)
      |      Create a simplePBI object to request fabric core workspaces API
      |      Args:
      |          token: String
      |              Bearer Token to use the Rest API
-     |  
+     |
      |  add_workspace_role_assignment(self, workspace_id, principal_id, principal_type, role)
      |      Adds a role assignment to the specified workspace.
      |      #### Parameters
@@ -554,7 +800,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 202 OK
-     |  
+     |
      |  assign_workspace_to_capacity(self, workspace_id, capacity_id)
      |      Assigns the specified workspace to the specified capacity.
      |      #### Parameters
@@ -566,7 +812,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 202 OK
-     |  
+     |
      |  create_workspace(self, displayName, capacity_id=None, description=None)
      |      Creates a workspace.
      |      #### Parameters
@@ -580,7 +826,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 201 OK
-     |  
+     |
      |  delete_workspace(self, workspace_id)
      |      Deletes the specified workspace.
      |      #### Parameters
@@ -590,7 +836,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  delete_workspace_role_assignment_by_principal_id(self, workspace_id, principal_id)
      |      Deletes the specified role assignment for the specified workspace.
      |      #### Parameters
@@ -602,7 +848,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  get_workspace(self, workspace_id)
      |      Returns the specified workspace.
      |      #### Parameters
@@ -613,8 +859,8 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a workspace.
-     |  
-     |  list_workspaces(self, roles, return_pandas=False)
+     |
+     |  list_workspaces(self, return_pandas=False, roles=None)
      |      Returns a list of workspaces for the specified role.
      |      #### Parameters
      |      ----
@@ -624,7 +870,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the workspaces.
-     |  
+     |
      |  unassign_workspace_from_capacity(self, workspace_id)
      |      Unassigns the specified workspace from the capacity.
      |      #### Parameters
@@ -634,7 +880,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  update_workspace(self, workspace_id, displayName=None, description=None)
      |      Updates the properties of the specified workspace.
      |      #### Parameters
@@ -648,7 +894,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  update_workspace_role_assignment(self, workspace_id, principal_id, role)
      |      Updates the specified role assignment for the specified workspace.
      |      #### Parameters
@@ -662,16 +908,16 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
-     |  
+     |
      |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
+     |      dictionary for instance variables
+     |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
 FILE
-    c:\users\ibarrau\documents\github\simplepbi\simplepbi\fabric\core\__init__.py
+    c:\users\ignaciobarrau\documents\github\simplepbi\simplepbi\fabric\core\__init__.py
 

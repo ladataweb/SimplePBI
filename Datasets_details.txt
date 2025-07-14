@@ -27,20 +27,20 @@ PACKAGE CONTENTS
 CLASSES
     builtins.object
         Datasets
-    
+
     class Datasets(builtins.object)
      |  Datasets(token)
-     |  
+     |
      |  Simple library to use the Power BI api and obtain datasets from it.
-     |  
+     |
      |  Methods defined here:
-     |  
+     |
      |  __init__(self, token)
      |      Create a simplePBI object to request admin API
      |      Args:
      |          token: String
      |              Bearer Token to use the Power Bi Rest API
-     |  
+     |
      |  bind_to_gateway_in_group_preview(self, workspace_id, dataset_id, gatewayObjectId, datasourceObjectIds)
      |      Binds the specified dataset from the specified workspace to the specified gateway, optionally with a given set of data source IDs. If you don’t supply a specific data source ID, the dataset will be bound to the first matching data source in the gateway. Only supports the on-premises data gateway
      |      ### Parameters
@@ -58,7 +58,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  bind_to_gateway_preview(self, dataset_id, gatewayObjectId, datasourceObjectIds)
      |      Binds the specified dataset from My workspace to the specified gateway, optionally with a given set of data source IDs. If you don’t supply a specific data source ID, the dataset will be bound to the first matching data source in the gateway. Only supports the on-premises data gateway
      |      ### Parameters
@@ -74,19 +74,19 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  create_doc_by_content_dataset_in_group(self, workspace_id, dataset_id, doc_type='text', path=None)
      |      Create an html doc of a semantic model
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
-     |          The Power Bi workspace id. You can take it from PBI Service URL        
+     |          The Power Bi workspace id. You can take it from PBI Service URL
      |      dataset_id: str uuid
-     |          The Power Bi Dataset id. You can take it from PBI Service URL                
+     |          The Power Bi Dataset id. You can take it from PBI Service URL
      |      doc_type: str
      |          It can be file or string text
      |      path: str
-     |          Path to store the html file like C:/Folder/SemanticModelDocument.html 
+     |          Path to store the html file like C:/Folder/SemanticModelDocument.html
      |      ### Limitations
      |      ----
      |          API can't get info from Semantic models in direct lake and direct query.
@@ -94,19 +94,19 @@ CLASSES
      |      ### Returns
      |      ----
      |      Returns a string of text of an html code to paste on a file or the literal file in the path specified
-     |  
+     |
      |  create_doc_by_table_dataset_in_group(self, workspace_id, dataset_id, doc_type='text', path=None)
      |      Create an html doc of a semantic model
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
-     |          The Power Bi workspace id. You can take it from PBI Service URL        
+     |          The Power Bi workspace id. You can take it from PBI Service URL
      |      dataset_id: str uuid
-     |          The Power Bi Dataset id. You can take it from PBI Service URL                
+     |          The Power Bi Dataset id. You can take it from PBI Service URL
      |      doc_type: str
      |          It can be file or string text
      |      path: str
-     |          Path to store the html file like C:/Folder/SemanticModelDocument.html 
+     |          Path to store the html file like C:/Folder/SemanticModelDocument.html
      |      ### Limitations
      |      ----
      |          API can't get info from Semantic models in direct lake and direct query.
@@ -114,7 +114,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Returns a string of text of an html code to paste on a file or the literal file in the path specified
-     |  
+     |
      |  delete_dataset(self, dataset_id)
      |      Deletes the specified dataset from My workspace.
      |      ### Parameters
@@ -124,7 +124,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  delete_dataset_in_group(self, workspace_id, dataset_id)
      |      Deletes the specified dataset from the specified workspace.
      |      ### Parameters
@@ -134,7 +134,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  discover_gateways(self, dataset_id)
      |      Returns a list of gateways that the specified dataset from My workspace can be bound to.
      |      This API call is only relevant to datasets that have at least one on-premises connection. For datasets with cloud-only connections, this API call returns an empty list.
@@ -146,7 +146,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a list of gateways from My workspace.
-     |  
+     |
      |  discover_gateways_in_group(self, workspace_id, dataset_id)
      |      Returns a list of gateways that the specified dataset from the specified workspace can be bound to.
      |      This API call is only relevant to datasets that have at least one on-premises connection. For datasets with cloud-only connections, this API call returns an empty list.
@@ -160,16 +160,16 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a list of gateways from the workspace.
-     |  
+     |
      |  enhanced_refresh_dataset_in_group(self, workspace_id, dataset_id, objects, typeProcessing='Full', commitMode='transactional', maxParallelism=1, retryCount=1, applyRefreshPolicy=True)
      |      Triggers a refresh for the specified dataset from the specified workspace.
      |      For Shared capacities, a maximum of eight requests per day, which includes refreshes executed using a scheduled refresh.
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
-     |          The Power Bi workspace id. You can take it from PBI Service URL        
+     |          The Power Bi workspace id. You can take it from PBI Service URL
      |      dataset_id: str uuid
-     |          The Power Bi Dataset id. You can take it from PBI Service URL        
+     |          The Power Bi Dataset id. You can take it from PBI Service URL
      |      ### Request Body
      |      ----
      |      typeProcessing: Enum (str)
@@ -186,11 +186,11 @@ CLASSES
      |      applyRefreshPolicy: boolean
      |          If an incremental refresh policy is defined, applyRefreshPolicy will determine if the policy is applied or not
      |      effectiveDate: date
-     |          Comming Soon            
+     |          Comming Soon
      |      ### Returns
      |      ----
      |      Response object from requests library. 202 OK
-     |  
+     |
      |  execute_queries(self, dataset_id, query, return_pandas=False)
      |      Executes Data Analysis Expressions (DAX) queries against the provided dataset. The dataset must reside in My workspace or another new workspace experience workspace.
      |      DAX query errors will result in: A response error, such as DAX query failure. A failure HTTP status code (400).
@@ -207,7 +207,7 @@ CLASSES
      |      ----
      |      If return_pandas = True returns a Pandas dataframe concatenating iterations otherwise it returns a dict of the response
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  execute_queries_in_group(self, workspace_id, dataset_id, query, return_pandas=False, impersonatedUserName=None)
      |      Executes Data Analysis Expressions (DAX) queries against the provided dataset. The dataset must reside in My workspace or another new workspace experience workspace.
      |      DAX query errors will result in: A response error, such as DAX query failure. A failure HTTP status code (400).
@@ -215,9 +215,9 @@ CLASSES
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
-     |          The Power Bi workspace id. You can take it from PBI Service URL    
+     |          The Power Bi workspace id. You can take it from PBI Service URL
      |      dataset_id: str uuid
-     |          The Power Bi Dataset id. You can take it from PBI Service URL        
+     |          The Power Bi Dataset id. You can take it from PBI Service URL
      |      return_pandas: bool
      |          Flag to specify if you want to return a dict response or a pandas dataframe of events.
      |      ### Body
@@ -230,19 +230,19 @@ CLASSES
      |      ----
      |      If return_pandas = True returns a Pandas dataframe concatenating iterations otherwise it returns a dict of the response
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  get_columns_from_dataset_in_group(self, workspace_id, dataset_id)
      |      Get all columns from specific dataset in a workspace
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
-     |          The Power Bi workspace id. You can take it from PBI Service URL        
+     |          The Power Bi workspace id. You can take it from PBI Service URL
      |      dataset_id: str uuid
-     |          The Power Bi Dataset id. You can take it from PBI Service URL        
+     |          The Power Bi Dataset id. You can take it from PBI Service URL
      |      ### Returns
      |      ----
      |      Response dict of measures from requests library. 200 OK
-     |  
+     |
      |  get_dataset(self, dataset_id)
      |      Returns the specified dataset from My workspace.
      |      ### Parameters
@@ -253,7 +253,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a dataset in My workspace.
-     |  
+     |
      |  get_dataset_in_group(self, workspace_id, dataset_id)
      |      Returns the specified dataset from the specified workspace.
      |      ### Parameters
@@ -266,7 +266,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a dataset in the workspace.
-     |  
+     |
      |  get_dataset_to_dataflows_links_in_group(self, workspace_id)
      |      Returns a list of upstream dataflows for datasets from the specified workspace.
      |      ### Parameters
@@ -277,7 +277,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all upstream dataflows in the dataset from a workspace
-     |  
+     |
      |  get_datasets(self)
      |      Returns a list of datasets from My workspace.
      |      ### Parameters
@@ -287,7 +287,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the datasets in My workspace.
-     |  
+     |
      |  get_datasets_in_group(self, workspace_id)
      |      Returns a list of datasets from the specified workspace.
      |      ### Parameters
@@ -298,7 +298,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the datasets in the workspace.
-     |  
+     |
      |  get_datasources(self, dataset_id)
      |      Returns a list of data sources for the specified dataset from My workspace.
      |      ### Parameters
@@ -309,7 +309,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the datasources in the dataset from My workspace.
-     |  
+     |
      |  get_datasources_in_group(self, workspace_id, dataset_id)
      |      Returns a list of data sources for the specified dataset from the specified workspace
      |      ### Parameters
@@ -322,7 +322,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the datasources in the dataset from the workspace.
-     |  
+     |
      |  get_direct_query_refresh_schedule(self, dataset_id)
      |      Returns the refresh schedule for a specified DirectQuery or LiveConnection dataset from My workspace.
      |      ### Parameters
@@ -333,7 +333,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing the direct query refresh schedule in a dataset from My workspace.
-     |  
+     |
      |  get_direct_query_refresh_schedule_in_group(self, workspace_id, dataset_id)
      |      Returns the refresh schedule for a specified DirectQuery or LiveConnection dataset from the specified workspace.
      |      ### Parameters
@@ -346,7 +346,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing the direct query refresh schedule in a dataset from a workspace.
-     |  
+     |
      |  get_gateway_datasources(self, dataset_id)
      |      This API is deprecated, use Get Datasources instead.
      |      ### Parameters
@@ -354,7 +354,7 @@ CLASSES
      |      dataset_id: str uuid
      |          The Power Bi Dataset id. You can take it from PBI Service URL
      |      ### Returns
-     |  
+     |
      |  get_gateway_datasources_in_group(self, dataset_id)
      |      This API is deprecated, use Get Datasources In Group instead.
      |      ### Parameters
@@ -362,19 +362,19 @@ CLASSES
      |      dataset_id: str uuid
      |          The Power Bi Dataset id. You can take it from PBI Service URL
      |      ### Returns
-     |  
+     |
      |  get_measures_from_dataset_in_group(self, workspace_id, dataset_id)
      |      Get all measures from specific dataset in a workspace
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
-     |          The Power Bi workspace id. You can take it from PBI Service URL        
+     |          The Power Bi workspace id. You can take it from PBI Service URL
      |      dataset_id: str uuid
-     |          The Power Bi Dataset id. You can take it from PBI Service URL        
+     |          The Power Bi Dataset id. You can take it from PBI Service URL
      |      ### Returns
      |      ----
      |      Response dict of measures from requests library. 200 OK
-     |  
+     |
      |  get_parameters(self, dataset_id)
      |      Returns a list of parameters for the specified dataset from My workspace.
      |      ### Parameters
@@ -385,7 +385,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the parameters in the dataset from My workspace.
-     |  
+     |
      |  get_parameters_in_group(self, workspace_id, dataset_id)
      |      Returns a list of parameters for the specified dataset from the specified workspace.
      |      ### Parameters
@@ -398,7 +398,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the parameters in the dataset from workspace.
-     |  
+     |
      |  get_query_scaleout_sync_status(self, dataset_id)
      |      Returns the query scale-out sync status for the specified dataset from My workspace.
      |      ### Parameters
@@ -409,7 +409,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing data about scaleout sync dataset in the workspace.
-     |  
+     |
      |  get_query_scaleout_sync_status_in_group(self, workspace_id, dataset_id)
      |      Returns the query scale-out sync status for the specified dataset from the specified workspace.
      |      ### Parameters
@@ -422,7 +422,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing data about scaleout sync dataset in the workspace.
-     |  
+     |
      |  get_refresh_history(self, dataset_id, top=None)
      |      Returns the refresh history for the specified dataset from My workspace.
      |      ### Parameters
@@ -435,7 +435,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a refresh history in a dataset in My workspace.
-     |  
+     |
      |  get_refresh_history_in_group(self, workspace_id, dataset_id, top=None)
      |      Returns the refresh history for the specified dataset from the specified workspace.
      |      ### Parameters
@@ -450,7 +450,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a refresh history in a dataset from workspace.
-     |  
+     |
      |  get_refresh_schedule(self, dataset_id)
      |      Returns the refresh schedule for the specified dataset from My workspace.
      |      ### Parameters
@@ -461,7 +461,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a refresh schedule in a dataset from My workspace.
-     |  
+     |
      |  get_refresh_schedule_in_group(self, workspace_id, dataset_id)
      |      Returns the refresh schedule for the specified dataset from the specified workspace.
      |      ### Parameters
@@ -474,39 +474,39 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a refresh schedule in a dataset from workspace.
-     |  
+     |
      |  get_roles_from_dataset_in_group(self, workspace_id, dataset_id)
      |      Get all roles from specific dataset in a workspace
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
-     |          The Power Bi workspace id. You can take it from PBI Service URL        
+     |          The Power Bi workspace id. You can take it from PBI Service URL
      |      dataset_id: str uuid
-     |          The Power Bi Dataset id. You can take it from PBI Service URL                
+     |          The Power Bi Dataset id. You can take it from PBI Service URL
      |      ### Limitations
      |      ----
      |          This request will only work for User and Password credentials. It won't work with Service Principal due to API limitations.
      |      ### Returns
      |      ----
      |      Response dict of measures from requests library. 200 OK
-     |  
+     |
      |  get_tables_from_dataset_in_group(self, workspace_id, dataset_id)
      |      Get the tables from specific dataset in a workspace
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
-     |          The Power Bi workspace id. You can take it from PBI Service URL        
+     |          The Power Bi workspace id. You can take it from PBI Service URL
      |      dataset_id: str uuid
-     |          The Power Bi Dataset id. You can take it from PBI Service URL        
+     |          The Power Bi Dataset id. You can take it from PBI Service URL
      |      ### Returns
      |      ----
      |      Response dict of tables from requests library. 200 OK
-     |  
+     |
      |  refresh_dataset(self, dataset_id, notifyOption)
      |      Triggers a refresh for the specified dataset from My workspace.
      |      For Shared capacities, a maximum of eight requests per day, which includes refreshes executed using a scheduled refresh.
      |      ### Parameters
-     |      ----    
+     |      ----
      |      dataset_id: str uuid
      |          The Power Bi Dataset id. You can take it from PBI Service URL
      |      ### Request Body
@@ -516,14 +516,14 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 202 OK
-     |  
+     |
      |  refresh_dataset_in_group(self, workspace_id, dataset_id, notifyOption)
      |      Triggers a refresh for the specified dataset from the specified workspace.
      |      For Shared capacities, a maximum of eight requests per day, which includes refreshes executed using a scheduled refresh.
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
-     |          The Power Bi workspace id. You can take it from PBI Service URL        
+     |          The Power Bi workspace id. You can take it from PBI Service URL
      |      dataset_id: str uuid
      |          The Power Bi Dataset id. You can take it from PBI Service URL
      |      ### Request Body
@@ -533,13 +533,13 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 202 OK
-     |  
+     |
      |  take_over_dataset_in_group(self, workspace_id, dataset_id)
      |      Transfers ownership over the specified dataset to the current authorized user.
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
-     |          The Power Bi workspace id. You can take it from PBI Service URL        
+     |          The Power Bi workspace id. You can take it from PBI Service URL
      |      dataset_id: str uuid
      |          The Power Bi Dataset id. You can take it from PBI Service URL
      |      ### Request Body
@@ -548,17 +548,17 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  trigger_query_scaleout_sync(self, dataset_id)
      |      Triggers a query scale-out sync of read-only replicas for the specified dataset from My workspace.
      |      ### Parameters
      |      ----
      |      dataset_id: str uuid
-     |          The Power Bi Dataset id. You can take it from PBI Service URL        
+     |          The Power Bi Dataset id. You can take it from PBI Service URL
      |      ### Returns
      |      ----
      |      Response object from requests library. 202 OK
-     |  
+     |
      |  trigger_query_scaleout_sync_in_group(self, workspace_id, dataset_id)
      |      Triggers a query scale-out sync of read-only replicas for the specified dataset from the specified workspace.
      |      ### Parameters
@@ -566,17 +566,17 @@ CLASSES
      |      workspace_id: str uuid
      |          The Power Bi workspace id. You can take it from PBI Service URL
      |      dataset_id: str uuid
-     |          The Power Bi Dataset id. You can take it from PBI Service URL        
+     |          The Power Bi Dataset id. You can take it from PBI Service URL
      |      ### Returns
      |      ----
      |      Response object from requests library. 202 OK
-     |  
+     |
      |  update_dataset_in_group(self, workspace_id, dataset_id, targetStorageMode=None, autoSyncReadOnlyReplicas=None, maxReadOnlyReplicas=None)
      |      Updates the properties for the specified dataset from the specified workspace. The user must be the dataset owner.
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
-     |          The Power Bi workspace id. You can take it from PBI Service URL        
+     |          The Power Bi workspace id. You can take it from PBI Service URL
      |      dataset_id: str uuid
      |          The Power Bi Dataset id. You can take it from PBI Service URL
      |      ### Request Body
@@ -590,7 +590,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  update_datasources_in_group_preview(self, workspace_id, dataset_id, updateDetails)
      |      Updates the data sources of the specified dataset from the specified workspace.
      |      Only these data sources are supported: SQL Server, Azure SQL Server, Azure Analysis Services, Azure Synapse, OData, SharePoint, Teradata, and SAP HANA.
@@ -625,7 +625,7 @@ CLASSES
      |      ### Limitations
      |      ----
      |      Datasets created using the public XMLA endpoint aren't supported.
-     |  
+     |
      |  update_direct_query_refresh_schedule_in_group_preview(self, workspace_id, dataset_id, frequency=None, days=None, enabled=None, localTimeZoneId=None, times=None)
      |      Updates the refresh schedule for a specified DirectQuery or LiveConnection dataset from the specified workspace.
      |      A request should contain either a set of days and times or a valid frequency, but not both. If you choose a set of days without specifying any times, then Power BI will use a default single time per day. Setting the frequency will automatically overwrite the days and times setting.
@@ -653,7 +653,7 @@ CLASSES
      |      ### Limitations
      |      ----
      |      The limit on the number of time slots per day depends on whether a Premium or Shared capacity is used.
-     |  
+     |
      |  update_parameters(self, dataset_id, updateDetails)
      |      Updates the parameters values for the specified dataset from My workspace.
      |      If you're using enhanced dataset metadata, refresh the dataset to apply the new parameter values.
@@ -691,7 +691,7 @@ CLASSES
      |      Parameters names are case-sensitive.
      |      Parameter IsRequired must have a non-empty value.
      |      The parameter types Any and Binary cannot be updated.
-     |  
+     |
      |  update_parameters_in_group(self, workspace_id, dataset_id, updateDetails)
      |      Updates the parameters values for the specified dataset from the specified workspace.
      |      If you're using enhanced dataset metadata, refresh the dataset to apply the new parameter values.
@@ -699,7 +699,7 @@ CLASSES
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
-     |          The Power Bi workspace id. You can take it from PBI Service URL        
+     |          The Power Bi workspace id. You can take it from PBI Service URL
      |      dataset_id: str uuid
      |          The Power Bi Dataset id. You can take it from PBI Service URL
      |      ### Request Body
@@ -731,11 +731,11 @@ CLASSES
      |      Parameters names are case-sensitive.
      |      Parameter IsRequired must have a non-empty value.
      |      The parameter types Any and Binary cannot be updated.
-     |  
+     |
      |  update_refresh_schedule(self, dataset_id, NotifyOption=None, days=None, enabled=None, localTimeZoneId=None, times=None)
      |      Updates the refresh schedule for the specified dataset from My workspace.
      |      A request that disables the refresh schedule should contain no other changes.
-     |      At least one day must be specified. If no times are specified, then Power BI will use a default single time per day.        
+     |      At least one day must be specified. If no times are specified, then Power BI will use a default single time per day.
      |      ### Parameters
      |      ----
      |      dataset_id: str uuid
@@ -758,11 +758,11 @@ CLASSES
      |      ### Limitations
      |      ----
      |      The limit on the number of time slots per day depends on whether a Premium or Shared capacity is used.
-     |  
+     |
      |  update_refresh_schedule_in_group(self, workspace_id, dataset_id, NotifyOption=None, days=None, enabled=None, localTimeZoneId=None, times=None)
      |      Updates the refresh schedule for the specified dataset from the specified workspace.
      |      A request that disables the refresh schedule should contain no other changes.
-     |      At least one day must be specified. If no times are specified, then Power BI will use a default single time per day.       
+     |      At least one day must be specified. If no times are specified, then Power BI will use a default single time per day.
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
@@ -787,16 +787,16 @@ CLASSES
      |      ### Limitations
      |      ----
      |      The limit on the number of time slots per day depends on whether a Premium or Shared capacity is used.
-     |  
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
-     |  
+     |
      |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
+     |      dictionary for instance variables
+     |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
 FILE
-    c:\users\ibarrau\documents\github\simplepbi\simplepbi\datasets\__init__.py
+    c:\users\ignaciobarrau\documents\github\simplepbi\simplepbi\datasets\__init__.py
 

@@ -27,31 +27,31 @@ PACKAGE CONTENTS
 CLASSES
     builtins.object
         Imports
-    
+
     class Imports(builtins.object)
      |  Imports(token)
-     |  
+     |
      |  Simple library to use the Power BI api and obtain imports from it.
-     |  
+     |
      |  Methods defined here:
-     |  
+     |
      |  __init__(self, token)
      |      Create a simplePBI object to request imports API
      |      Args:
      |          token: String
      |              Bearer Token to use the Power Bi Rest API
-     |  
+     |
      |  get_import(self, import_id)
      |      Returns the specified import from My workspace.
      |      ### Parameters
      |      ----
      |      import_id: str uuid
-     |          The Power Bi import id. 
+     |          The Power Bi import id.
      |      ### Returns
      |      ----
      |      Dict:
      |          A dictionary containing a import in My workspace.
-     |  
+     |
      |  get_import_in_group(self, workspace_id, import_id)
      |      Returns the specified import from the specified workspace.
      |      ### Parameters
@@ -64,7 +64,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a import in the workspace.
-     |  
+     |
      |  get_imports(self)
      |      Returns a list of imports from My workspace.
      |      ### Parameters
@@ -74,7 +74,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the imports in My workspace.
-     |  
+     |
      |  get_imports_in_group(self, workspace_id)
      |      Returns a list of imports from the specified workspace.
      |      ### Parameters
@@ -85,7 +85,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the imports in the workspace.
-     |  
+     |
      |  simple_import_from_devops(self, organization, project, repository_id, path, devopsKey, workspace_id)
      |      This function will import a PBIX file from DevOps to Power BI. Only available for Pbix with size lower than 1gb
      |       ### Parameters
@@ -101,12 +101,12 @@ CLASSES
      |      devopsKey: str
      |          The DevOps Key. You can turn it on from DevOps > User Settings > Personal Access Tokens
      |      workspace_id: str uuid
-     |          The Power Bi workspace id. You can take it from PBI Service URL    
+     |          The Power Bi workspace id. You can take it from PBI Service URL
      |      ### Returns
      |      ----
      |      Dict:
      |          Response 200 or 202 Ok
-     |  
+     |
      |  simple_import_from_github(self, owner, repo, path, github_pat, workspace_id)
      |      This function will import a PBIX file from GitHub to Power BI. The maximun size is 100Mb.
      |       ### Parameters
@@ -120,20 +120,20 @@ CLASSES
      |      github_pat: str
      |          The GitHub Personal Access Token. You can turn it on from Settings > Developer Settings > Personal Access Tokens
      |      workspace_id: str uuid
-     |          The Power Bi workspace id. You can take it from PBI Service URL    
+     |          The Power Bi workspace id. You can take it from PBI Service URL
      |      ### Returns
      |      ----
      |      Dict:
      |          Response 202 Ok
-     |  
+     |
      |  simple_import_pbix(self, filePath, datasetDisplayName, nameConflict='CreateOrOverwrite', overrideModelLabel=None, overrideReportLabel=None)
      |      Creates new content in My Workspace. Pbix with size lower than 1gb or with temporal blog storage url created
-     |      Note: supported content for now Power BI .pbix files. Soon JSON files (.json), Excel files (.xlsx), SQL Server Report Definition Language files (.rdl)        
+     |      Note: supported content for now Power BI .pbix files. Soon JSON files (.json), Excel files (.xlsx), SQL Server Report Definition Language files (.rdl)
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
      |          The Power Bi workspace id. You can take it from PBI Service URL
-     |      datasetDisplayName: str 
+     |      datasetDisplayName: str
      |          The display name of the dataset should include file extension
      |      nameConflict: str
      |          Specifies what to do if a dataset with the same name already exists. The default value is Ignore. You can also use CreateOrOverwrite,GenerateUniqueName or Overwrite
@@ -147,7 +147,7 @@ CLASSES
      |          Full local path like "C:/Users/SimplePBI/Documents/Filename.pbix"
      |      fileUrl
      |          SOON The shared access signature URL of the temporary blob storage used to import large Power BI .pbix files between 1 GB and 10 GB in size.
-     |          
+     |
      |      ### Returns
      |      ----
      |      Dict:
@@ -155,15 +155,15 @@ CLASSES
      |      ### Limitations
      |      ----
      |      Importing a Power BI .pbix file from OneDrive isn't supported.
-     |  
+     |
      |  simple_import_pbix_as_parameter(self, workspace_id, fileContent, datasetDisplayName, nameConflict='CreateOrOverwrite', overrideModelLabel=None, overrideReportLabel=None)
      |      Creates new content in the specified workspace from a Pbix added by parameter. Pbix with size lower than 1gb or with temporal blog storage url created
-     |      Note: supported content for now Power BI .pbix files. Soon JSON files (.json), Excel files (.xlsx), SQL Server Report Definition Language files (.rdl)        
+     |      Note: supported content for now Power BI .pbix files. Soon JSON files (.json), Excel files (.xlsx), SQL Server Report Definition Language files (.rdl)
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
      |          The Power Bi workspace id. You can take it from PBI Service URL
-     |      datasetDisplayName: str 
+     |      datasetDisplayName: str
      |          The display name of the dataset should include file extension
      |      nameConflict: str
      |          Specifies what to do if a dataset with the same name already exists. The default value is Ignore. You can also use CreateOrOverwrite,GenerateUniqueName or Overwrite
@@ -177,7 +177,7 @@ CLASSES
      |          Pbix file as Response.Content from requests library. If you print the content it might end with something like this format: "x03  I.   "
      |      fileUrl
      |          SOON The shared access signature URL of the temporary blob storage used to import large Power BI .pbix files between 1 GB and 10 GB in size.
-     |          
+     |
      |      ### Returns
      |      ----
      |      Dict:
@@ -185,15 +185,15 @@ CLASSES
      |      ### Limitations
      |      ----
      |      Importing a Power BI .pbix file from OneDrive isn't supported.
-     |  
+     |
      |  simple_import_pbix_folder_in_group_preview(self, workspace_id, folderPath, nameConflict=None, overrideModelLabel=None, overrideReportLabel=None)
      |      Creates new multiple contents in the specified workspace. Define a local folder with pbix files. Pbix with size lower than 1gb or with temporal blog storage url created
-     |      Note: supported content for now Power BI .pbix files. Soon JSON files (.json), Excel files (.xlsx), SQL Server Report Definition Language files (.rdl)        
+     |      Note: supported content for now Power BI .pbix files. Soon JSON files (.json), Excel files (.xlsx), SQL Server Report Definition Language files (.rdl)
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
      |          The Power Bi workspace id. You can take it from PBI Service URL
-     |      folderPath: str 
+     |      folderPath: str
      |          Set the file path from local file system like C:/Files/
      |      nameConflict: str
      |          Specifies what to do if a dataset with the same name already exists. The default value is Ignore. You can also use CreateOrOverwrite,GenerateUniqueName or Overwrite
@@ -207,7 +207,7 @@ CLASSES
      |          Full local path of the files like "C:/Users/SimplePBI/Documents/"
      |      fileUrl: str
      |          SOON The shared access signature URL of the temporary blob storage used to import large Power BI .pbix files between 1 GB and 10 GB in size.
-     |          
+     |
      |      ### Returns
      |      ----
      |      Dict:
@@ -215,14 +215,14 @@ CLASSES
      |      ### Limitations
      |      ----
      |      Importing a Power BI .pbix file from OneDrive isn't supported.
-     |  
+     |
      |  simple_import_pbix_folder_preview(self, folderPath, nameConflict=None, overrideModelLabel=None, overrideReportLabel=None)
      |      Creates new multiple contents in the specified workspace. Define a local folder with pbix files. Pbix with size lower than 1gb or with temporal blog storage url created
-     |      Note: supported content for now Power BI .pbix files. Soon JSON files (.json), Excel files (.xlsx), SQL Server Report Definition Language files (.rdl)        
+     |      Note: supported content for now Power BI .pbix files. Soon JSON files (.json), Excel files (.xlsx), SQL Server Report Definition Language files (.rdl)
      |      ### Parameters
      |      ----
-     |      datasetDisplayName: str 
-     |          The display name of the dataset should include file extension            
+     |      datasetDisplayName: str
+     |          The display name of the dataset should include file extension
      |      nameConflict: str
      |          Specifies what to do if a dataset with the same name already exists. The default value is Ignore. You can also use CreateOrOverwrite,GenerateUniqueName or Overwrite
      |      overrideModelLabel: str
@@ -235,7 +235,7 @@ CLASSES
      |          Full local path of the files like "C:/Users/SimplePBI/Documents/"
      |      fileUrl: str
      |          SOON The shared access signature URL of the temporary blob storage used to import large Power BI .pbix files between 1 GB and 10 GB in size.
-     |          
+     |
      |      ### Returns
      |      ----
      |      Dict:
@@ -243,15 +243,15 @@ CLASSES
      |      ### Limitations
      |      ----
      |      Importing a Power BI .pbix file from OneDrive isn't supported.
-     |  
+     |
      |  simple_import_pbix_in_group(self, workspace_id, filePath, datasetDisplayName, nameConflict='CreateOrOverwrite', overrideModelLabel=None, overrideReportLabel=None)
      |      Creates new content in the specified workspace. Pbix with size lower than 1gb or with temporal blog storage url created
-     |      Note: supported content for now Power BI .pbix files. Soon JSON files (.json), Excel files (.xlsx), SQL Server Report Definition Language files (.rdl)        
+     |      Note: supported content for now Power BI .pbix files. Soon JSON files (.json), Excel files (.xlsx), SQL Server Report Definition Language files (.rdl)
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
      |          The Power Bi workspace id. You can take it from PBI Service URL
-     |      datasetDisplayName: str 
+     |      datasetDisplayName: str
      |          The display name of the dataset should include file extension
      |      nameConflict: str
      |          Specifies what to do if a dataset with the same name already exists. The default value is Ignore. You can also use CreateOrOverwrite,GenerateUniqueName or Overwrite
@@ -265,7 +265,7 @@ CLASSES
      |          Full local path like "C:/Users/SimplePBI/Documents/Filename.pbix"
      |      fileUrl
      |          SOON The shared access signature URL of the temporary blob storage used to import large Power BI .pbix files between 1 GB and 10 GB in size.
-     |          
+     |
      |      ### Returns
      |      ----
      |      Dict:
@@ -273,16 +273,16 @@ CLASSES
      |      ### Limitations
      |      ----
      |      Importing a Power BI .pbix file from OneDrive isn't supported.
-     |  
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
-     |  
+     |
      |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
+     |      dictionary for instance variables
+     |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
 FILE
-    c:\users\ibarrau\documents\github\simplepbi\simplepbi\imports\__init__.py
+    c:\users\ignaciobarrau\documents\github\simplepbi\simplepbi\imports\__init__.py
 

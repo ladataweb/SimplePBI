@@ -27,20 +27,20 @@ PACKAGE CONTENTS
 CLASSES
     builtins.object
         Dashboards
-    
+
     class Dashboards(builtins.object)
      |  Dashboards(token)
-     |  
+     |
      |  Simple library to use the Power BI api and obtain dashboards from it.
-     |  
+     |
      |  Methods defined here:
-     |  
+     |
      |  __init__(self, token)
      |      Create a simplePBI object to request admin API
      |      Args:
      |          token: String
      |              Bearer Token to use the Power Bi Rest API
-     |  
+     |
      |  add_dashboard(self, workspace_name)
      |      Creates a new empty dashboard in My workspace.
      |      ### Parameters
@@ -48,12 +48,12 @@ CLASSES
      |      None
      |      ### Request Body
      |      ----
-     |      workspace_name: str 
+     |      workspace_name: str
      |          The name of the new dashboard
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  add_dashboard_in_group(self, workspace_id, workspace_name)
      |      Creates a new empty dashboard in the specified workspace.
      |      ### Parameters
@@ -62,12 +62,12 @@ CLASSES
      |          The Power Bi workspace id. You can take it from PBI Service URL
      |      ### Request Body
      |      ----
-     |      workspace_name: str 
+     |      workspace_name: str
      |          The name of the new dashboard
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  clone_tile_in_dashboard(self, dashboard_id, tile_id, target_dashboard_id, target_dataset_id=None, target_report_id=None, target_workspace_id=None)
      |      Clones the specified tile from My workspace.
      |      When a tile is cloned to another workspace and bound to another report and dataset, it's cloned as is with its underlying query containing the original report filters.
@@ -91,7 +91,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  clone_tile_in_dashboard_in_group(self, workspace_id, dashboard_id, tile_id, target_dashboard_id, target_dataset_id=None, target_report_id=None, target_workspace_id=None)
      |      Clones the specified tile from the specified workspace.
      |      When a tile is cloned to another workspace and bound to another report and dataset, it's cloned as is with its underlying query containing the original report filters.
@@ -99,7 +99,7 @@ CLASSES
      |      ### Parameters
      |      ----
      |      workspace_id: str uuid
-     |          The Power Bi workspace id. You can take it from PBI Service URL   
+     |          The Power Bi workspace id. You can take it from PBI Service URL
      |      dashboard_id: str uuid
      |          The Power Bi dashboard id. You can take it from PBI Service URL
      |      tile_id: str
@@ -117,7 +117,7 @@ CLASSES
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
-     |  
+     |
      |  get_dashboard(self, dashboard_id)
      |      Returns the specified dashboard from My workspace.
      |      ### Parameters
@@ -128,7 +128,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a dashboard in My workspace.
-     |  
+     |
      |  get_dashboard_in_group(self, workspace_id, dashboard_id)
      |      Returns the specified dashboard from the specified workspace.
      |      ### Parameters
@@ -141,7 +141,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a dashboard in the workspace.
-     |  
+     |
      |  get_dashboards(self)
      |      Returns a list of dashboards from My workspace.
      |      ### Parameters
@@ -151,7 +151,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the dashboards in My workspace.
-     |  
+     |
      |  get_dashboards_in_group(self, workspace_id)
      |      Returns a list of dashboards from the specified workspace.
      |      ### Parameters
@@ -162,7 +162,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the dashboards in the workspace.
-     |  
+     |
      |  get_tile(self, dashboard_id, tile_id)
      |      Returns the specified tile within the specified dashboard from My workspace.
      |      Supported tiles include datasets and live tiles that contain an entire report page.
@@ -176,7 +176,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a tile in dashboard from My workspace.
-     |  
+     |
      |  get_tile_in_group(self, workspace_id, dashboard_id, tile_id)
      |      Returns the specified tile within the specified dashboard from the specified workspace.
      |      Supported tiles include datasets and live tiles that contain an entire report page.
@@ -192,7 +192,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing a tile in a dashboard from the workspace.
-     |  
+     |
      |  get_tiles(self, dashboard_id)
      |      Returns a list of tiles within the specified dashboard from My workspace.
      |      Supported tiles include datasets and live tiles that contain an entire report page.
@@ -204,7 +204,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the tiles in a dashboard from My workspace.
-     |  
+     |
      |  get_tiles_in_group(self, workspace_id, dashboard_id)
      |      Returns a list of tiles within the specified dashboard from the specified workspace.
      |      Supported tiles include datasets and live tiles that contain an entire report page.
@@ -218,16 +218,16 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the tiles in a dashboard from a workspace.
-     |  
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
-     |  
+     |
      |  __dict__
-     |      dictionary for instance variables (if defined)
-     |  
+     |      dictionary for instance variables
+     |
      |  __weakref__
-     |      list of weak references to the object (if defined)
+     |      list of weak references to the object
 
 FILE
-    c:\users\ibarrau\documents\github\simplepbi\simplepbi\dashboards\__init__.py
+    c:\users\ignaciobarrau\documents\github\simplepbi\simplepbi\dashboards\__init__.py
 
