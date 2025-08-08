@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=67", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "simplepbi"
+version = "1.0.4"
+description = "Simplify usage of Power Bi Rest API"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Ignacio Barrau", email = "igna_barrau@hotmail.com"}
+]
+keywords = [
+    "Power BI Rest API", "Power BI", "Power Bi API", "PBI",
+    "LaDataWeb", "Azure", "Data", "Python", "Fabric", "Microsoft Fabric", "Fabric Rest API", "Fabric API"
+]
+dependencies = [
+    "requests",
+    "pandas",
+    "requests-toolbelt"
+]
+
+# Classifiers as per your setup.py
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Documentation = "https://docs.microsoft.com/en-us/rest/api/power-bi/"
+SayThanks = "https://www.ladataweb.com.ar/contacto.html"
+Source = "https://github.com/ladataweb/SimplePBI"
+Tracker = "https://github.com/ladataweb/SimplePBI/issues"
+
+# This section ensures the use of find_packages() in the build process
+[tool.setuptools]
+packages = {find = {}}

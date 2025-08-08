@@ -115,6 +115,26 @@ CLASSES
      |      ----
      |      Returns a string of text of an html code to paste on a file or the literal file in the path specified
      |
+     |  create_doc_by_table_semantic_model_in_group(self, workspace_id, dataset_id, doc_type='text', path=None)
+     |      Create an html doc of a semantic model
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The Power Bi workspace id. You can take it from PBI Service URL
+     |      dataset_id: str uuid
+     |          The Power Bi Dataset id. You can take it from PBI Service URL
+     |      doc_type: str
+     |          It can be file or string text
+     |      path: str
+     |          Path to store the html file like C:/Folder/SemanticModelDocument.html
+     |      ### Limitations
+     |      ----
+     |          API can't get info from Semantic models in direct lake and direct query.
+     |          Service Principal can't query a semantic model with RLS by API
+     |      ### Returns
+     |      ----
+     |      Returns a string of text of an html code to paste on a file or the literal file in the path specified
+     |
      |  delete_dataset(self, dataset_id)
      |      Deletes the specified dataset from My workspace.
      |      ### Parameters

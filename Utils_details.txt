@@ -1,0 +1,223 @@
+Python Library Documentation: package simplepbi.utils in simplepbi
+
+NAME
+    simplepbi.utils
+
+DESCRIPTION
+    .
+               @@@@@@@@@@
+           @@@@..........@@@@
+        @@@         .        @@@
+      @@.           .         . @@
+     @  .     _     .         .   @
+    @........| |...................@    *********************************************
+    @      . | |   _____  .        @
+    @      . | |  |  __ \ .        @    La Data Web
+    @      . | |__| |  | |.   ***  @
+    @........|____| |  | |...*   *.@    Copyright © 2022 Ignacio Barrau
+    @   .       . | |__| |. *     *@
+    @   .       . |_____/ . *     *@    *********************************************
+    @   .       .         . *     *@
+    @   .       .         . *******@
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+PACKAGE CONTENTS
+
+
+FUNCTIONS
+    append_value(dict_obj, key, value)
+        Parameters
+        ----------
+        dict_obj : dict
+            dictionary object to append values.
+        key : str
+            Key name of the dictonary that will append a value.
+        value : any
+            Value to append in the key of the dictionary.
+
+        Returns
+        -------
+        None. It is applied to the dict in the parameter
+
+    extract_relationships(relationships_text)
+        Parses TMDL-formatted relationship definitions into a structured DataFrame.
+        ### Parameters
+        ----
+        relationships_text: str
+            The TMDL-formatted string containing relationship definitions.
+        ### Returns
+        ----
+        DataFrame:
+            A pandas DataFrame with columns: fromTable, fromColumn, toTable, toColumn.
+
+    generate_bim_documentation(bim_json_text: str, output_html_path: str)
+        Generates an HTML documentation for a Business Intelligence Model (BIM) based on its JSON representation.
+        ### Parameters
+        ----
+        bim_json_text: str
+            A string containing the JSON representation of the BIM, typically loaded from a .bim file.
+        output_html_path: str
+            The path where the HTML documentation will be saved.
+        ### Returns
+        ----
+            None: The function writes the generated HTML to the specified output path.
+
+    generate_cytoscape_diagram(tables, relationships)
+        Generates an HTML representation of a data model diagram using Cytoscape.js.
+        ### Parameters
+        ----
+        tables: list
+            A list of dictionaries, each representing a table with a 'name' key.
+        relationships: list
+            A list of dictionaries, each representing a relationship with keys like 'fromTable', 'fromColumn', 'toTable', 'toColumn', and 'cardinality'.
+        ### Returns
+        ----
+            str: An HTML representation of the data model diagram, including nodes for tables and edges for relationships.
+
+    generate_index_of_tables(tables) -> str
+        Generates an HTML representation of an index of tables, with links to each table's section.
+        ### Parameters
+        ----
+        tables: list
+            A list of dictionaries, each representing a table with a 'name' key.
+        ### Returns
+        ----
+            str: An HTML representation of the index of tables, with links to each table's section.
+
+    get_artifact_from_scan_preview(scan_result, artifact)
+        Get a table of an specific artifact
+        ### Parameters
+        ----
+        scan_result: dict
+            The scan result response from get_scan_result_preview
+        artifact: str
+            The type of artifact. Types: 'reports', 'dashboards', 'datasets', 'dataflows', 'users'
+        ### Returns
+        ----
+        str:
+            Returns the status of the scan. Succeeded means you are ready to request scans.
+
+    load_bim_file_as_string(filepath: str) -> str
+        Loads a BIM file and returns its contents as a string.
+        ### Parameters
+        ----
+        filepath: str
+            The path to the BIM file to be loaded.
+        ### Returns
+        ----
+            str: The contents of the BIM file as a string.
+
+    parse_columns_table(columns) -> str
+        Parses a list of column definitions into an HTML table.
+        ### Parameters
+        ----
+        columns: list
+            A list of dictionaries, each representing a column with keys like 'name', 'dataType', 'formatString', and 'description'.
+        ### Returns
+        ----
+            str: An HTML representation of the columns in a table format.
+
+    parse_config(model: Dict[str, Any], bim: Dict[str, Any]) -> str
+        Parses the model configuration into an HTML representation.
+        ### Parameters
+        ----
+        model: dict
+            A dictionary containing model details with keys like 'culture', 'sourceQueryCulture', and 'annotations'.
+        bim: dict
+            A dictionary containing the entire BIM structure, which may include additional metadata.
+        ### Returns
+        ----
+            str: An HTML representation of the model configuration, including compatibility level, culture, and annotations.
+
+    parse_measure(measure: Dict[str, Any]) -> str
+        Parses a measure definition into an HTML representation.
+        ### Parameters
+        ----
+        measure: dict
+            A dictionary containing measure details with keys like 'name', 'expression', 'formatString', and 'description'.
+        ### Returns
+        ----
+            str: An HTML representation of the measure.
+
+    parse_partition(partition: Dict[str, Any]) -> str
+        Parses a partition definition into an HTML representation.
+        ### Parameters
+        ----
+        partition: dict
+            A dictionary containing partition details with keys like 'name', 'mode', 'queryGroup', and 'source'.
+        ### Returns
+        ----
+            str: An HTML representation of the partition.
+
+    parse_relationship(rel: Dict[str, Any]) -> str
+        Parses a relationship definition into an HTML representation.
+        ### Parameters
+        ----
+        rel: dict
+            A dictionary containing relationship details with keys like 'fromTable', 'fromColumn', 'toTable', 'toColumn', and 'cardinality'.
+        ### Returns
+        ----
+            str: An HTML representation of the relationship, including the tables and columns involved, and the cardinality.
+
+    parse_role(role: Dict[str, Any]) -> str
+        Parses a role definition into an HTML representation.
+        ### Parameters
+        ----
+        role: dict
+            A dictionary containing role details with keys like 'name', 'modelPermission', and 'tablePermissions'.
+        ### Returns
+        ----
+            str: An HTML representation of the role.
+
+    parse_table(table: Dict[str, Any]) -> str
+        Parses a table definition into an HTML representation.
+        ### Parameters
+        ----
+        table: dict
+            A dictionary containing table details with keys like 'name', 'columns', 'measures', and 'partitions'.
+        ### Returns
+        ----
+            str: An HTML representation of the table, including its columns, measures, and partitions.
+
+    parse_tmdl_structure(table_definition)
+        Parses a TMDL-format semantic model tables definition into a structured DataFrame.
+        Extracts table name, field name, data type, and DAX expression.
+        ### Parameters
+        ----
+        table_definition: str
+            The TMDL-formatted string containing table definitions.
+        ### Returns
+        ----
+        DataFrame:
+            A pandas DataFrame with columns: table, name, type, data_type, expression.
+
+    to_pandas(response_dict, father_node)
+        Parameters
+        ----------
+        response_dict : dict
+            response from methods.
+        father_node : TYPE
+            Dict Key involving the list [] of items. Example for get_dashboards, the key of the response is "value"
+            {
+              "value": [
+                {
+                  "id": "69ffaa6c-b36d-4d01-96f5-1ed67c64d4af",
+                  "displayName": "SalesMarketing",
+                  "embedUrl": "https://app.powerbi.com/dashboardEmbed?dashboardId=69ffaa6c-b36d-4d01-96f5-1ed67c64d4af&groupId=f089354e-8366-4e18-aea3-4cb4a3a50b48",
+                  "isReadOnly": false
+                }
+              ]
+            }
+
+        Returns
+        -------
+        df : Pandas DataFrame
+            Returns the dict response converted in a Pandas DataFrame.
+
+DATA
+    Dict = typing.Dict
+        A generic version of dict.
+
+FILE
+    c:\users\ignaciobarrau\documents\github\simplepbi\simplepbi\utils\__init__.py
+

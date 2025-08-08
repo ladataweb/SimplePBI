@@ -1,0 +1,199 @@
+Python Library Documentation: package simplepbi.fabric.semanticmodels in simplepbi.fabric
+
+NAME
+    simplepbi.fabric.semanticmodels
+
+DESCRIPTION
+    .
+               @@@@@@@@@@
+           @@@@..........@@@@
+        @@@         .        @@@
+      @@.           .         . @@
+     @  .     _     .         .   @
+    @........| |...................@    *********************************************
+    @      . | |   _____  .        @
+    @      . | |  |  __ \ .        @    La Data Web
+    @      . | |__| |  | |.   ***  @
+    @........|____| |  | |...*   *.@    Copyright © 2025 Ignacio Barrau
+    @   .       . | |__| |. *     *@
+    @   .       . |_____/ . *     *@    *********************************************
+    @   .       .         . *     *@
+    @   .       .         . *******@
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+PACKAGE CONTENTS
+
+
+CLASSES
+    builtins.object
+        SemanticModels
+
+    class SemanticModels(builtins.object)
+     |  SemanticModels(token)
+     |
+     |  Simple library to use the api and obtain semantic models item from it.
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, token)
+     |      Create a simplePBI object to request fabric semantic models item API
+     |      Args:
+     |          token: String
+     |              Bearer Token to use the Rest API
+     |
+     |  create_html_semantic_model_documentation(self, workspace_id, semantic_model_id, output_html_path)
+     |      Generates an HTML documentation for the specified semantic model.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from PBI Service URL
+     |      semantic_model_id: str uuid
+     |          The semantic model id. You can take it from PBI Service URL
+     |      output_html_path: str
+     |          The path where the HTML documentation will be saved.
+     |          E.g: C:\Users\user\Desktop\semantic_model_documentation.html
+     |      ### Returns
+     |      ----
+     |      None
+     |
+     |  delete_semantic_model(self, workspace_id, semantic_model_id)
+     |      Deletes the specified semantic model from the specified workspace.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from PBI Service URL
+     |      semantic_model_id: str uuid
+     |          The semantic model id. You can take it from PBI Service URL
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK
+     |
+     |  get_relationships_from_semantic_model(self, workspace_id, semantic_model_id)
+     |      Returns the relationships of the specified semantic model.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from PBI Service URL
+     |      semantic_model_id: str uuid
+     |          The semantic model id. You can take it from PBI Service URL
+     |      ### Returns
+     |      ----
+     |      DataFrame:
+     |          A pandas DataFrame containing the relationships of the semantic model.
+     |
+     |  get_semantic_model(self, workspace_id, semantic_model_id)
+     |      Returns properties of the specified semantic model.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from PBI Service URL
+     |      semantic_model_id: str uuid
+     |          The semantic model id. You can take it from PBI Service URL
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing a semantic model in the workspace.
+     |
+     |  get_semantic_model_bim(self, workspace_id, semantic_model_id)
+     |      Returns the model.bim of the specified semantic model.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from PBI Service URL
+     |      semantic_model_id: str uuid
+     |          The semantic model id. You can take it from PBI Service URL
+     |      ### Returns
+     |      ----
+     |      DataFrame:
+     |          A pandas DataFrame containing the bim of the semantic model.
+     |
+     |  get_semantic_model_definition(self, workspace_id, semantic_model_id, format=None)
+     |      Returns the definition of the specified semantic model.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from PBI Service URL
+     |      semantic_model_id: str uuid
+     |          The semantic model id. You can take it from PBI Service URL
+     |      format: str
+     |          The format of the semantic model definition. Can be 'TMDL' or 'TMSL'.
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing the definition of the semantic model.
+     |
+     |  get_tables_partitions_from_semantic_model(self, workspace_id, semantic_model_id)
+     |      Returns the tables partitions of the specified semantic model.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from PBI Service URL
+     |      semantic_model_id: str uuid
+     |          The semantic model id. You can take it from PBI Service URL
+     |      ### Returns
+     |      ----
+     |      DataFrame:
+     |          A pandas DataFrame containing the tables of the semantic model.
+     |
+     |  get_tables_schema_from_semantic_model(self, workspace_id, semantic_model_id)
+     |      Returns the tables schema of the specified semantic model.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from PBI Service URL
+     |      semantic_model_id: str uuid
+     |          The semantic model id. You can take it from PBI Service URL
+     |      ### Returns
+     |      ----
+     |      DataFrame:
+     |          A pandas DataFrame containing the tables of the semantic model.
+     |
+     |  list_roles_from_semantic_model(self, workspace_id, semantic_model_id)
+     |      Returns the roles of the specified semantic model.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from PBI Service URL
+     |      semantic_model_id: str uuid
+     |          The semantic model id. You can take it from PBI Service URL
+     |      ### Returns
+     |      ----
+     |      DataFrame:
+     |          A list containing the roles of the semantic model.
+     |
+     |  list_semantic_models(self, workspace_id)
+     |      Returns a list of semantic models in the specified workspace.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from PBI Service URL
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing all the semantic models in the workspace.
+     |
+     |  list_tables_from_semantic_model(self, workspace_id, semantic_model_id)
+     |      Returns the tables of the specified semantic model.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from PBI Service URL
+     |      semantic_model_id: str uuid
+     |          The semantic model id. You can take it from PBI Service URL
+     |      ### Returns
+     |      ----
+     |      DataFrame:
+     |          A list containing the tables of the semantic model.
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables
+     |
+     |  __weakref__
+     |      list of weak references to the object
+
+FILE
+    c:\users\ignaciobarrau\documents\github\simplepbi\simplepbi\fabric\semanticmodels\__init__.py
+

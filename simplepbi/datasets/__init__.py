@@ -19,6 +19,7 @@ r'''.
 import json
 import requests
 from simplepbi import utils
+from simplepbi.fabric import semanticmodels
 import pandas as pd
 import math
 
@@ -2364,3 +2365,467 @@ class Datasets():
                 return fina_html
         except Exception as ex:            
             print("Error: ", ex, "\nThe is an error reading tables from the semantic model. Make sure you have checked the API limitations of the request at the description of the method." , "\nThere was an error generating the file. Please consider this is a preview feature. If you are not running a limitation, help us sending feedback on the specific dataset description you couldn't generate at https://www.ladataweb.com.ar/contacto.html")
+
+    def create_doc_by_table_semantic_model_in_group(self, workspace_id, dataset_id, doc_type='text', path=None ):   
+            """Create an html doc of a semantic model
+            ### Parameters
+            ----
+            workspace_id: str uuid
+                The Power Bi workspace id. You can take it from PBI Service URL        
+            dataset_id: str uuid
+                The Power Bi Dataset id. You can take it from PBI Service URL                
+            doc_type: str
+                It can be file or string text
+            path: str
+                Path to store the html file like C:/Folder/SemanticModelDocument.html 
+            ### Limitations
+            ----
+                API can't get info from Semantic models in direct lake and direct query.
+                Service Principal can't query a semantic model with RLS by API
+            ### Returns
+            ----
+            Returns a string of text of an html code to paste on a file or the literal file in the path specified
+            """
+            try:
+                # Get Dataset details
+                print("Getting Semantic Model Details...")
+                dset = self.get_dataset_in_group(workspace_id, dataset_id)
+                dsource = self.get_datasources_in_group(workspace_id, dataset_id)
+                # Get Tables
+                print("Getting Tables...")
+                sem = semanticmodels.SemanticModels(d.token)
+                list_tables = sem.get_tables_partitions_from_semantic_model(workspace_id, dataset_id)
+                df = list_tables
+                # Get Columns
+                print("Getting Columns...")
+                table_schema = sem.get_tables_schema_from_semantic_model(workspace_id, dataset_id)
+                df_col = table_schema[table_schema["type"]=="column"]
+                df_cols_selected = df_col[["table","type", "name","data_type", "expression"]]
+                # Build tables dict for diagram
+                print("Getting Relationships...")
+                df_rel = sem.get_relationships_from_semantic_model(workspace_id, dataset_id)
+                key_columns = list(set(df_rel["fromColumn"].tolist() + df_rel["toColumn"].tolist()))                
+                # Get Partitions
+                print("Getting Partitions...")
+                
+                print("Building Diagram...")
+                # Generating a matrix for adjusting diagram positions
+                allin = []
+                dic = {}
+                columnas=[]
+                raiz = math.sqrt(len(df))
+                x = int(raiz)
+                y = int(raiz)
+                if x*y < len(df):
+                    x=x+1
+                else:
+                    pass
+                x_count=0
+                y_count=0
+                
+                for i, row in df.iterrows():
+                    if y_count == y:
+                        x_count= x_count+1
+                        y_count=0
+                    else:
+                        y_count= y_count+1
+                    #print("i es ",str(i),"(", str(par*100) , ", " , str(impar*100) + ")")
+                    dic["key"] = row["table"]
+                    dic["location"] = "new go.Point(" + str(x_count*400) + ", " + str(y_count*100) + ")"
+                    for j, wor in df_col[df_col['table'] == row["table"]].iterrows():
+                        if wor["name"]!=None:
+                            #if "RowNumber" not in wor["[ItemName]"]:
+                            if wor["name"] in key_columns:
+                                columnas.append({"name":wor["name"], 'iskey': 'true', 'figure': 'Decision', 'color': 'purple'})                
+                            else:
+                                columnas.append({"name":wor["name"], 'iskey': 'false', 'figure': 'Circle', 'color': 'blue'})            
+                    dic["items"]=columnas
+                    dic["inheritedItems"]=[]
+                    allin.append(dic)
+                    dic = {}
+                    columnas=[]
+                    
+                # Clean Table
+                nodeDataArray = ','.join(map(str,allin))
+                nodeDataArray = nodeDataArray.replace("'key'","key")
+                nodeDataArray = nodeDataArray.replace("'name'","name")
+                nodeDataArray = nodeDataArray.replace("'new","new")
+                nodeDataArray = nodeDataArray.replace("0)'","0)")
+                nodeDataArray = nodeDataArray.replace("'item'","item")
+                nodeDataArray = nodeDataArray.replace("'iskey'","iskey")
+                nodeDataArray = nodeDataArray.replace("'figure'","figure")
+                nodeDataArray = nodeDataArray.replace("'color'","color")
+                nodeDataArray = nodeDataArray.replace("'true'","true")
+                nodeDataArray = nodeDataArray.replace("'false'","false")
+                # Build relationships dict for diagram                        
+                relations = []
+                for i, row in df_rel.iterrows():
+                    fromy = 1
+                    tomy = 1
+                    #if row["[FromCardinality]"]== 2:
+                    #    fromy="*"
+                    #if row["[ToCardinality]"]== 2:
+                    #    tomy="*"
+                    relations.append({ "from": row["fromTable"], "to": row["toTable"], "text": fromy, "toText": tomy })
+                # Clean Relationships
+                linkDataArray = ','.join(map(str,relations))
+                linkDataArray = linkDataArray.replace("'from'","from")
+                linkDataArray = linkDataArray.replace("'to'","to")
+                linkDataArray = linkDataArray.replace("'text'","text")
+                linkDataArray = linkDataArray.replace("'toText'","toText")
+                # Get Measures
+                print("Getting Measures...")                
+                df_mea = table_schema[table_schema["type"]=="measure"]
+                df_meas_selected = df_mea[["table","type", "name", "expression"]]
+                
+                print("Creating document...")
+                # Create Document Tables
+                html_long=""
+                list_tables=""            
+                for i, row in df.iterrows(): #cambie df por df_loop
+                    list_tables = list_tables + '<li><a href="#'+ row["table"] +'">'+ row["table"] +'</a></li>'
+                    html_long = html_long + '''
+                    <h3 id="'''+ row["table"] +'''">Table '''+ row["table"] +''' </h3>                
+                    <div id="accordion">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse'''+ str(row["table"]) +'''" aria-expanded="true" aria-controls="collapse'''+ str(row["table"]) +'''">
+                            Query Definition
+                            </button>
+                        </h5>
+                        </div>
+
+                        <div id="collapse'''+ str(row["table"]) +'''" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-body">
+                            <pre class="language-js"><code class="language-js">
+    '''+ row["query_definition"]  +'''
+                            </code></pre>  
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                    <br>
+                    <h4>Table schema definition</h4>
+                    '''+ pd.DataFrame.to_html(df_cols_selected[df_cols_selected["table"]==row["table"]]).replace('class="dataframe"', 'class="styled-table"').replace('\\n',' ')                
+                    if len(df_meas_selected[df_meas_selected["table"]==row["table"]]) == 0:
+                        html_long = html_long + "<br><p>This table doesn't contains measures.</p>"
+                    else:
+                        html_long = html_long + '''<h4>Table measures </h4>
+                        '''+ pd.DataFrame.to_html(df_meas_selected[df_meas_selected["table"]==row["table"]]).replace('class="dataframe"', 'class="styled-table"').replace('\\n',' ')
+                
+                # Create Document
+                fina_html='''
+                    <html lang="en"><head>
+                    <title>Semantic Model Document with SimplePBI</title>
+                    <meta name="description" content="This document was autogenerated with SimplePBI, the python library for Power Bi Rest API developed by ibarrau." />
+                    <meta name="generator" content="http://www.ladataweb.com.ar/">
+                    <meta name="author" content="ibarrau">
+                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+                    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+                    <link rel="stylesheet" href="http://web.simmons.edu/~grovesd/comm244/css/notes.css" media="screen">
+                    <meta name="viewport" content="width=device-width, initial-scale=1">
+                    <script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/js?id=G-3DEZ6EPPHR&amp;cx=c&amp;_slc=1"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script src="http://web.simmons.edu/~grovesd/comm244/js/prism.js"></script><style type="text/css" id="operaUserStyle"></style>
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                    <script src="https://unpkg.com/gojs@3.0.10/release/go.js"></script>
+                    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+                    <style>
+                        .styled-table { 
+                            margin: 25px 0;
+                            border-collapse: collapse;
+                            font-size: 0.9em;
+                            font-family: sans-serif;
+                            min-width: 400px;
+                            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+                        }
+                        .styled-table thead tr {
+                            background-color: #F3A977;
+                            color: #ffffff;
+                            text-align: left;
+                        }
+                        .styled-table th,
+                        .styled-table td {
+                            padding: 12px 15px;
+                        }
+                        .styled-table tbody tr {
+                            border-bottom: 1px solid #dddddd;
+                        }
+                    
+                        .styled-table tbody tr:nth-of-type(even) {
+                            background-color: #f3f3f3;
+                        }
+                    
+                        .styled-table tbody tr:last-of-type {
+                            border-bottom: 2px solid #F3A977;
+                        }
+                        .styled-table tbody tr.active-row {
+                            font-weight: bold;
+                            color: #009879;
+                        }
+                    </style>
+                    </head>
+                    
+                    <body>
+                    <!-- Button on top like "back"> <p class="backlink"><a href="../../week3">Back to Week 3 page »</a></p> -->
+                    <br>
+                    <h1>Semantic Model '''+dset['name']+''' documentation</h1>
+                    <br>
+                    <p>The semantic model was configured by '''+ dset['configuredBy'] +'''. The target storage mode is '''+ dset['targetStorageMode'] +'''. Its refresh setting is set to '''+ str(dset['isRefreshable']) +'''. The configuration for RLS is '''+str(dset['isEffectiveIdentityRolesRequired'])+'''. It was created the date '''+dset['createdDate']+'''.</p>
+                    <p>The sources types involved are '''+', '.join([item['datasourceType'] for item in dsource['value']])+'''.
+                    <p>The document is built detailing table by table. For each table you will find its query definition, schema and measures.</p>
+                    <ul>
+                        '''+list_tables+'''
+                    </ul>
+                    <h2 id="Diagram">Model Diagram</h2>
+                    
+                    <p>In addition you can see this data model interactive diagram. You can move tables, scroll or ctrl + wheel in order to adjust the view.</p>
+                    
+                    <div id="allSampleContent" class="p-4 w-full">
+                            
+                    <script src="https://unpkg.com/create-gojs-kit@3.0.10/dist/extensions/Figures.js"></script>
+                    <script src="https://unpkg.com/create-gojs-kit@3.0.10/dist/extensions/Themes.js"></script>
+                    <script id="code">
+                    function init() { 
+                        myDiagram = new go.Diagram('myDiagramDiv', {
+                        allowDelete: false,
+                        allowCopy: false,
+                        layout: new go.ForceDirectedLayout({ isInitial: false }),
+                        'undoManager.isEnabled': true,
+                        // use "Modern" themes from extensions/Themes
+                        'themeManager.themeMap': new go.Map([
+                            { key: 'light', value: Modern },
+                            { key: 'dark', value: ModernDark }
+                        ]),
+                        'themeManager.changesDivBackground': true,
+                        'themeManager.currentTheme': document.getElementById('theme').value
+                        });
+                    
+                        myDiagram.themeManager.set('light', {
+                        colors: {
+                            primary: '#f7f9fc',
+                            green: '#62bd8e',
+                            blue: '#3999bf',
+                            purple: '#7f36b0',
+                            red: '#c41000'
+                        }
+                        });
+                        myDiagram.themeManager.set('dark', {
+                        colors: {
+                            primary: '#4a4a4a',
+                            green: '#429e6f',
+                            blue: '#3f9fc6',
+                            purple: '#9951c9',
+                            red: '#ff4d3d'
+                        }
+                        });
+                    
+                        // the template for each attribute in a node's array of item data
+                        const itemTempl = new go.Panel('Horizontal', { margin: new go.Margin(2, 0) })
+                        .add(
+                            new go.Shape({
+                            desiredSize: new go.Size(15, 15),
+                            strokeWidth: 0,
+                            margin: new go.Margin(0, 5, 0, 0)
+                            })
+                            .bind('figure')
+                            .themeData('fill', 'color'),
+                            new go.TextBlock({
+                            font: '14px sans-serif',
+                            stroke: 'black'
+                            })
+                            .bind('text', 'name')
+                            .bind('font', 'iskey', (k) => (k ? 'italic 14px sans-serif' : '14px sans-serif'))
+                            .theme('stroke', 'text')
+                        );
+                    
+                        // define the Node template, representing an entity
+                        myDiagram.nodeTemplate = new go.Node('Auto', { // the whole node panel
+                        selectionAdorned: true,
+                        resizable: true,
+                        layoutConditions: go.LayoutConditions.Standard & ~go.LayoutConditions.NodeSized,
+                        fromSpot: go.Spot.LeftRightSides,
+                        toSpot: go.Spot.LeftRightSides
+                        })
+                        .bindTwoWay('location')
+                        // whenever the PanelExpanderButton changes the visible property of the "LIST" panel,
+                        // clear out any desiredSize set by the ResizingTool.
+                        .bindObject('desiredSize', 'visible', (v) => new go.Size(NaN, NaN), undefined, 'LIST')
+                        .add(
+                            // define the node's outer shape, which will surround the Table
+                            new go.Shape('RoundedRectangle', {
+                            stroke: '#e8f1ff',
+                            strokeWidth: 3
+                            })
+                            .theme('fill', 'primary'),
+                            new go.Panel('Table', {
+                            margin: 8,
+                            stretch: go.Stretch.Fill
+                            })
+                            .addRowDefinition(0, { sizing: go.Sizing.None })
+                            .add(
+                                // the table header
+                                new go.TextBlock({
+                                row: 0,
+                                alignment: go.Spot.Center,
+                                margin: new go.Margin(0, 24, 0, 2), // leave room for Button
+                                font: 'bold 18px sans-serif'
+                                })
+                                .bind('text', 'key')
+                                .theme('stroke', 'text'),
+                                // the collapse/expand button
+                                go.GraphObject.build('PanelExpanderButton', {
+                                row: 0,
+                                alignment: go.Spot.TopRight
+                                },'LIST') // the name of the element whose visibility this button toggles
+                                .theme('ButtonIcon.stroke', 'text'),
+                                new go.Panel('Table', {
+                                name: 'LIST',
+                                row: 1,
+                                alignment: go.Spot.TopLeft
+                                })
+                                .add(
+                                    new go.TextBlock('Attributes', {
+                                    row: 0,
+                                    alignment: go.Spot.Left,
+                                    margin: new go.Margin(3, 24, 3, 2),
+                                    font: 'bold 15px sans-serif'
+                                    })
+                                    .theme('stroke', 'text'),
+                                    go.GraphObject.build('PanelExpanderButton', {
+                                    row: 0,
+                                    alignment: go.Spot.Right
+                                    }, 'NonInherited')
+                                    .theme('ButtonIcon.stroke', 'text'),
+                                    new go.Panel('Vertical', {
+                                    row: 1,
+                                    visible: false,
+                                    name: 'NonInherited',
+                                    alignment: go.Spot.TopLeft,
+                                    defaultAlignment: go.Spot.Left,
+                                    itemTemplate: itemTempl
+                                    })
+                                    .bind('itemArray', 'items'),
+                                    new go.TextBlock('Inherited Attributes', {
+                                    row: 2,
+                                    visible: false,
+                                    alignment: go.Spot.Left,
+                                    margin: new go.Margin(3, 24, 3, 2), // leave room for Button
+                                    font: 'bold 15px sans-serif'
+                                    })
+                                    .bind('visible', 'inheritedItems', (arr) => Array.isArray(arr) && arr.length > 0)
+                                    .theme('stroke', 'text'),
+                                    go.GraphObject.build('PanelExpanderButton', {
+                                    row: 2,
+                                    alignment: go.Spot.Right
+                                    }, 'Inherited')
+                                    .bind('visible', 'inheritedItems', (arr) => Array.isArray(arr) && arr.length > 0)
+                                    .theme('ButtonIcon.stroke', 'text'),
+                                    new go.Panel('Vertical', {
+                                    row: 3,
+                                    name: 'Inherited',
+                                    alignment: go.Spot.TopLeft,
+                                    defaultAlignment: go.Spot.Left,
+                                    itemTemplate: itemTempl
+                                    })
+                                    .bind('itemArray', 'inheritedItems')
+                                )
+                            )
+                        );
+                    
+                        // define the Link template, representing a relationship
+                        myDiagram.linkTemplate = new go.Link({ // the whole link panel
+                        selectionAdorned: true,
+                        layerName: 'Background',
+                        reshapable: true,
+                        routing: go.Routing.AvoidsNodes,
+                        corner: 5,
+                        curve: go.Curve.JumpOver
+                        })
+                        .add(
+                            new go.Shape({ // the link shape
+                            stroke: '#f7f9fc',
+                            strokeWidth: 3
+                            })
+                            .theme('stroke', 'link'),
+                            new go.TextBlock({ // the "from" label
+                            textAlign: 'center',
+                            font: 'bold 14px sans-serif',
+                            stroke: 'black',
+                            segmentIndex: 0,
+                            segmentOffset: new go.Point(NaN, NaN),
+                            segmentOrientation: go.Orientation.Upright
+                            })
+                            .bind('text')
+                            .theme('stroke', 'text'),
+                            new go.TextBlock({ // the "to" label
+                            textAlign: 'center',
+                            font: 'bold 14px sans-serif',
+                            stroke: 'black',
+                            segmentIndex: -1,
+                            segmentOffset: new go.Point(NaN, NaN),
+                            segmentOrientation: go.Orientation.Upright
+                            })
+                            .bind('text', 'toText')
+                            .theme('stroke', 'text')
+                            );
+                    
+                        // create the model for the E-R diagram
+                    
+                        const nodeDataArray = ['''+nodeDataArray+'''];
+                        
+                        const linkDataArray = ['''+linkDataArray+'''];
+                    
+                        myDiagram.model = new go.GraphLinksModel({
+                        copiesArrays: true,
+                        copiesArrayObjects: true,
+                        nodeDataArray: nodeDataArray,
+                        linkDataArray: linkDataArray
+                        });
+                    }
+                    
+                    const changeTheme = () => {
+                        const myDiagram = go.Diagram.fromDiv('myDiagramDiv');
+                        if (myDiagram) {
+                        myDiagram.themeManager.currentTheme = document.getElementById('theme').value;
+                        }
+                    };
+                    
+                    window.addEventListener('DOMContentLoaded', init);
+                    </script>
+                    
+                    <div id="sample">
+                    <div id="myDiagramDiv" style="background-color: white; border: solid 1px black; width: 100%; height: 700px"></div>
+                    Theme:
+                    <select id="theme" onchange="changeTheme()">
+                        <option value="system">System</option>
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                    </select>
+                    </div>
+                    </div>
+                    
+                    <h2 id="Tables">Tables</h2>
+                    <p>Here you can find the list of tables in the data model.</p>
+                    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+                    
+                    '''+html_long+'''
+                    
+                    
+                                    
+                    <p class="backlink"><a href="https://www.ladataweb.com.ar/contacto.html?id=suscribirse">Automatic Document developed by LaDataWeb</a></p>
+                    
+                    
+                    </body></html>
+                    '''
+                print("Saving document...")
+                if doc_type == 'file':
+                    with open(path, "w") as file:
+                        file.write(fina_html)
+                    return "File saved."
+                else:   
+                    return fina_html
+            except Exception as ex:            
+                print("Error: ", ex, "\nThe is an error reading tables from the semantic model. Make sure you have checked the API limitations of the request at the description of the method." , "\nThere was an error generating the file. Please consider this is a preview feature. If you are not running a limitation, help us sending feedback on the specific dataset description you couldn't generate at https://www.ladataweb.com.ar/contacto.html")

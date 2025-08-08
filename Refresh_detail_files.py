@@ -14,7 +14,9 @@ from simplepbi import azpause
 from simplepbi import pushdatasets
 from simplepbi.fabric import core
 from simplepbi.fabric import adminfab
-#from simplepbi import utils
+from simplepbi.fabric import datapipelines
+from simplepbi.fabric import semanticmodels
+from simplepbi import utils
 
 import pydoc
 
@@ -35,6 +37,9 @@ if __name__ == '__main__':
     pushd = pydoc.render_doc(pushdatasets, forceload=0, renderer=pydoc.plaintext)
     adfab = pydoc.render_doc(adminfab, forceload=0, renderer=pydoc.plaintext)
     coree = pydoc.render_doc(core, forceload=0, renderer=pydoc.plaintext)
+    seman = pydoc.render_doc(semanticmodels, forceload=0, renderer=pydoc.plaintext)
+    dpipes = pydoc.render_doc(datapipelines, forceload=0, renderer=pydoc.plaintext)
+    utii = pydoc.render_doc(utils, forceload=0, renderer=pydoc.plaintext)
 
     a=open(r'Admin_details.txt', 'w')
     a.write(ad)
@@ -99,3 +104,15 @@ if __name__ == '__main__':
     corefab=open(r'Fabric_Core_details.txt', 'w')
     corefab.write(coree)
     corefab.close()
+    
+    semod=open(r'Fabric_SemanticModels_details.txt', 'w')
+    semod.write(seman)
+    semod.close()
+    
+    dapipes=open(r'Fabric_DataPipelines_details.txt', 'w')
+    dapipes.write(dpipes)
+    dapipes.close()
+    
+    utiil=open(r'Utils_details.txt', 'w')
+    utiil.write(utii)
+    utiil.close()

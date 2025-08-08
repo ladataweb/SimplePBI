@@ -8,7 +8,7 @@
 [twitter-follow]: https://img.shields.io/twitter/follow/chemerisuk.svg?style=social&label=Follow%20me
 [donate-url]: https://www.paypal.com/donate/?hosted_button_id=7A8YKN3HQ65LU
 
-This is a simple library that makes it easy to use the Power Bi REST API and Fabric REST API. We have cover more than 80% of PowerBi request and now we are working with Microsoft Fabric too. One day SimplePBI will contain all the categories in both APIs, our at least that's our vision dream.
+This is a simple library that makes it easy to use the Power Bi REST API and Fabric REST API. We have cover more than 85% of PowerBi request and now we are working with Microsoft Fabric too. We hope one day SimplePBI will contain all the categories in both APIs, our at least that's our vision dream.
 Feel free to check the doc to get a deeper understanding of a specific request: 
 - Power Bi Doc: https://learn.microsoft.com/en-us/rest/api/power-bi/
 - Fabric Doc: https://learn.microsoft.com/en-us/rest/api/fabric/articles/using-fabric-apis
@@ -71,6 +71,9 @@ Items_In_Workspace = it.list_items(workspace_id)
 
 The library get requests will return a response object .json() that python reads it as a Dict.
 
+## The Core Category requests at Fabric
+The core requests at Fabric are the operational requests for regular users. Some examples are workspaces, folders, items, git integration, schedules or gateways. It contains a subcategory items that can handle any item created at fabric. You can list items and pick a type report for the get. Items can be anything like notebooks, pipelines, semantic models, etc.
+
 ## Preview methods
 There are some methods in the classes that still need more testing. Those will have a "preview" at the end of the name. Please let us know if something goes wrong with those. All Fabric requests are in "preview" even though they don't have the clarification at the name.
 
@@ -92,8 +95,8 @@ Right now the library is consuming endpoints from:
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Push_Datasets_details.txt" target="_blank">Push Datasets</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Fabric_Admin_details.txt" target="_blank">Fabric Admin</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Fabric_Core_details.txt" target="_blank">Fabric Core</a>
-- <a href="#" target="_blank">Fabric Data Pipelines</a>
-- <a href="#" target="_blank">Fabric Semantic Models</a>
+- <a href="https://github.com/ladataweb/SimplePBI/blob/main/Fabric_DataPipelines_details.txt" target="_blank">Fabric Data Pipelines</a>
+- <a href="https://github.com/ladataweb/SimplePBI/blob/main/Fabric_SemanticModels_details.txt" target="_blank">Fabric Semantic Models</a>
 
 ## Complex requests
 If you want to get a deeper look on complex __Admin__ methods and unique methods. 
@@ -122,49 +125,47 @@ We are also adding new methods with the requests to help get new actions. Exampl
 - get_widely shared_artifacts_published_to_web (already iterating): makes geting the published to web repos info easier
 - get_dataset_roles_in_group: get all the roles from a single dataset in a specific workspace
 - get_datasets_roles_in_groups: get all the roles from all datasets in a list of workspaces
-- create_doc_by_content_dataset_in_group (deprecated by Rest API source): generate an html code file or text with a document of semantic model in a workspace organized by content
-- create_doc_by_table_dataset_in_group (deprecated by Rest API source): generate an html code file or text with a document of semantic model in a workspace organized by tables
+- create_doc_by_table_semantic_model_in_group(workspace_id, dataset_id, doc_type, path): generate an html code file or text with a document of semantic model in a workspace organized by tables
+- create_html_semantic_model_documentation(workspace_id, semantic_model_id, output_html_path): a new version generating an html code file or text with a document of semantic model in a workspace organized by tables
+- list_roles_from_semantic_model(workspace_id, semantic_model_id): returns the roles of the specified semantic model
+- get_tables_schema_from_semantic_model(workspace_id, semantic_model_id): returns the tables schema of the specified semantic model
+- get_tables_partitions_from_semantic_model(workspace_id, semantic_model_id): returns the tables partitions of the specified semantic model
 
 ## Small categories
 Small categories like Dataflow Storage Accounts and Available Features were moved to Groups and Admin.
 
 # Missing endpoints
 We are still developing the library. The following endpoints from admin are still missing
-### Admin 
-- Set and Remove LabelsAsAdmin
-### Groups
-- Update group User
-### Reports
-- Export To File (full request, there is a smaller simpler one)
-- Get Export To File Status (regular and in groups)
-- Get File Of Export To File (regular and in groups)
-- Update Datasources (rdl files regular and in groups)
-- Update Report Content (regular and in groups)
-### Imports
-- Create Temporary Upload Location
-- Create Temporary Upload Location In Group
-- Post Import (for xlsx, json and rdl)
-- Post Import In Group (for xlsx, json and rdl)
-### Gateways 
-- Create Datasource (looks like there is a bug on the API)
-- Update Datasource 
-- Delete Datasource 
-### Scorecards (preview)
-- Patch By Id 
-- Move Goals
-### Embed Token
-- All requests 
-### Goals (preview)
-- All requests
 ### Fabric API
 - Admin (External data shares, labels and tenants)
 - Core (Capacities, deployment pipelines, external data shares, gateways, managed private endpoints)
-- All other categories
+- All other categories except SemanticModels and DataPipelines
+### Power Bi Rest API
+- Admin (Set and Remove LabelsAsAdmin)
+- Groups (Update group User)
+- Reports
+	- Export To File (full request, there is a smaller simpler one)
+	- Get Export To File Status (regular and in groups)
+	- Get File Of Export To File (regular and in groups)
+	- Update Datasources (rdl files regular and in groups)
+	- Update Report Content (regular and in groups)
+- Imports
+	- Create Temporary Upload Location
+	- Create Temporary Upload Location In Group
+	- Post Import (for xlsx, json and rdl)
+	- Post Import In Group (for xlsx, json and rdl)
+- Gateways 
+	- Create Datasource (looks like there is a bug on the API)
+	- Update Datasource 
+	- Delete Datasource 
+- Scorecards (Patch By Id, Move Goals)
+- Embed Token (All requests)
+- Goals (All requests)
 
 # Next Steps (planned items)
 - Complete Fabric API requests for admin and core.
 - Creating new awesome ideas.
 - Keep completing missing endpoints category.
-- Keep updating and building power bi ideas.
+- Focus on Fabric Rest API and close PowerBi Rest API development.
 
 

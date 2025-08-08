@@ -86,15 +86,16 @@ class Items():
         https://learn.microsoft.com/en-us/rest/api/fabric/articles/item-management/item-management-overview
         """
         try:
-            url = "https://api.fabric.microsoft.com/v1/admin/items"
+            url = "https://api.fabric.microsoft.com/v1/admin/items?"
             if workspace_id != None:
-                url += "?workspaceId={}".format(workspace_id)
+                url += "&workspaceId={}".format(workspace_id)
             if capacity_id != None:
                 url += "&capacityId={}".format(capacity_id)
             if type != None:
                 url += "&type={}".format(type)
             if status != None:
                 url += "&status={}".format(status)
+            url = url.replace("?&", "?")
             res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             data = res.json()
@@ -195,15 +196,16 @@ class Workspaces():
             A dictionary containing all the workspaces.
         """
         try:
-            url = "https://api.fabric.microsoft.com/v1/admin/workspaces"
+            url = "https://api.fabric.microsoft.com/v1/admin/workspaces?"
             if capacity_id != None:
-                url += "?capacityId={}".format(capacity_id)
+                url += "&capacityId={}".format(capacity_id)
             if name != None:
                 url += "&name={}".format(name)
             if state != None:
                 url += "&state={}".format(state)
             if type != None:
                 url += "&type={}".format(type)
+            url = url.replace("?&", "?")
             res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             data = res.json()

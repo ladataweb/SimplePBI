@@ -141,3 +141,7 @@ Refactor of code separating the parts build for semantic model and reports deplo
 Adding semantic model fabric category get requests and sub category connections and folders to Core.
 Refactor code due to fabric/powerbi rest api updates. INFODAX functions are not supported any more. Some dataset requests were deprecated. Improving getting list continuation token to fabric requests. Get activity for 28 days instead of 30. Updating fabric pause api version.
 Fixing pending details with some parameters.
+
+1.0.4 (05/08/2025)
+------------------
+Adding get semantic model requests with amazing creations from us. Getting roles, tables, relationships and even creating a whole new versión HTML doc from a model. Fixing admin listing requests
