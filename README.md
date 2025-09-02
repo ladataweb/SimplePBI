@@ -13,6 +13,8 @@ Feel free to check the doc to get a deeper understanding of a specific request:
 - Power Bi Doc: https://learn.microsoft.com/en-us/rest/api/power-bi/
 - Fabric Doc: https://learn.microsoft.com/en-us/rest/api/fabric/articles/using-fabric-apis
 
+Also make sure to check the deepwiki's doc of this project (AI-Generated): https://deepwiki.com/ladataweb/SimplePBI
+
 We are doing our best to make this library useful for the community. This project is not a remunerable job for us. It's a public community open source project. It's a way to express our passion of sharing knowledge. Please be patient if you submit an issue and it's not fixed right away.
 <br>Each category is an Object. This means we need to initialize an object to start using its methods. In order to create them we need the Bearer token that can be obtain from a Token Object. 
 Let's see how we can create an Admin Object to try the requests in that category.
