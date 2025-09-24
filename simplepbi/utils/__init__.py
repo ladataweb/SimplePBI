@@ -293,7 +293,7 @@ def parse_partition(partition: Dict[str, Any]) -> str:
       <summary>{partition.get('name')}</summary>
       <div><b>Mode:</b> {partition.get('mode', '')}</div>
       <div><b>Query Group:</b> {partition.get('queryGroup', '')}</div>
-      <div><b>Source Expression:</b><pre>{source}</pre></div>
+      <div><b>Source Expression:</b><pre class="language-js"><code class="language-js">{source}</code></pre></div>
     </details>
     """
 
@@ -580,6 +580,8 @@ def generate_bim_documentation(bim_json_text: str, output_html_path: str):
     <html lang="en">
     <head>
       <meta charset="UTF-8">
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
       <title>Power BI Model Documentation</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <style>

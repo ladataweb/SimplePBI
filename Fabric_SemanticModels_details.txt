@@ -68,7 +68,7 @@ CLASSES
      |      ----
      |      Response object from requests library. 200 OK
      |
-     |  get_relationships_from_semantic_model(self, workspace_id, semantic_model_id)
+     |  get_relationships_from_semantic_model(self, workspace_id, semantic_model_id, model=None)
      |      Returns the relationships of the specified semantic model.
      |      ### Parameters
      |      ----
@@ -76,6 +76,8 @@ CLASSES
      |          The workspace id. You can take it from PBI Service URL
      |      semantic_model_id: str uuid
      |          The semantic model id. You can take it from PBI Service URL
+     |      model: object
+     |          TMDL model definition, if you already have it, you don't need to specify workspace_id and semantic_model_id. Send empty instead.
      |      ### Returns
      |      ----
      |      DataFrame:
@@ -122,7 +124,7 @@ CLASSES
      |      Dict:
      |          A dictionary containing the definition of the semantic model.
      |
-     |  get_tables_partitions_from_semantic_model(self, workspace_id, semantic_model_id)
+     |  get_tables_partitions_from_semantic_model(self, workspace_id, semantic_model_id, model=None)
      |      Returns the tables partitions of the specified semantic model.
      |      ### Parameters
      |      ----
@@ -130,12 +132,14 @@ CLASSES
      |          The workspace id. You can take it from PBI Service URL
      |      semantic_model_id: str uuid
      |          The semantic model id. You can take it from PBI Service URL
+     |      model: object
+     |          TMDL model definition, if you already have it, you don't need to specify workspace_id and semantic_model_id. Send empty instead.
      |      ### Returns
      |      ----
      |      DataFrame:
      |          A pandas DataFrame containing the tables of the semantic model.
      |
-     |  get_tables_schema_from_semantic_model(self, workspace_id, semantic_model_id)
+     |  get_tables_schema_from_semantic_model(self, workspace_id, semantic_model_id, model=None)
      |      Returns the tables schema of the specified semantic model.
      |      ### Parameters
      |      ----
@@ -143,12 +147,14 @@ CLASSES
      |          The workspace id. You can take it from PBI Service URL
      |      semantic_model_id: str uuid
      |          The semantic model id. You can take it from PBI Service URL
+     |      model: object
+     |          TMDL model definition, if you already have it, you don't need to specify workspace_id and semantic_model_id. Send empty instead.
      |      ### Returns
      |      ----
      |      DataFrame:
      |          A pandas DataFrame containing the tables of the semantic model.
      |
-     |  list_roles_from_semantic_model(self, workspace_id, semantic_model_id)
+     |  list_roles_from_semantic_model(self, workspace_id, semantic_model_id, model=None)
      |      Returns the roles of the specified semantic model.
      |      ### Parameters
      |      ----
@@ -156,6 +162,8 @@ CLASSES
      |          The workspace id. You can take it from PBI Service URL
      |      semantic_model_id: str uuid
      |          The semantic model id. You can take it from PBI Service URL
+     |      model: object
+     |          TMDL model definition, if you already have it, you don't need to specify workspace_id and semantic_model_id. Send empty instead.
      |      ### Returns
      |      ----
      |      DataFrame:
@@ -172,7 +180,7 @@ CLASSES
      |      Dict:
      |          A dictionary containing all the semantic models in the workspace.
      |
-     |  list_tables_from_semantic_model(self, workspace_id, semantic_model_id)
+     |  list_tables_from_semantic_model(self, workspace_id, semantic_model_id, model=None)
      |      Returns the tables of the specified semantic model.
      |      ### Parameters
      |      ----
@@ -180,6 +188,8 @@ CLASSES
      |          The workspace id. You can take it from PBI Service URL
      |      semantic_model_id: str uuid
      |          The semantic model id. You can take it from PBI Service URL
+     |      model: object
+     |          TMDL model definition, if you already have it, you don't need to specify workspace_id and semantic_model_id. Send empty instead.
      |      ### Returns
      |      ----
      |      DataFrame:

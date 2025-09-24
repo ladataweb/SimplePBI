@@ -145,3 +145,7 @@ Fixing pending details with some parameters.
 1.0.4 (05/08/2025)
 ------------------
 Adding get semantic model requests with amazing creations from us. Getting roles, tables, relationships and even creating a whole new versión HTML doc from a model. Fixing admin listing requests
+
+1.0.5 (24/9/2025)
+------------------
+Improving HTML doc creation from dataset and semantic model. Adding method to do it from bim files.

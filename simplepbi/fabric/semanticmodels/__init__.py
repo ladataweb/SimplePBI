@@ -145,7 +145,7 @@ class SemanticModels():
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
 
-    def list_roles_from_semantic_model(self, workspace_id, semantic_model_id):
+    def list_roles_from_semantic_model(self, workspace_id, semantic_model_id, model=None):
         """Returns the roles of the specified semantic model.
         ### Parameters
         ----
@@ -153,13 +153,16 @@ class SemanticModels():
             The workspace id. You can take it from PBI Service URL
         semantic_model_id: str uuid
             The semantic model id. You can take it from PBI Service URL
+        model: object
+            TMDL model definition, if you already have it, you don't need to specify workspace_id and semantic_model_id. Send empty instead.
         ### Returns
         ----
         DataFrame:
             A list containing the roles of the semantic model.
         """
         try:
-            model = self.get_semantic_model_definition(workspace_id, semantic_model_id,"TMDL")
+            if model is None:
+                model = self.get_semantic_model_definition(workspace_id, semantic_model_id,"TMDL")
             for i in model["definition"]["parts"]:
                 if "model.tmdl" in i["path"]:
                     metad = i["payload"]
@@ -171,7 +174,7 @@ class SemanticModels():
             return roles
         except Exception as e:
             print("Error while getting roles: ", e)
-    def list_tables_from_semantic_model(self, workspace_id, semantic_model_id):
+    def list_tables_from_semantic_model(self, workspace_id, semantic_model_id, model=None):
         """Returns the tables of the specified semantic model.
         ### Parameters
         ----
@@ -179,13 +182,16 @@ class SemanticModels():
             The workspace id. You can take it from PBI Service URL
         semantic_model_id: str uuid
             The semantic model id. You can take it from PBI Service URL
+        model: object
+            TMDL model definition, if you already have it, you don't need to specify workspace_id and semantic_model_id. Send empty instead.
         ### Returns
         ----
         DataFrame:
             A list containing the tables of the semantic model.
         """
         try:
-            model = self.get_semantic_model_definition(workspace_id, semantic_model_id,"TMDL")
+            if model is None:
+                model = self.get_semantic_model_definition(workspace_id, semantic_model_id,"TMDL")
             for i in model["definition"]["parts"]:
                 if "model.tmdl" in i["path"]:
                     metad = i["payload"]
@@ -198,7 +204,7 @@ class SemanticModels():
         except Exception as e:
             print("Error while getting tables: ", e)
     
-    def get_tables_schema_from_semantic_model(self, workspace_id, semantic_model_id):
+    def get_tables_schema_from_semantic_model(self, workspace_id, semantic_model_id, model=None):
         """Returns the tables schema of the specified semantic model.
         ### Parameters
         ----
@@ -206,13 +212,16 @@ class SemanticModels():
             The workspace id. You can take it from PBI Service URL
         semantic_model_id: str uuid
             The semantic model id. You can take it from PBI Service URL
+        model: object
+            TMDL model definition, if you already have it, you don't need to specify workspace_id and semantic_model_id. Send empty instead.
         ### Returns
         ----
         DataFrame:
             A pandas DataFrame containing the tables of the semantic model.
         """
         try:
-            model = self.get_semantic_model_definition(workspace_id, semantic_model_id, "TMDL")
+            if model is None:
+                model = self.get_semantic_model_definition(workspace_id, semantic_model_id, "TMDL")
             tables = [base64.b64decode(i["payload"].encode("utf-8")).decode("utf-8") for i in model["definition"]["parts"] if "tables" in i["path"]]
             # Append all tables into a single string
             decoded_str = "\n".join(tables)
@@ -220,7 +229,7 @@ class SemanticModels():
         except Exception as e:
             print("Error while getting tables: ", e)
 
-    def get_tables_partitions_from_semantic_model(self, workspace_id, semantic_model_id):
+    def get_tables_partitions_from_semantic_model(self, workspace_id, semantic_model_id, model=None):
         """Returns the tables partitions of the specified semantic model.
         ### Parameters
         ----
@@ -228,13 +237,16 @@ class SemanticModels():
             The workspace id. You can take it from PBI Service URL
         semantic_model_id: str uuid
             The semantic model id. You can take it from PBI Service URL
+        model: object
+            TMDL model definition, if you already have it, you don't need to specify workspace_id and semantic_model_id. Send empty instead.
         ### Returns
         ----
         DataFrame:
             A pandas DataFrame containing the tables of the semantic model.
         """
         try:
-            model = self.get_semantic_model_definition(workspace_id, semantic_model_id, "TMDL")
+            if model is None:
+                model = self.get_semantic_model_definition(workspace_id, semantic_model_id, "TMDL")
             tables = [base64.b64decode(i["payload"].encode("utf-8")).decode("utf-8") for i in model["definition"]["parts"] if "tables" in i["path"]]
             # Append all tables into a single string
             decoded_str = "\n".join(tables)             
@@ -258,7 +270,7 @@ class SemanticModels():
         except Exception as e:
             print("Error while getting tables: ", e)
     
-    def get_relationships_from_semantic_model(self, workspace_id, semantic_model_id):
+    def get_relationships_from_semantic_model(self, workspace_id, semantic_model_id, model=None):
         """Returns the relationships of the specified semantic model.
         ### Parameters
         ----
@@ -266,13 +278,16 @@ class SemanticModels():
             The workspace id. You can take it from PBI Service URL
         semantic_model_id: str uuid
             The semantic model id. You can take it from PBI Service URL
+        model: object
+            TMDL model definition, if you already have it, you don't need to specify workspace_id and semantic_model_id. Send empty instead.
         ### Returns
         ----
         DataFrame:
             A pandas DataFrame containing the relationships of the semantic model.
         """
         try:
-            model = self.get_semantic_model_definition(workspace_id, semantic_model_id, "TMDL")
+            if model is None:
+                model = self.get_semantic_model_definition(workspace_id, semantic_model_id, "TMDL")
             for i in model["definition"]["parts"]:
                 if "relationships.tmdl" in i["path"]:
                     relations = i["payload"]

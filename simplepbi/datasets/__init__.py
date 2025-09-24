@@ -2391,19 +2391,21 @@ class Datasets():
                 print("Getting Semantic Model Details...")
                 dset = self.get_dataset_in_group(workspace_id, dataset_id)
                 dsource = self.get_datasources_in_group(workspace_id, dataset_id)
+                
+                sem = semanticmodels.SemanticModels(self.token)
+                model = sem.get_semantic_model_definition(workspace_id, dataset_id,"TMDL")
                 # Get Tables
                 print("Getting Tables...")
-                sem = semanticmodels.SemanticModels(d.token)
-                list_tables = sem.get_tables_partitions_from_semantic_model(workspace_id, dataset_id)
+                list_tables = sem.get_tables_partitions_from_semantic_model(workspace_id, dataset_id, model)
                 df = list_tables
                 # Get Columns
                 print("Getting Columns...")
-                table_schema = sem.get_tables_schema_from_semantic_model(workspace_id, dataset_id)
+                table_schema = sem.get_tables_schema_from_semantic_model(workspace_id, dataset_id, model)
                 df_col = table_schema[table_schema["type"]=="column"]
                 df_cols_selected = df_col[["table","type", "name","data_type", "expression"]]
                 # Build tables dict for diagram
                 print("Getting Relationships...")
-                df_rel = sem.get_relationships_from_semantic_model(workspace_id, dataset_id)
+                df_rel = sem.get_relationships_from_semantic_model(workspace_id, dataset_id, model)
                 key_columns = list(set(df_rel["fromColumn"].tolist() + df_rel["toColumn"].tolist()))                
                 # Get Partitions
                 print("Getting Partitions...")
