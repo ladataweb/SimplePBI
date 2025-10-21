@@ -310,6 +310,8 @@ def parse_role(role: Dict[str, Any]) -> str:
     perms = role.get('modelPermission', '')
     table_perms = ""
     for tp in role.get("tablePermissions", []):
+        if 'filterExpression' not in tp.keys():
+            tp['filterExpression'] = "<em>No filter</em>"
         table_perms += f"<li>{tp['name']}: {tp['filterExpression']}</li>"
     return f"""
     <details class="role-section">

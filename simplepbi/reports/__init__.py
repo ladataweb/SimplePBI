@@ -1,4 +1,4 @@
-'''.
+r'''.
            @@@@@@@@@@
        @@@@..........@@@@
     @@@         .        @@@
@@ -259,7 +259,7 @@ class Reports():
             print("Request exception: ", e)
           
     def export_report(self, report_id):
-        """Exports the specified report from "My Workspace" to a .pbix file.
+        r"""Exports the specified report from "My Workspace" to a .pbix file.
         Note: As a workaround for fixing timeout issues, you can set preferClientRouting to true.
         Large files are downloaded to a temporary blob. Their URL is returned in the response and stored in the locally downloaded PBIX file.
         ### Parameters
@@ -286,8 +286,8 @@ class Reports():
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
-    def export_report_in_group(self, workspace_id, report_id):
-        """Exports the specified report from the specified workspace to a .pbix file.
+    def export_report_in_group(self, workspace_id, report_id, downloadType=None):
+        r"""Exports the specified report from the specified workspace to a .pbix file.
         Note: As a workaround for fixing timeout issues, you can set preferClientRouting to true.
         Large files are downloaded to a temporary blob. Their URL is returned in the response and stored in the locally downloaded PBIX file.
         ### Parameters
@@ -296,6 +296,8 @@ class Reports():
             The Power Bi workspace id. You can take it from PBI Service URL
         report_id: str uuid
             The Power Bi report id. You can take it from PBI Service URL
+        downloadType: str
+            The type of download. Valid values are 'LiveConnect' and 'IncludeModel'
         ### Returns
         ----
         Dict:
@@ -306,6 +308,8 @@ class Reports():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/groups/{}/reports/{}/Export".format(workspace_id, report_id)
+            if downloadType != None:
+                url += "?downloadType={}".format(downloadType)
             res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             return res
@@ -315,7 +319,7 @@ class Reports():
             print("Request exception: ", e)
             
     def simple_export_report(self, report_id, filename_path):
-        """Exports the specified report from "My Workspace" to a .pbix file.
+        r"""Exports the specified report from "My Workspace" to a .pbix file.
         Note: As a workaround for fixing timeout issues, you can set preferClientRouting to true.
         Large files are downloaded to a temporary blob. Their URL is returned in the response and stored in the locally downloaded PBIX file.
         ### Parameters
@@ -343,8 +347,8 @@ class Reports():
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
-    def simple_export_report_in_group(self, workspace_id, report_id, filename_path):
-        """Exports the specified report from the specified workspace to a .pbix file.
+    def simple_export_report_in_group(self, workspace_id, report_id, filename_path, downloadType=None):
+        r"""Exports the specified report from the specified workspace to a .pbix file.
         Note: As a workaround for fixing timeout issues, you can set preferClientRouting to true.
         Large files are downloaded to a temporary blob. Their URL is returned in the response and stored in the locally downloaded PBIX file.
         ### Parameters
@@ -355,6 +359,8 @@ class Reports():
             The Power Bi report id. You can take it from PBI Service URL
         filename_path: str
             Path of the local machine to save the file. Example: C:\Temp\file.pbix
+        downloadType: str
+            The type of download. Valid values are 'LiveConnect' and 'IncludeModel'
         ### Returns
         ----
         Dict:
@@ -365,6 +371,8 @@ class Reports():
         """
         try:
             url = "https://api.powerbi.com/v1.0/myorg/groups/{}/reports/{}/Export".format(workspace_id, report_id)
+            if downloadType != None:
+                url += "?downloadType={}".format(downloadType)
             res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             open(filename_path, 'wb').write(res.content)
@@ -374,8 +382,8 @@ class Reports():
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
 
-    def simple_export_file(self, report_id, fileFormat, filename_path, includeHiddenPages=False):
-        """Exports the specified report from "My Workspace" to a .pbix file.
+    def simple_export_file(self, report_id, fileFormat, filename_path, powerBIReportConfiguration=None):
+        r"""Exports the specified report from "My Workspace" to a .pbix file.
         Note: As a workaround for fixing timeout issues, you can set preferClientRouting to true.
         Large files are downloaded to a temporary blob. Their URL is returned in the response and stored in the locally downloaded PBIX file.
         ### Parameters
@@ -384,6 +392,8 @@ class Reports():
             The Power Bi report id. You can take it from PBI Service URL
         filename_path: str
             Path of the local machine to save the file. Example: C:\Temp\file.pbix
+        powerBIReportConfiguration: dict/json
+            A PowerBIReportConfiguration object defining settings for the export operation. Read docs to make sure you understand it well.
         ### Returns
         ----
         Dict:
@@ -395,13 +405,10 @@ class Reports():
         try:
             url = "https://api.powerbi.com/v1.0/myorg/reports/{}/ExportTo".format(report_id)
             body= {
-                "format": fileFormat,
-                "powerBIReportConfiguration": {
-                    "settings": {
-                        "includeHiddenPages":includeHiddenPages
-                        }
-                    }
+                "format": fileFormat
                 }
+            if powerBIReportConfiguration != None:
+                body["powerBIReportConfiguration"]=powerBIReportConfiguration
             res = requests.post(url, data = json.dumps(body), headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
             res.raise_for_status()
             open(filename_path, 'wb').write(res.content)
@@ -411,8 +418,8 @@ class Reports():
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
            
-    def simple_export_file_in_group(self, workspace_id, report_id, fileFormat, filename_path, includeHiddenPages=False):
-        """Exports the specified report from the specified workspace to a .pbix file.
+    def simple_export_file_in_group(self, workspace_id, report_id, fileFormat, filename_path, powerBIReportConfiguration=None):
+        r"""Exports the specified report from the specified workspace to a .pbix file.
         Note: As a workaround for fixing timeout issues, you can set preferClientRouting to true.
         Large files are downloaded to a temporary blob. Their URL is returned in the response and stored in the locally downloaded PBIX file.
         ### Parameters
@@ -423,6 +430,8 @@ class Reports():
             The Power Bi report id. You can take it from PBI Service URL
         filename_path: str
             Path of the local machine to save the file. Example: C:\Temp\file.pbix
+        powerBIReportConfiguration: dict/json
+            A PowerBIReportConfiguration object defining settings for the export operation. Read docs to make sure you understand it well.
         ### Returns
         ----
         Dict:
@@ -434,13 +443,16 @@ class Reports():
         try:
             url = "https://api.powerbi.com/v1.0/myorg/groups/{}/reports/{}/ExportTo".format(workspace_id, report_id)
             body= {
-                "format": fileFormat,
-                "powerBIReportConfiguration": {
-                    "settings": {
-                        "includeHiddenPages":includeHiddenPages
-                        }
+                "format": fileFormat
+            }
+            ''' user will configure it all
+            "powerBIReportConfiguration": {
+                "settings": {
+                    "includeHiddenPages":includeHiddenPages
                     }
-                }
+            }'''                
+            if powerBIReportConfiguration != None:
+                body["powerBIReportConfiguration"]=powerBIReportConfiguration
             res = requests.post(url, data = json.dumps(body), headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(auth_token)})
             res.raise_for_status()
             open(filename_path, 'wb').write(res.content)
