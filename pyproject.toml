@@ -7,7 +7,8 @@ name = "simplepbi"
 version = "1.0.7"
 description = "Simplify usage of Power Bi Rest API"
 readme = "README.md"
-license = {text = "MIT"}
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [
     {name = "Ignacio Barrau", email = "igna_barrau@hotmail.com"}
 ]
@@ -25,7 +26,6 @@ dependencies = [
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
