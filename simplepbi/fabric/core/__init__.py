@@ -392,10 +392,11 @@ To create a PowerBI item, the user must have the appropritate license. For more 
                             raise Exception("Semantic Model {} does not exist in the specified workspace.".format(semantic_model_name))
                         print("Semantic model id found: {}".format(semantic_model_id))
                     except Exception as e:
-                        print("Error: ", e)
-                        
+                        print("Error: ", e)                      
+                    
                     del pbir_json['datasetReference']['byPath']
-                    del pbir_json["$schema"]
+                    if '$schema' in pbir_json:
+                        del pbir_json["$schema"]
                     
                     # Add a new JSON object to the "byConnection" property
                     pbir_json['datasetReference']['byConnection'] = {
