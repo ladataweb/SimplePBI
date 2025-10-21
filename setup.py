@@ -27,7 +27,7 @@ classifiers = [
 setup(
     name='simplepbi',
     packages=find_packages(),
-    version='1.0.6',
+    version='1.0.7',
     project_urls={
         'Documentation': 'https://docs.microsoft.com/en-us/rest/api/power-bi/',
         'Say Thanks!': 'https://www.ladataweb.com.ar/contacto.html',

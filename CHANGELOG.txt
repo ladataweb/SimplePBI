@@ -150,7 +150,7 @@ Adding get semantic model requests with amazing creations from us. Getting roles
 ------------------
 Improving HTML doc creation from dataset and semantic model. Adding method to do it from bim files.
 
-1.0.6 (21/10/2025)
+1.0.6 & 1.0.7 (21/10/2025)
 ------------------
 Improving HTML doc creation role parser. 
 Adding download type parameter to report export. 
