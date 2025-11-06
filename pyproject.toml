@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "simplepbi"
-version = "1.0.7"
+version = "1.0.8"
 description = "Simplify usage of Power Bi Rest API"
 readme = "README.md"
 license = "MIT"
@@ -19,6 +19,7 @@ keywords = [
 dependencies = [
     "requests",
     "pandas",
+	"msal",
     "requests-toolbelt"
 ]
 

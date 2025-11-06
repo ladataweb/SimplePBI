@@ -170,7 +170,7 @@ To create a PowerBI item, the user must have the appropritate license. For more 
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
-    def get_item_definition(self, workspace_id, item_id):
+    def get_item_definition(self, workspace_id, item_id, format=None):
         """Returns the specified item definition.
         #### Parameters
         ----
@@ -178,6 +178,8 @@ To create a PowerBI item, the user must have the appropritate license. For more 
             The workspace id. You can take it from Fabric URL
         item_id: str uuid
             The item id. You can take it from Fabric URL        
+        format: str
+            The format of the item definition. Depending on the type it could be different. Read docs before using it.
         ### Returns
         ----
         Response object from requests library. 200 OK        
@@ -187,11 +189,28 @@ To create a PowerBI item, the user must have the appropritate license. For more 
         """
         
         try: 
+            op = LongRunningOperations(self.token)
             url= "https://api.fabric.microsoft.com/v1/workspaces/{}/items/{}/getDefinition".format(workspace_id, item_id)
+            if format != None:
+                url += "?format={}".format(format)
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}            
             res = requests.post(url, headers = headers)
             res.raise_for_status()
-            return res
+            if "x-ms-operation-id" in res.headers:
+                opid = res.headers["x-ms-operation-id"]
+                status="Running"
+                while status == "Running":
+                    try:                    
+                        ope = op.get_operation_state(opid)
+                        status = json.loads(ope)["status"]                    
+                    except Exception as e:
+                        print("Error while checking operation status: ", e)
+                        break
+                model = op.get_operation_result(opid)
+                print("Operation ", opid ," completed with status: ", status)
+                return json.loads(model)
+            else:
+                return res.json()
         except requests.exceptions.HTTPError as ex:
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
@@ -357,7 +376,7 @@ To create a PowerBI item, the user must have the appropritate license. For more 
         semantic_model_workspace_id: str uuid
             The workspace id of the semantic model of a report. You can take it from Fabric URL
         item_path: str 
-            The semantic model path until [name].Report folder like C:/Users/user/Desktop/[name].Report
+            The semantic model path until [name].Report folder like C:/Users/user/Git/Folder/[name].Report
         ### Returns
         ----
         Dict with parts of the report
@@ -383,18 +402,27 @@ To create a PowerBI item, the user must have the appropritate license. For more 
                         pbir_json = json.load(f)
                         
                     # Remove the "byPath" item
-                    semantic_model_name = pbir_json['datasetReference']['byPath']['path'].split("/")[-1].split(".")[0]                    
-                    print("Looking for id of semantic model {} in workspace id {} related to the report".format(semantic_model_name, semantic_model_workspace_id))
-                    try:
-                        it = self.list_items(semantic_model_workspace_id)
-                        semantic_model_id = [i['id'] for i in it['value'] if i['displayName']==semantic_model_name and i['type']=="SemanticModel" ]
-                        if semantic_model_id == []:
-                            raise Exception("Semantic Model {} does not exist in the specified workspace.".format(semantic_model_name))
-                        print("Semantic model id found: {}".format(semantic_model_id))
-                    except Exception as e:
-                        print("Error: ", e)                      
-                    
-                    del pbir_json['datasetReference']['byPath']
+                    if 'byPath' in pbir_json['datasetReference']:
+                        semantic_model_name = pbir_json['datasetReference']['byPath']['path'].split("/")[-1].split(".")[0]                    
+                        print("Looking for id of semantic model {} in workspace id {} related to the report".format(semantic_model_name, semantic_model_workspace_id))
+                        try:
+                            it = self.list_items(semantic_model_workspace_id)
+                            model_array = [i['id'] for i in it['value'] if i['displayName']==semantic_model_name and i['type']=="SemanticModel" ]                            
+                            if model_array == []:
+                                raise Exception("Semantic Model {} does not exist in the specified workspace.".format(semantic_model_name))
+                            semantic_model_id = model_array[0]
+                            print("Semantic model id found: {}".format(semantic_model_id))
+                        except Exception as e:
+                            print("Error: ", e)                        
+                        del pbir_json['datasetReference']['byPath']
+                    else:
+                        if 'byConnection' in pbir_json['datasetReference']:
+                            pairs = [item.strip() for item in pbir_json["datasetReference"]["byConnection"]["connectionString"].split(';') if item.strip()]
+                            data_dict = dict(pair.split('=', 1) for pair in pairs)
+                            semantic_model_name = data_dict["initial catalog"]
+                            semantic_model_id = data_dict["semanticmodelid"]
+                            print("Semantic model id found: {}".format(semantic_model_id))
+                            
                     if '$schema' in pbir_json:
                         del pbir_json["$schema"]
                     
@@ -403,7 +431,7 @@ To create a PowerBI item, the user must have the appropritate license. For more 
                         "connectionString": None,
                         "pbiServiceModelId": None,
                         "pbiModelVirtualServerName": "sobe_wowvirtualserver",
-                        "pbiModelDatabaseName": semantic_model_id[0],
+                        "pbiModelDatabaseName": semantic_model_id,
                         "name": "EntityDataSource",
                         "connectionType": "pbiServiceXmlaStyleLive"
                     }

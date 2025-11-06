@@ -114,7 +114,7 @@ CLASSES
      |      report_id: str uuid
      |          The Power Bi report id. You can take it from PBI Service URL
      |      filename_path: str
-     |          Path of the local machine to save the file. Example: C:\Tempile.pbix
+     |          Path of the local machine to save the file. Example: C:\Temp\file.pbix
      |      ### Returns
      |      ----
      |      Dict:
@@ -123,7 +123,7 @@ CLASSES
      |      ----
      |      Export of a report with Power BI service live connection after calling rebind report is not supported. Refer to Download a report from the Power BI service to Power BI Desktop for requirements and limitations.
      |
-     |  export_report_in_group(self, workspace_id, report_id)
+     |  export_report_in_group(self, workspace_id, report_id, downloadType=None)
      |      Exports the specified report from the specified workspace to a .pbix file.
      |      Note: As a workaround for fixing timeout issues, you can set preferClientRouting to true.
      |      Large files are downloaded to a temporary blob. Their URL is returned in the response and stored in the locally downloaded PBIX file.
@@ -133,6 +133,8 @@ CLASSES
      |          The Power Bi workspace id. You can take it from PBI Service URL
      |      report_id: str uuid
      |          The Power Bi report id. You can take it from PBI Service URL
+     |      downloadType: str
+     |          The type of download. Valid values are 'LiveConnect' and 'IncludeModel'
      |      ### Returns
      |      ----
      |      Dict:
@@ -322,7 +324,7 @@ CLASSES
      |      ----
      |      Export of a report with Power BI service live connection after calling rebind report is not supported. Refer to Download a report from the Power BI service to Power BI Desktop for requirements and limitations.
      |
-     |  simple_export_file(self, report_id, fileFormat, filename_path, includeHiddenPages=False)
+     |  simple_export_file(self, report_id, fileFormat, filename_path, powerBIReportConfiguration=None)
      |      Exports the specified report from "My Workspace" to a .pbix file.
      |      Note: As a workaround for fixing timeout issues, you can set preferClientRouting to true.
      |      Large files are downloaded to a temporary blob. Their URL is returned in the response and stored in the locally downloaded PBIX file.
@@ -331,7 +333,9 @@ CLASSES
      |      report_id: str uuid
      |          The Power Bi report id. You can take it from PBI Service URL
      |      filename_path: str
-     |          Path of the local machine to save the file. Example: C:\Tempile.pbix
+     |          Path of the local machine to save the file. Example: C:\Temp\file.pbix
+     |      powerBIReportConfiguration: dict/json
+     |          A PowerBIReportConfiguration object defining settings for the export operation. Read docs to make sure you understand it well.
      |      ### Returns
      |      ----
      |      Dict:
@@ -340,7 +344,7 @@ CLASSES
      |      ----
      |      Export of a report with Power BI service live connection after calling rebind report is not supported. Refer to Download a report from the Power BI service to Power BI Desktop for requirements and limitations.
      |
-     |  simple_export_file_in_group(self, workspace_id, report_id, fileFormat, filename_path, includeHiddenPages=False)
+     |  simple_export_file_in_group(self, workspace_id, report_id, fileFormat, filename_path, powerBIReportConfiguration=None)
      |      Exports the specified report from the specified workspace to a .pbix file.
      |      Note: As a workaround for fixing timeout issues, you can set preferClientRouting to true.
      |      Large files are downloaded to a temporary blob. Their URL is returned in the response and stored in the locally downloaded PBIX file.
@@ -351,7 +355,9 @@ CLASSES
      |      report_id: str uuid
      |          The Power Bi report id. You can take it from PBI Service URL
      |      filename_path: str
-     |          Path of the local machine to save the file. Example: C:\Tempile.pbix
+     |          Path of the local machine to save the file. Example: C:\Temp\file.pbix
+     |      powerBIReportConfiguration: dict/json
+     |          A PowerBIReportConfiguration object defining settings for the export operation. Read docs to make sure you understand it well.
      |      ### Returns
      |      ----
      |      Dict:
@@ -369,7 +375,7 @@ CLASSES
      |      report_id: str uuid
      |          The Power Bi report id. You can take it from PBI Service URL
      |      filename_path: str
-     |          Path of the local machine to save the file. Example: C:\Tempile.pbix
+     |          Path of the local machine to save the file. Example: C:\Temp\file.pbix
      |      ### Returns
      |      ----
      |      Dict:
@@ -378,7 +384,7 @@ CLASSES
      |      ----
      |      Export of a report with Power BI service live connection after calling rebind report is not supported. Refer to Download a report from the Power BI service to Power BI Desktop for requirements and limitations.
      |
-     |  simple_export_report_in_group(self, workspace_id, report_id, filename_path)
+     |  simple_export_report_in_group(self, workspace_id, report_id, filename_path, downloadType=None)
      |      Exports the specified report from the specified workspace to a .pbix file.
      |      Note: As a workaround for fixing timeout issues, you can set preferClientRouting to true.
      |      Large files are downloaded to a temporary blob. Their URL is returned in the response and stored in the locally downloaded PBIX file.
@@ -389,7 +395,9 @@ CLASSES
      |      report_id: str uuid
      |          The Power Bi report id. You can take it from PBI Service URL
      |      filename_path: str
-     |          Path of the local machine to save the file. Example: C:\Tempile.pbix
+     |          Path of the local machine to save the file. Example: C:\Temp\file.pbix
+     |      downloadType: str
+     |          The type of download. Valid values are 'LiveConnect' and 'IncludeModel'
      |      ### Returns
      |      ----
      |      Dict:

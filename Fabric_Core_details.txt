@@ -413,7 +413,7 @@ CLASSES
      |      semantic_model_workspace_id: str uuid
      |          The workspace id of the semantic model of a report. You can take it from Fabric URL
      |      item_path: str
-     |          The semantic model path until [name].Report folder like C:/Users/user/Desktop/[name].Report
+     |          The semantic model path until [name].Report folder like C:/Users/user/Git/Folder/[name].Report
      |      ### Returns
      |      ----
      |      Dict with parts of the report
@@ -477,7 +477,7 @@ CLASSES
      |      This API is supported for a number of item types, find the supported item types here.
      |      https://learn.microsoft.com/en-us/rest/api/fabric/articles/item-management/item-management-overview
      |
-     |  get_item_definition(self, workspace_id, item_id)
+     |  get_item_definition(self, workspace_id, item_id, format=None)
      |      Returns the specified item definition.
      |      #### Parameters
      |      ----
@@ -485,6 +485,8 @@ CLASSES
      |          The workspace id. You can take it from Fabric URL
      |      item_id: str uuid
      |          The item id. You can take it from Fabric URL
+     |      format: str
+     |          The format of the item definition. Depending on the type it could be different. Read docs before using it.
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK

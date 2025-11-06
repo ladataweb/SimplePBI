@@ -8,7 +8,7 @@
 [twitter-follow]: https://img.shields.io/twitter/follow/chemerisuk.svg?style=social&label=Follow%20me
 [donate-url]: https://www.paypal.com/donate/?hosted_button_id=7A8YKN3HQ65LU
 
-This is a simple library that makes it easy to use the Power Bi REST API and Fabric REST API. We have cover more than 85% of PowerBi request and now we are working with Microsoft Fabric too. We hope one day SimplePBI will contain all the categories in both APIs, our at least that's our vision dream.
+This is a simple library that makes it easy to use the Power Bi REST API and Fabric REST API. We have cover more than 90% of PowerBi request and now we are working with Microsoft Fabric too. We hope one day SimplePBI will contain all the categories in both APIs, our at least that's our vision dream.
 Feel free to check the doc to get a deeper understanding of a specific request: 
 - Power Bi Doc: https://learn.microsoft.com/en-us/rest/api/power-bi/
 - Fabric Doc: https://learn.microsoft.com/en-us/rest/api/fabric/articles/using-fabric-apis

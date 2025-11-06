@@ -156,3 +156,10 @@ Improving HTML doc creation role parser.
 Adding download type parameter to report export. 
 Adding freedom to export report to file leting user control the whole dict of parameters. 
 Improving pbir refactor when deploying
+
+1.0.8 (6/11/2025)
+------------------
+Adding a fabric report requests. 
+Adjusting report details for live connection. 
+New utils for downloading the item files. 
+Adding Login feature with credentials to try the api request.

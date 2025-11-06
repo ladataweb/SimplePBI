@@ -20,6 +20,8 @@ import json
 import pandas as pd
 import io
 import re
+import os
+import base64
 from typing import Dict, Any
 
 '''
@@ -811,3 +813,63 @@ def load_bim_file_as_string(filepath: str) -> str:
         raise ValueError(f"Invalid JSON in {filepath}: {e}")
 
     return contents
+
+def save_files_from_api_response(response_json, output_dir, item_name, item_type):
+    """
+    Saves base64-encoded files from an API response to the local filesystem.
+    ### Parameters
+    ----    
+    response_json: dict
+      The item definition parts.
+    output_dir: str
+        The base directory where files will be stored. Ej: C:/Users/...
+    item_name: str
+        The name of the item.
+    item_type: str
+        The type of the item. E.g., 'report', 'dataset' or 'semanticmodel'.
+    ### Returns
+    ----
+        A print with the stored files in the local filesystem output_dir.
+    Args:
+        
+    """
+    case = item_type.lower()
+    if case == 'report':
+        item_type = 'Report'
+    elif case == 'dataset':
+        item_type = 'SemanticModel'
+    elif case == 'semanticmodel':
+        item_type = 'SemanticModel'
+    else:
+        raise ValueError(f"Invalid item type: {item_type}")
+
+
+    parts = response_json.get("definition", {}).get("parts", [])
+    if not parts:
+        print("No files found in response.")
+        return
+
+    for part in parts:
+        file_path = item_name + "." + item_type + "/" + part.get("path")
+        payload = part.get("payload")
+        payload_type = part.get("payloadType")
+
+        # Skip invalid entries
+        if not file_path or not payload or payload_type != "InlineBase64":
+            print(f"Skipping invalid entry: {part}")
+            continue
+
+        # Build the full local path
+        full_path = os.path.join(output_dir, file_path)
+
+        # Ensure the directory exists
+        os.makedirs(os.path.dirname(full_path), exist_ok=True)
+
+        # Decode base64 content and write to file
+        try:
+            decoded_bytes = base64.b64decode(payload)
+            with open(full_path, "wb") as f:
+                f.write(decoded_bytes)
+            print(f"Saved: {full_path}")
+        except Exception as e:
+            print(f"Failed to write {file_path}: {e}")

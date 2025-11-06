@@ -1,4 +1,4 @@
-'''.
+r'''.
            @@@@@@@@@@
        @@@@..........@@@@
     @@@         .        @@@
@@ -18,9 +18,10 @@
 
 import json
 import requests
+import msal
 
 class Token():
-    """Simple library to use the Power BI api and obtain datasets from it.
+    """Token class help us getting the Bearer token to authenticate against Power BI / Fabric API. This token help us automateing tasks.
     """
 
     def __init__(self, tenant_id=None, power_bi_client_id=None, power_bi_username=None, power_bi_password=None, power_bi_secret=None, use_service_principal=False):
@@ -93,4 +94,25 @@ class Token():
             except requests.exceptions.HTTPError as ex:
                 print(ex)
     
-    
+class Tryit():
+    """Tryit class help us testing new APIs before integrating them into the main SimplePBI classes. You can login with your user in the browser.
+    """
+
+    def __init__(self):
+        # App registration details
+        CLIENT_ID = "96695795-9432-46a2-a801-b9e56b43abce"
+        AUTHORITY = "https://login.microsoftonline.com/common"  # Multi-tenant
+        SCOPE = ["https://analysis.windows.net/powerbi/api/.default"]
+
+        try:
+            # Create MSAL public client
+            app = msal.PublicClientApplication(CLIENT_ID, authority=AUTHORITY)
+
+            # Interactive login (opens system browser)
+            result = app.acquire_token_interactive(scopes=SCOPE)
+
+            self.token = result["access_token"]
+        except msal.MsalException as e:
+            print("MSAL exception: ", e)
+        except Exception as e:
+            print("General exception: ", e)

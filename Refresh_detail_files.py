@@ -16,6 +16,7 @@ from simplepbi.fabric import core
 from simplepbi.fabric import adminfab
 from simplepbi.fabric import datapipelines
 from simplepbi.fabric import semanticmodels
+from simplepbi.fabric import report
 from simplepbi import utils
 
 import pydoc
@@ -25,7 +26,7 @@ if __name__ == '__main__':
     dataset = pydoc.render_doc(datasets, forceload=0, renderer=pydoc.plaintext)
     group = pydoc.render_doc(groups, forceload=0, renderer=pydoc.plaintext)
     dataflow = pydoc.render_doc(dataflows, forceload=0, renderer=pydoc.plaintext)
-    report = pydoc.render_doc(reports, forceload=0, renderer=pydoc.plaintext)
+    reportt = pydoc.render_doc(reports, forceload=0, renderer=pydoc.plaintext)
     dashboard = pydoc.render_doc(dashboards, forceload=0, renderer=pydoc.plaintext)
     app = pydoc.render_doc(apps, forceload=0, renderer=pydoc.plaintext)
     impo = pydoc.render_doc(imports, forceload=0, renderer=pydoc.plaintext)
@@ -38,6 +39,7 @@ if __name__ == '__main__':
     adfab = pydoc.render_doc(adminfab, forceload=0, renderer=pydoc.plaintext)
     coree = pydoc.render_doc(core, forceload=0, renderer=pydoc.plaintext)
     seman = pydoc.render_doc(semanticmodels, forceload=0, renderer=pydoc.plaintext)
+    rept = pydoc.render_doc(report, forceload=0, renderer=pydoc.plaintext)
     dpipes = pydoc.render_doc(datapipelines, forceload=0, renderer=pydoc.plaintext)
     utii = pydoc.render_doc(utils, forceload=0, renderer=pydoc.plaintext)
 
@@ -58,7 +60,7 @@ if __name__ == '__main__':
     f.close()
     
     r=open(r'Reports_details.txt', 'w')
-    r.write(report)
+    r.write(reportt)
     r.close()
     
     db=open(r'Dashboards_details.txt', 'w')
@@ -108,6 +110,10 @@ if __name__ == '__main__':
     semod=open(r'Fabric_SemanticModels_details.txt', 'w')
     semod.write(seman)
     semod.close()
+    
+    repor=open(r'Fabric_Report_details.txt', 'w')
+    repor.write(rept)
+    repor.close()
     
     dapipes=open(r'Fabric_DataPipelines_details.txt', 'w')
     dapipes.write(dpipes)
