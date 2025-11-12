@@ -1,5 +1,5 @@
 # SimplePBI
-![downloads](https://img.shields.io/badge/downloads-93k-brightgreen) ![downloads](https://img.shields.io/badge/downloads-3,3k%2Fmonth-brightgreen) [![PayPal donate](https://img.shields.io/badge/paypal-donate-ff69b4?logo=paypal)][donate-url] [![Twitter][twitter-follow]][twitter-url]
+![downloads](https://img.shields.io/badge/downloads-93k-brightgreen) ![downloads](https://img.shields.io/badge/downloads-3,3k%2Fmonth-brightgreen) [![PayPal donate](https://img.shields.io/badge/paypal-donate-ff69b4?logo=paypal)][donate-url] [![Twitter][twitter-follow]][twitter-url] [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/ladataweb/SimplePBI)
  
 | [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)][donate-url] | Your help is appreciated. |
 |-|-|
