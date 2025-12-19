@@ -134,4 +134,23 @@ class Report():
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
 
-    
+    def save_report_definition_local(self, workspace_id, report_id, path, report_connection=None):
+        """Saves the report files consistency to the local filesystem. Specify if pbir should read live connection or import
+        ### Parameters
+        ----
+        workspace_id: str uuid
+            The workspace id. You can take it from PBI Service URL
+        report_id: str uuid
+            The report id. You can take it from PBI Service URL
+        path: str
+            The local filesystem path where the semantic model files will be saved. Like C:/Users/user/Repository/Workspace
+        report_connection: str
+            The connection type of the report. E.g., 'LiveConnection' or 'Import' by default it's LiveConnection    
+        ### Returns
+        ----
+            A print with the stored files in the local filesystem path.
+        """ 
+        rpt = self.get_report(workspace_id, report_id)
+        report_name = rpt["displayName"]
+        parts = self.get_report_definition(workspace_id, report_id)
+        utils.save_files_from_api_response(parts, path, report_name, "report", report_connection)

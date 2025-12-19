@@ -1,5 +1,5 @@
 # SimplePBI
-![downloads](https://img.shields.io/badge/downloads-93k-brightgreen) ![downloads](https://img.shields.io/badge/downloads-3,3k%2Fmonth-brightgreen) [![PayPal donate](https://img.shields.io/badge/paypal-donate-ff69b4?logo=paypal)][donate-url] [![Twitter][twitter-follow]][twitter-url] [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/ladataweb/SimplePBI)
+![downloads](https://img.shields.io/badge/downloads-3,1k-brightgreen) ![downloads](https://img.shields.io/badge/downloads-30%2Fmonth-brightgreen) [![PayPal donate](https://img.shields.io/badge/paypal-donate-ff69b4?logo=paypal)][donate-url] [![Twitter][twitter-follow]][twitter-url] [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/ladataweb/SimplePBI)
  
 | [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)][donate-url] | Your help is appreciated. |
 |-|-|
@@ -99,6 +99,7 @@ Right now the library is consuming endpoints from:
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Fabric_Core_details.txt" target="_blank">Fabric Core</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Fabric_DataPipelines_details.txt" target="_blank">Fabric Data Pipelines</a>
 - <a href="https://github.com/ladataweb/SimplePBI/blob/main/Fabric_SemanticModels_details.txt" target="_blank">Fabric Semantic Models</a>
+- <a href="https://github.com/ladataweb/SimplePBI/blob/main/Fabric_Report_details.txt" target="_blank">Fabric Reports</a>
 
 ## Complex requests
 If you want to get a deeper look on complex __Admin__ methods and unique methods. 
@@ -132,6 +133,8 @@ We are also adding new methods with the requests to help get new actions. Exampl
 - list_roles_from_semantic_model(workspace_id, semantic_model_id): returns the roles of the specified semantic model
 - get_tables_schema_from_semantic_model(workspace_id, semantic_model_id): returns the tables schema of the specified semantic model
 - get_tables_partitions_from_semantic_model(workspace_id, semantic_model_id): returns the tables partitions of the specified semantic model
+- save_semantic_model_definition_local("xxxxxx", "xxxxxx", path): locally stores a semantic model definition in TMDL format
+- save_report_definition_local("xxxxxx", "xxxxxx", path, report_connection=None): locally stores a report definition in PBIR format
 
 ## Small categories
 Small categories like Dataflow Storage Accounts and Available Features were moved to Groups and Admin.
@@ -141,7 +144,7 @@ We are still developing the library. The following endpoints from admin are stil
 ### Fabric API
 - Admin (External data shares, labels and tenants)
 - Core (Capacities, deployment pipelines, external data shares, gateways, managed private endpoints)
-- All other categories except SemanticModels and DataPipelines
+- All other categories except SemanticModels, Reports and DataPipelines
 ### Power Bi Rest API
 - Admin (Set and Remove LabelsAsAdmin)
 - Groups (Update group User)
@@ -160,9 +163,7 @@ We are still developing the library. The following endpoints from admin are stil
 	- Create Datasource (looks like there is a bug on the API)
 	- Update Datasource 
 	- Delete Datasource 
-- Scorecards (Patch By Id, Move Goals)
 - Embed Token (All requests)
-- Goals (All requests)
 
 # Next Steps (planned items)
 - Complete Fabric API requests for admin and core.

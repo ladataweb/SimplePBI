@@ -342,3 +342,22 @@ class SemanticModels():
             print("Documentation generated successfully at: ", output_html_path)
         except Exception as e:
             print("Error while generating HTML documentation: ", e)
+
+    def save_semantic_model_definition_local(self, workspace_id, semantic_model_id, path):
+        """Saves the semantic_model files consistency to the local filesystem. Specify if pbir should read live connection or import
+        ### Parameters
+        ----
+        workspace_id: str uuid
+            The workspace id. You can take it from PBI Service URL
+        semantic_model_id: str uuid
+            The semantic_model id. You can take it from PBI Service URL
+        path: str
+            The local filesystem path where the semantic model files will be saved. Like C:/Users/user/Repository/Workspace
+        ### Returns
+        ----
+            A print with the stored files in the local filesystem path.
+        """ 
+        smodel = self.get_semantic_model(workspace_id, semantic_model_id)
+        semantic_model_name = smodel["displayName"]
+        parts = self.get_semantic_model_definition(workspace_id, semantic_model_id)
+        utils.save_files_from_api_response(parts, path, semantic_model_name, "semanticmodel")

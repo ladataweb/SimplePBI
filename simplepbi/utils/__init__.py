@@ -814,7 +814,7 @@ def load_bim_file_as_string(filepath: str) -> str:
 
     return contents
 
-def save_files_from_api_response(response_json, output_dir, item_name, item_type):
+def save_files_from_api_response(response_json, output_dir, item_name, item_type, report_connection=None):
     """
     Saves base64-encoded files from an API response to the local filesystem.
     ### Parameters
@@ -827,14 +827,16 @@ def save_files_from_api_response(response_json, output_dir, item_name, item_type
         The name of the item.
     item_type: str
         The type of the item. E.g., 'report', 'dataset' or 'semanticmodel'.
+    report_connection: str only for report item type
+        The connection type of the report. E.g., 'LiveConnection' or 'Import' by default it's LiveConnection
     ### Returns
     ----
         A print with the stored files in the local filesystem output_dir.
     Args:
-        
+         
     """
     case = item_type.lower()
-    if case == 'report':
+    if case == 'report' or case == 'reports':
         item_type = 'Report'
     elif case == 'dataset':
         item_type = 'SemanticModel'
@@ -868,6 +870,13 @@ def save_files_from_api_response(response_json, output_dir, item_name, item_type
         # Decode base64 content and write to file
         try:
             decoded_bytes = base64.b64decode(payload)
+            if(report_connection=="Import"):
+              if part.get("path") == "definition.pbir":
+                  pbir = json.loads(decoded_bytes)
+                  pbir['datasetReference']['byPath'] = {}
+                  pbir['datasetReference']['byPath']['path'] = "../"+item_name+".SemanticModel"
+                  del pbir['datasetReference']['byConnection']
+                  decoded_bytes = json.dumps(pbir).encode()
             with open(full_path, "wb") as f:
                 f.write(decoded_bytes)
             print(f"Saved: {full_path}")

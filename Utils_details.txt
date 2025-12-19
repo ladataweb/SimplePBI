@@ -191,7 +191,7 @@ FUNCTIONS
         DataFrame:
             A pandas DataFrame with columns: table, name, type, data_type, expression.
 
-    save_files_from_api_response(response_json, output_dir, item_name, item_type)
+    save_files_from_api_response(response_json, output_dir, item_name, item_type, report_connection=None)
         Saves base64-encoded files from an API response to the local filesystem.
         ### Parameters
         ----
@@ -203,6 +203,8 @@ FUNCTIONS
             The name of the item.
         item_type: str
             The type of the item. E.g., 'report', 'dataset' or 'semanticmodel'.
+        report_connection: str only for report item type
+            The connection type of the report. E.g., 'LiveConnection' or 'Import' by default it's LiveConnection
         ### Returns
         ----
             A print with the stored files in the local filesystem output_dir.

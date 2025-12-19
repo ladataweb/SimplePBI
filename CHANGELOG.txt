@@ -163,3 +163,7 @@ Adding a fabric report requests.
 Adjusting report details for live connection. 
 New utils for downloading the item files. 
 Adding Login feature with credentials to try the api request.
+
+1.0.9 (19/12/2025)
+------------------
+Adding requests at semantic models and reports to download as Project TMDL and Pbir
