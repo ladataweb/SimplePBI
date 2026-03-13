@@ -106,6 +106,41 @@ class SemanticModels():
             print("Request exception: ", e)
     # Create semantic model in Workspace
     
+    def bind_semantic_model_connection(self, workspace_id, semantic_model_id, connection_body):
+        """Creates an item in the specified workspace. Preview request, soon we'll add 'definition' parameter
+        #### Parameters
+        ----
+        workspace_id: str uuid
+            The workspace id. You can take it from Fabric URL
+        semantic_model_id: str
+            The semantic model id. You can take it from Fabric URL
+        connection_body: dict
+            The connection body with the connection details to bind. It must follow the format specified in the documentation
+            E.g:   "connectionBinding": {
+                        "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx",
+                        "connectivityType": "ShareableCloud",
+                        "connectionDetails": {
+                        "type": "SQL",
+                        "path": "server_name;db_name"
+                        }
+                    }
+        ### Returns
+        ----
+        Response object from requests library. 200 OK or 429 (rate limit)
+        """
+        
+        try: 
+            url= "https://api.fabric.microsoft.com/v1/workspaces/{}/semanticModels/{}/bindConnection".format(workspace_id, semantic_model_id)
+            body = connection_body                        
+            headers={'Content-Type': 'application/json; charset=utf-8', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.post(url, data = json.dumps(body), headers = headers)
+            res.raise_for_status()            
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
     def get_semantic_model_definition(self, workspace_id, semantic_model_id, format=None):
         """Returns the definition of the specified semantic model.
         ### Parameters

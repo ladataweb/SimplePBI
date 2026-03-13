@@ -357,9 +357,15 @@ def parse_table(table: Dict[str, Any]) -> str:
     ----
         str: An HTML representation of the table, including its columns, measures, and partitions.
     """
-    columns_html = parse_columns_table(table.get("columns", []))
-    measures_html = "".join([parse_measure(m) for m in table.get("measures", [])])
-    partitions_html = "".join([parse_partition(p) for p in table.get("partitions", [])])
+    # Sort by name ASC
+    columns = sorted(table.get("columns", []), key=lambda c: (c.get("name") or "").lower())
+    measures = sorted(table.get("measures", []), key=lambda m: (m.get("name") or "").lower())
+    partitions = sorted(table.get("partitions", []), key=lambda p: (p.get("name") or "").lower())
+
+    columns_html = parse_columns_table(columns)
+    measures_html = "".join(parse_measure(m) for m in measures)
+    partitions_html = "".join(parse_partition(p) for p in partitions)
+
     anchor = f"table-{table.get('name').replace(' ', '_')}"
     return f"""
     <section class="table-card" id="{anchor}">
@@ -556,6 +562,8 @@ def generate_bim_documentation(bim_json_text: str, output_html_path: str):
     bim = json.loads(bim_json_text)
     model = bim['model']
     tables = model.get("tables", [])
+    tables = sorted(tables, key=lambda t: (t.get("name") or "").lower())
+
     relationships = model.get("relationships", [])
     roles = model.get("roles", [])
 

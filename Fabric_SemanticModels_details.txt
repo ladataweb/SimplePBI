@@ -41,6 +41,28 @@ CLASSES
      |          token: String
      |              Bearer Token to use the Rest API
      |
+     |  bind_semantic_model_connection(self, workspace_id, semantic_model_id, connection_body)
+     |      Creates an item in the specified workspace. Preview request, soon we'll add 'definition' parameter
+     |      #### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from Fabric URL
+     |      semantic_model_id: str
+     |          The semantic model id. You can take it from Fabric URL
+     |      connection_body: dict
+     |          The connection body with the connection details to bind. It must follow the format specified in the documentation
+     |          E.g:   "connectionBinding": {
+     |                      "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx",
+     |                      "connectivityType": "ShareableCloud",
+     |                      "connectionDetails": {
+     |                      "type": "SQL",
+     |                      "path": "server_name;db_name"
+     |                      }
+     |                  }
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK or 429 (rate limit)
+     |
      |  create_html_semantic_model_documentation(self, workspace_id, semantic_model_id, output_html_path)
      |      Generates an HTML documentation for the specified semantic model.
      |      ### Parameters

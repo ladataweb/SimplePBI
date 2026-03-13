@@ -167,3 +167,7 @@ Adding Login feature with credentials to try the api request.
 1.0.9 (19/12/2025)
 ------------------
 Adding requests at semantic models and reports to download as Project TMDL and Pbir
+
+1.0.10 (06/03/2026)
+------------------
+Adding bind semantic model connection request and fixing A-Z sorting for auto generated HTML doc of a semantic model
