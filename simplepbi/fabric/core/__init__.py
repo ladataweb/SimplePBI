@@ -737,8 +737,6 @@ class Scheduler():
             body = {
                 "executionData": {}
             }
-            if format != None:
-                body["format"]=format
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}            
             res = requests.post(url, data = json.dumps(body), headers = headers)
             res.raise_for_status()

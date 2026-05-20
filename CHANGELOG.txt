@@ -171,3 +171,7 @@ Adding requests at semantic models and reports to download as Project TMDL and P
 1.0.10 (06/03/2026)
 ------------------
 Adding bind semantic model connection request and fixing A-Z sorting for auto generated HTML doc of a semantic model
+
+1.0.11 (20/05/2026)
+------------------
+Bug fixing running trigger for ítems at job scheduler.
