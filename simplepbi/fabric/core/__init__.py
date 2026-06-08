@@ -798,6 +798,197 @@ class Scheduler():
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
+
+    # Get item schedule
+    def get_item_schedule(self, workspace_id, item_id, job_type, schedule_id):
+        """Get an existing schedule for an item.
+        #### Parameters
+        ----
+        workspace_id: str uuid
+            The workspace id. You can take it from Fabric URL
+        item_id: str uuid
+            The item id. You can take it from Fabric URL
+        job_type: str 
+            The job type. API suggest 'DefaultJob' for now.
+        schedule_id: str uuid
+            The schedule id.
+        ### Returns
+        ----
+        Response object from requests library. 202 OK
+        """
+        try: 
+            url= "https://api.fabric.microsoft.com/v1/workspaces/{}/items/{}/jobs/{}/schedules/{}".format(workspace_id, item_id, job_type, schedule_id)
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}            
+            res = requests.get(url, headers = headers)
+            res.raise_for_status()
+            return res.json()
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e) 
+
+    # List item job instances
+    def list_item_job_instances(self, workspace_id, item_id, return_pandas):
+        """Returns a list of job instances for the specified item.
+        #### Parameters
+        ----
+        workspace_id: str uuid
+            The workspace id. You can take it from Fabric URL
+        item_id: str uuid
+            The item id. You can take it from Fabric URL
+        return_pandas: bool
+            Decide if you want to return a pandas dataframe or a dictionary
+        ### Returns
+        ----
+        Response object from requests library. 202 OK
+        """
+        try: 
+            url= "https://api.fabric.microsoft.com/v1/workspaces/{}/items/{}/jobs/instances".format(workspace_id, item_id)
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            data = res.json()
+            while 'continuationToken' in data and data['continuationToken'] != None:
+                url = "https://api.fabric.microsoft.com/v1/workspaces/{}/items/{}/jobs/instances?continuationToken={}".format(workspace_id, item_id, data['continuationToken'])
+                res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+                res.raise_for_status()
+                data.update(res.json())
+                data.pop('continuationToken')
+            if return_pandas:
+                js = json.dumps(data['value'])
+                return pd.DataFrame(pd.read_json(io.StringIO(js)))
+            else:
+                return data
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+    
+    # List items schedules
+    def list_item_schedules(self, workspace_id, item_id, job_type, return_pandas):
+        """Returns a list of job instances for the specified item.
+        
+        #### Parameters
+        ----
+        workspace_id: str uuid
+            The workspace id. You can take it from Fabric URL
+        item_id: str uuid
+            The item id. You can take it from Fabric URL
+        job_type: str 
+            The job type. API suggest 'DefaultJob' for now.
+        return_pandas: bool
+            Decide if you want to return a pandas dataframe or a dictionary
+        ### Returns
+        ----
+        Response object from requests library. 202 OK
+        """
+        try: 
+            url= "https://api.fabric.microsoft.com/v1/workspaces/{}/items/{}/jobs/{}/schedules".format(workspace_id, item_id, job_type)
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            data = res.json()
+            while 'continuationToken' in data and data['continuationToken'] != None:
+                url = "https://api.fabric.microsoft.com/v1/workspaces/{}/items/{}/jobs/{}/schedules?continuationToken={}".format(workspace_id, item_id, job_type, data['continuationToken'])
+                res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+                res.raise_for_status()
+                data.update(res.json())
+                data.pop('continuationToken')
+            if return_pandas:
+                js = json.dumps(data['value'])
+                return pd.DataFrame(pd.read_json(io.StringIO(js)))
+            else:
+                return data
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    # Delete item schedule
+    def delete_item_schedule(self, workspace_id, item_id, job_type, schedule_id):
+        """Deletes an existing schedule for an item.
+        #### Parameters
+        ----
+        workspace_id: str uuid
+            The workspace id. You can take it from Fabric URL
+        item_id: str uuid
+            The item id. You can take it from Fabric URL
+        job_type: str 
+            The job type. API suggest 'DefaultJob' for now.
+        schedule_id: str uuid
+            The schedule id.
+        ### Returns
+        ----
+        Response object from requests library. 202 OK
+        """
+        try: 
+            url= "https://api.fabric.microsoft.com/v1/workspaces/{}/items/{}/jobs/{}/schedules/{}".format(workspace_id, item_id, job_type, schedule_id)
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}            
+            res = requests.delete(url, headers = headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    # Create item schedule
+    def create_item_schedule(self, workspace_id, item_id, job_type, body):
+        """Create a new schedule for an item. An item can create maximum 20 schedulers.
+        #### Parameters
+        ----
+        workspace_id: str uuid
+            The workspace id. You can take it from Fabric URL
+        item_id: str uuid
+            The item id. You can take it from Fabric URL
+        job_type: str 
+            The job type. API suggest 'DefaultJob' for now.
+        body: dict
+            Please read the documentation for the request body details.
+        ### Returns
+        ----
+        Response object from requests library. 202 OK
+        """
+        try: 
+            url= "https://api.fabric.microsoft.com/v1/workspaces/{}/items/{}/jobs/{}/schedules".format(workspace_id, item_id, job_type)
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            body_data = body
+            res = requests.post(url, data = json.dumps(body_data), headers = headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    # Update item schedule details
+    def update_item_schedule(self, workspace_id, item_id, job_type, body):
+        """Update an existing schedule for an item.
+        #### Parameters
+        ----
+        workspace_id: str uuid
+            The workspace id. You can take it from Fabric URL
+        item_id: str uuid
+            The item id. You can take it from Fabric URL
+        job_type: str 
+            The job type. API suggest 'DefaultJob' for now.
+        body: dict
+            Please read the documentation for the request body details.
+        ### Returns
+        ----
+        Response object from requests library. 202 OK
+        """
+        try: 
+            url= "https://api.fabric.microsoft.com/v1/workspaces/{}/items/{}/jobs/{}/schedules".format(workspace_id, item_id, job_type)
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            body_data = body
+            res = requests.patch(url, data = json.dumps(body_data), headers = headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+
             
 class Workspaces():
     """Simple library to use the api and obtain workspaces from it.

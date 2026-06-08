@@ -175,3 +175,7 @@ Adding bind semantic model connection request and fixing A-Z sorting for auto ge
 1.0.11 (20/05/2026)
 ------------------
 Bug fixing running trigger for ítems at job scheduler.
+
+1.0.12 (08/06/2026)
+------------------
+Adding Fabric job scheduler requests from Core.
