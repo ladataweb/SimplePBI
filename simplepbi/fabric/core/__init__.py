@@ -828,7 +828,7 @@ class Scheduler():
             print("Request exception: ", e) 
 
     # List item job instances
-    def list_item_job_instances(self, workspace_id, item_id, return_pandas):
+    def list_item_job_instances(self, workspace_id, item_id, return_pandas=False):
         """Returns a list of job instances for the specified item.
         #### Parameters
         ----
@@ -851,8 +851,12 @@ class Scheduler():
                 url = "https://api.fabric.microsoft.com/v1/workspaces/{}/items/{}/jobs/instances?continuationToken={}".format(workspace_id, item_id, data['continuationToken'])
                 res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
                 res.raise_for_status()
-                data.update(res.json())
-                data.pop('continuationToken')
+                data["value"].extend(res.json()["value"])
+                if "continuationToken" in res.json():
+                    data["continuationToken"] = res.json()["continuationToken"]
+                else:
+                    data["continuationToken"] = None
+
             if return_pandas:
                 js = json.dumps(data['value'])
                 return pd.DataFrame(pd.read_json(io.StringIO(js)))
@@ -864,7 +868,7 @@ class Scheduler():
             print("Request exception: ", e)
     
     # List items schedules
-    def list_item_schedules(self, workspace_id, item_id, job_type, return_pandas):
+    def list_item_schedules(self, workspace_id, item_id, job_type, return_pandas=False):
         """Returns a list of job instances for the specified item.
         
         #### Parameters
@@ -1898,6 +1902,445 @@ class Connections():
         """
         try:
             url = "https://api.fabric.microsoft.com/v1/connections/{}/roleAssignments/{}".format(connection_id, connection_role_assignment_id)
+            body = {
+                "role": role
+            }
+            headers = {'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.patch(url, data=json.dumps(body), headers=headers)
+            res.raise_for_status()            
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+class Gateways():
+    """Simple library to use the Gateways api and obtain gateway information from it.
+    """
+    def __init__(self, token):
+        """Create a simplePBI object to request operations API
+        Args:
+            token: String
+                Bearer Token to use the Rest API
+        """
+        self.token = token
+
+    def list_gateways(self):
+        """Returns a list of all gateways.
+        ### Returns
+        ----
+        List[Dict]:
+            A list of dictionaries, each containing information about a gateway.
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/gateways"
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            data = res.json()
+            while 'continuationToken' in data and data['continuationToken'] != None:
+                url = "https://api.fabric.microsoft.com/v1/gateways?continuationToken={}".format(data['continuationToken'])
+                res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+                res.raise_for_status()
+                data.update(res.json())
+                data.pop('continuationToken')
+
+            return res.json()
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def get_gateway(self, gateway_id):
+        """Returns the specified gateway.
+        #### Parameters
+        ----
+        gateway_id: str uuid
+            The gateway id. You can take it from Fabric URL
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing the gateway information.
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/gateways/{}".format(gateway_id)
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def list_gateway_members(self, gateway_id):
+        """Returns a list of all members of the specified gateway.
+        #### Parameters
+        ----
+        gateway_id: str uuid
+            The gateway id. You can take it from Fabric URL
+        ### Returns
+        ----
+        List[Dict]:
+            A list of dictionaries, each containing information about a gateway member.
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/gateways/{}/members".format(gateway_id)
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            data = res.json()
+            while 'continuationToken' in data and data['continuationToken'] != None:
+                url = "https://api.fabric.microsoft.com/v1/gateways/{}/members?continuationToken={}".format(gateway_id, data['continuationToken'])
+                res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+                res.raise_for_status()
+                data.update(res.json())
+                data.pop('continuationToken')
+
+            return res.json()
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def list_gateway_role_assignments(self, gateway_id):
+        """Returns a list of gateway role assignments.
+        #### Parameters
+        ----
+        gateway_id: str uuid
+            The gateway id. You can take it from Fabric URL
+        ### Returns
+        ----
+        List[Dict]:
+            A list of dictionaries, each containing information about a gateway role assignments.
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/gateways/{}/roleAssignments".format(gateway_id)
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            data = res.json()
+            while 'continuationToken' in data and data['continuationToken'] != None:
+                url = "https://api.fabric.microsoft.com/v1/gateways/{}/roleAssignments?continuationToken={}".format(gateway_id, data['continuationToken'])
+                res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+                res.raise_for_status()
+                data.update(res.json())
+                data.pop('continuationToken')
+
+            return res.json()
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def get_gateway_role_assignment(self, gateway_id, gateway_role_assignment_id):
+        """Returns the specified gateway role assignment.
+        #### Parameters
+        ----
+        gateway_id: str uuid
+            The gateway id. You can take it from Fabric URL
+        gateway_role_assignment_id: str uuid
+            The gateway role assignment id.
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing the gateway role assignment information.
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/gateways/{}/roleAssignments/{}".format(gateway_id, gateway_role_assignment_id)
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def check_gateway_status(self, gateway_id):
+        """Checks the status of the specified gateway.
+        #### Parameters
+        ----
+        gateway_id: str uuid
+            The gateway id. You can take it from Fabric URL
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing the gateway status information.
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/gateways/{}/checkStatus".format(gateway_id)
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def check_gateway_member_status(self, gateway_id, gateway_member_id):
+        """Checks the status of the specified gateway member.
+        #### Parameters
+        ----
+        gateway_id: str uuid
+            The gateway id. You can take it from Fabric URL
+        gateway_member_id: str uuid
+            The gateway member id.
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing the gateway member status information.
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/gateways/{}/members/{}/checkStatus".format(gateway_id, gateway_member_id)
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def shutdown_gateway():
+        """Shuts down the specified gateway.
+        #### Parameters
+        ----
+        gateway_id: str uuid
+            The gateway id. You can take it from Fabric URL
+        ### Returns
+        ----
+        Response object from requests library. 204 No Content
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/gateways/{}/shutdown".format(gateway_id)
+            headers = {'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.post(url, headers=headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def restart_gateway(self, gateway_id):
+        """Restarts the specified gateway.
+        #### Parameters
+        ----
+        gateway_id: str uuid
+            The gateway id. You can take it from Fabric URL
+        ### Returns
+        ----
+        Response object from requests library. 204 No Content
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/gateways/{}/restart".format(gateway_id)
+            headers = {'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.post(url, headers=headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def create_gateway(self, capacity_id, display_name, inactivity_minutes_before_sleep, number_of_member_gateways, virtual_network_azure_resource):
+        """Creates a new virtual network gateway.
+        #### Parameters
+        ----
+        capacity_id: str uuid
+            The object ID of the Fabric license capacity.
+        display_name: string
+            The display name of the virtual network gateway. Maximum length is 200 characters.
+        inactivity_minutes_before_sleep: int
+            The minutes of inactivity before the virtual network gateway goes into auto-sleep. Must be one of the following values: 30, 60, 90, 120, 150, 240, 360, 480, 720, 1440.
+        number_of_member_gateways: int
+            The number of member gateways. A number between 1 and 9.
+        virtual_network_azure_resource: dict
+            The Azure virtual network resource. Make sure you read https://learn.microsoft.com/en-us/rest/api/fabric/core/gateways/create-gateway?tabs=HTTP#virtualnetworkazureresource
+        ### Returns
+        ----
+        Response object from requests library. 201 Created
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/gateways"
+            body = {
+                "capacityId": capacity_id,
+                "displayName": display_name,
+                "inactivityMinutesBeforeSleep": inactivity_minutes_before_sleep,
+                "numberOfMemberGateways": number_of_member_gateways,
+                "type": "VirtualNetwork",
+                "virtualNetworkAzureResource": virtual_network_azure_resource
+            }
+            headers = {'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.post(url, data=json.dumps(body), headers=headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def delete_gateway(self, gateway_id):
+        """Deletes the specified gateway.
+        #### Parameters
+        ----
+        gateway_id: str uuid
+            The gateway id. You can take it from Fabric URL
+        ### Returns
+        ----
+        Response object from requests library. 204 No Content
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/gateways/{}".format(gateway_id)
+            headers = {'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.delete(url, headers=headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def delete_gateway_member(self, gateway_id, gateway_member_id):
+        """Deletes the specified gateway member from the gateway.
+        #### Parameters
+        ----
+        gateway_id: str uuid
+            The gateway id. You can take it from Fabric URL
+        gateway_member_id: str uuid
+            The gateway member id.
+        ### Returns
+        ----
+        Response object from requests library. 204 No Content
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/gateways/{}/members/{}".format(gateway_id, gateway_member_id)
+            headers = {'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.delete(url, headers=headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def delete_gateway_role_assignment(self, gateway_id, gateway_role_assignment_id):
+        """Deletes the specified gateway role assignment from the gateway.
+        #### Parameters
+        ----
+        gateway_id: str uuid
+            The gateway id. You can take it from Fabric URL
+        gateway_role_assignment_id: str uuid
+            The gateway role assignment id.
+        ### Returns
+        ----
+        Response object from requests library. 204 No Content
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/gateways/{}/roleAssignments/{}".format(gateway_id, gateway_role_assignment_id)
+            headers = {'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.delete(url, headers=headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def add_gateway_role_assignment(self, gateway_id, principal, role):
+        """Adds a role assignment to the specified gateway.
+        #### Parameters
+        ----
+        gateway_id: str uuid
+            The gateway id. You can take it from Fabric URL
+        principal: dict
+            The principal. Make sure you read https://learn.microsoft.com/en-us/rest/api/fabric/core/gateways/add-gateway-role-assignment?tabs=HTTP#principal
+        role: string
+            The role. { "Admin", "User" }
+        ### Returns
+        ----
+        Response object from requests library. 201 Created
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/gateways/{}/roleAssignments".format(gateway_id)
+            body = {
+                "principal": principal,
+                "role": role
+            }
+            headers = {'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.post(url, data=json.dumps(body), headers=headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def update_gateway(self, gateway_id, body):
+        """Updates the specified gateway.
+        #### Parameters
+        ----
+        gateway_id: str uuid
+            The gateway id. You can take it from Fabric URL
+        body: dict
+            The body of the gateway to update. Make sure you read https://learn.microsoft.com/en-us/rest/api/fabric/core/gateways/update-gateway
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/gateways/{}".format(gateway_id)
+            headers = {'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.patch(url, data=json.dumps(body), headers=headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def update_gateway_member(self, gateway_id, gateway_member_id, display_name, enabled):
+        """Updates the specified gateway member.
+        #### Parameters
+        ----
+        gateway_id: str uuid
+            The gateway id. You can take it from Fabric URL
+        gateway_member_id: str uuid
+            The gateway member id.
+        display_name: string
+            The display name of the gateway member. Maximum length is 200 characters.
+        enabled: boolean
+            Whether the gateway member is enabled. True - Enabled, False - Not enabled.
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/gateways/{}/members/{}".format(gateway_id, gateway_member_id)
+            body = {
+                "displayName": display_name,
+                "enabled": enabled
+            }
+            headers = {'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}
+            res = requests.patch(url, data=json.dumps(body), headers=headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def update_gateway_role_assignment(self, gateway_id, gateway_role_assignment_id, role):
+        """Updates the specified gateway role assignment.
+        #### Parameters
+        ----
+        gateway_id: str uuid
+            The gateway id. You can take it from Fabric URL
+        gateway_role_assignment_id: str uuid
+            The gateway role assignment id.
+        role: string
+            The role. { "Admin", "User" }
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/gateways/{}/roleAssignments/{}".format(gateway_id, gateway_role_assignment_id)
             body = {
                 "role": role
             }

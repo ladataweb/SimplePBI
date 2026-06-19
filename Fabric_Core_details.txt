@@ -28,6 +28,7 @@ CLASSES
     builtins.object
         Connections
         Folders
+        Gateways
         Git
         Items
         LongRunningOperations
@@ -262,6 +263,233 @@ CLASSES
      |          The folder id. You can take it from Fabric URL
      |      displayName: str
      |          The new display name for the folder.
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables
+     |
+     |  __weakref__
+     |      list of weak references to the object
+
+    class Gateways(builtins.object)
+     |  Gateways(token)
+     |
+     |  Simple library to use the Gateways api and obtain gateway information from it.
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, token)
+     |      Create a simplePBI object to request operations API
+     |      Args:
+     |          token: String
+     |              Bearer Token to use the Rest API
+     |
+     |  add_gateway_role_assignment(self, gateway_id, principal, role)
+     |      Adds a role assignment to the specified gateway.
+     |      #### Parameters
+     |      ----
+     |      gateway_id: str uuid
+     |          The gateway id. You can take it from Fabric URL
+     |      principal: dict
+     |          The principal. Make sure you read https://learn.microsoft.com/en-us/rest/api/fabric/core/gateways/add-gateway-role-assignment?tabs=HTTP#principal
+     |      role: string
+     |          The role. { "Admin", "User" }
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 201 Created
+     |
+     |  check_gateway_member_status(self, gateway_id, gateway_member_id)
+     |      Checks the status of the specified gateway member.
+     |      #### Parameters
+     |      ----
+     |      gateway_id: str uuid
+     |          The gateway id. You can take it from Fabric URL
+     |      gateway_member_id: str uuid
+     |          The gateway member id.
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing the gateway member status information.
+     |
+     |  check_gateway_status(self, gateway_id)
+     |      Checks the status of the specified gateway.
+     |      #### Parameters
+     |      ----
+     |      gateway_id: str uuid
+     |          The gateway id. You can take it from Fabric URL
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing the gateway status information.
+     |
+     |  create_gateway(self, capacity_id, display_name, inactivity_minutes_before_sleep, number_of_member_gateways, virtual_network_azure_resource)
+     |      Creates a new virtual network gateway.
+     |      #### Parameters
+     |      ----
+     |      capacity_id: str uuid
+     |          The object ID of the Fabric license capacity.
+     |      display_name: string
+     |          The display name of the virtual network gateway. Maximum length is 200 characters.
+     |      inactivity_minutes_before_sleep: int
+     |          The minutes of inactivity before the virtual network gateway goes into auto-sleep. Must be one of the following values: 30, 60, 90, 120, 150, 240, 360, 480, 720, 1440.
+     |      number_of_member_gateways: int
+     |          The number of member gateways. A number between 1 and 9.
+     |      virtual_network_azure_resource: dict
+     |          The Azure virtual network resource. Make sure you read https://learn.microsoft.com/en-us/rest/api/fabric/core/gateways/create-gateway?tabs=HTTP#virtualnetworkazureresource
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 201 Created
+     |
+     |  delete_gateway(self, gateway_id)
+     |      Deletes the specified gateway.
+     |      #### Parameters
+     |      ----
+     |      gateway_id: str uuid
+     |          The gateway id. You can take it from Fabric URL
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 204 No Content
+     |
+     |  delete_gateway_member(self, gateway_id, gateway_member_id)
+     |      Deletes the specified gateway member from the gateway.
+     |      #### Parameters
+     |      ----
+     |      gateway_id: str uuid
+     |          The gateway id. You can take it from Fabric URL
+     |      gateway_member_id: str uuid
+     |          The gateway member id.
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 204 No Content
+     |
+     |  delete_gateway_role_assignment(self, gateway_id, gateway_role_assignment_id)
+     |      Deletes the specified gateway role assignment from the gateway.
+     |      #### Parameters
+     |      ----
+     |      gateway_id: str uuid
+     |          The gateway id. You can take it from Fabric URL
+     |      gateway_role_assignment_id: str uuid
+     |          The gateway role assignment id.
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 204 No Content
+     |
+     |  get_gateway(self, gateway_id)
+     |      Returns the specified gateway.
+     |      #### Parameters
+     |      ----
+     |      gateway_id: str uuid
+     |          The gateway id. You can take it from Fabric URL
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing the gateway information.
+     |
+     |  get_gateway_role_assignment(self, gateway_id, gateway_role_assignment_id)
+     |      Returns the specified gateway role assignment.
+     |      #### Parameters
+     |      ----
+     |      gateway_id: str uuid
+     |          The gateway id. You can take it from Fabric URL
+     |      gateway_role_assignment_id: str uuid
+     |          The gateway role assignment id.
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing the gateway role assignment information.
+     |
+     |  list_gateway_members(self, gateway_id)
+     |      Returns a list of all members of the specified gateway.
+     |      #### Parameters
+     |      ----
+     |      gateway_id: str uuid
+     |          The gateway id. You can take it from Fabric URL
+     |      ### Returns
+     |      ----
+     |      List[Dict]:
+     |          A list of dictionaries, each containing information about a gateway member.
+     |
+     |  list_gateway_role_assignments(self, gateway_id)
+     |      Returns a list of gateway role assignments.
+     |      #### Parameters
+     |      ----
+     |      gateway_id: str uuid
+     |          The gateway id. You can take it from Fabric URL
+     |      ### Returns
+     |      ----
+     |      List[Dict]:
+     |          A list of dictionaries, each containing information about a gateway role assignments.
+     |
+     |  list_gateways(self)
+     |      Returns a list of all gateways.
+     |      ### Returns
+     |      ----
+     |      List[Dict]:
+     |          A list of dictionaries, each containing information about a gateway.
+     |
+     |  restart_gateway(self, gateway_id)
+     |      Restarts the specified gateway.
+     |      #### Parameters
+     |      ----
+     |      gateway_id: str uuid
+     |          The gateway id. You can take it from Fabric URL
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 204 No Content
+     |
+     |  shutdown_gateway()
+     |      Shuts down the specified gateway.
+     |      #### Parameters
+     |      ----
+     |      gateway_id: str uuid
+     |          The gateway id. You can take it from Fabric URL
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 204 No Content
+     |
+     |  update_gateway(self, gateway_id, body)
+     |      Updates the specified gateway.
+     |      #### Parameters
+     |      ----
+     |      gateway_id: str uuid
+     |          The gateway id. You can take it from Fabric URL
+     |      body: dict
+     |          The body of the gateway to update. Make sure you read https://learn.microsoft.com/en-us/rest/api/fabric/core/gateways/update-gateway
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK
+     |
+     |  update_gateway_member(self, gateway_id, gateway_member_id, display_name, enabled)
+     |      Updates the specified gateway member.
+     |      #### Parameters
+     |      ----
+     |      gateway_id: str uuid
+     |          The gateway id. You can take it from Fabric URL
+     |      gateway_member_id: str uuid
+     |          The gateway member id.
+     |      display_name: string
+     |          The display name of the gateway member. Maximum length is 200 characters.
+     |      enabled: boolean
+     |          Whether the gateway member is enabled. True - Enabled, False - Not enabled.
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK
+     |
+     |  update_gateway_role_assignment(self, gateway_id, gateway_role_assignment_id, role)
+     |      Updates the specified gateway role assignment.
+     |      #### Parameters
+     |      ----
+     |      gateway_id: str uuid
+     |          The gateway id. You can take it from Fabric URL
+     |      gateway_role_assignment_id: str uuid
+     |          The gateway role assignment id.
+     |      role: string
+     |          The role. { "Admin", "User" }
      |      ### Returns
      |      ----
      |      Response object from requests library. 200 OK
@@ -734,6 +962,38 @@ CLASSES
      |      ----
      |      Response object from requests library. 202 OK
      |
+     |  create_item_schedule(self, workspace_id, item_id, job_type, body)
+     |      Create a new schedule for an item. An item can create maximum 20 schedulers.
+     |      #### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from Fabric URL
+     |      item_id: str uuid
+     |          The item id. You can take it from Fabric URL
+     |      job_type: str
+     |          The job type. API suggest 'DefaultJob' for now.
+     |      body: dict
+     |          Please read the documentation for the request body details.
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 202 OK
+     |
+     |  delete_item_schedule(self, workspace_id, item_id, job_type, schedule_id)
+     |      Deletes an existing schedule for an item.
+     |      #### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from Fabric URL
+     |      item_id: str uuid
+     |          The item id. You can take it from Fabric URL
+     |      job_type: str
+     |          The job type. API suggest 'DefaultJob' for now.
+     |      schedule_id: str uuid
+     |          The schedule id.
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 202 OK
+     |
      |  get_item_job_instance(self, workspace_id, item_id, job_instance_id)
      |      Returns the specified job instance for the specified item.
      |      #### Parameters
@@ -749,6 +1009,53 @@ CLASSES
      |      Dict:
      |          A dictionary containing a job instance in the workspace.
      |
+     |  get_item_schedule(self, workspace_id, item_id, job_type, schedule_id)
+     |      Get an existing schedule for an item.
+     |      #### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from Fabric URL
+     |      item_id: str uuid
+     |          The item id. You can take it from Fabric URL
+     |      job_type: str
+     |          The job type. API suggest 'DefaultJob' for now.
+     |      schedule_id: str uuid
+     |          The schedule id.
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 202 OK
+     |
+     |  list_item_job_instances(self, workspace_id, item_id, return_pandas=False)
+     |      Returns a list of job instances for the specified item.
+     |      #### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from Fabric URL
+     |      item_id: str uuid
+     |          The item id. You can take it from Fabric URL
+     |      return_pandas: bool
+     |          Decide if you want to return a pandas dataframe or a dictionary
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 202 OK
+     |
+     |  list_item_schedules(self, workspace_id, item_id, job_type, return_pandas=False)
+     |      Returns a list of job instances for the specified item.
+     |
+     |      #### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from Fabric URL
+     |      item_id: str uuid
+     |          The item id. You can take it from Fabric URL
+     |      job_type: str
+     |          The job type. API suggest 'DefaultJob' for now.
+     |      return_pandas: bool
+     |          Decide if you want to return a pandas dataframe or a dictionary
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 202 OK
+     |
      |  run_on_demand_item_job(self, workspace_id, item_id, jobType)
      |      Run on-demand item job instance.
      |      #### Parameters
@@ -761,6 +1068,22 @@ CLASSES
      |          The job type, for now just "DefaultJob"
      |      executionData: str
      |              Execution data for the job. Preview parameter, a working progress from the API
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 202 OK
+     |
+     |  update_item_schedule(self, workspace_id, item_id, job_type, body)
+     |      Update an existing schedule for an item.
+     |      #### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from Fabric URL
+     |      item_id: str uuid
+     |          The item id. You can take it from Fabric URL
+     |      job_type: str
+     |          The job type. API suggest 'DefaultJob' for now.
+     |      body: dict
+     |          Please read the documentation for the request body details.
      |      ### Returns
      |      ----
      |      Response object from requests library. 202 OK
