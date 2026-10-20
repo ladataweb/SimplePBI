@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "simplepbi"
-version = "1.0.13"
+version = "1.0.14"
 description = "Simplify usage of Power Bi Rest API"
 readme = "README.md"
 license = "MIT"
@@ -20,7 +20,8 @@ dependencies = [
     "requests",
     "pandas",
 	"msal",
-    "requests-toolbelt"
+    "requests-toolbelt",
+    "pyarrow"
 ]
 
 # Classifiers as per your setup.py

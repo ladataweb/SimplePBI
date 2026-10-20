@@ -535,7 +535,7 @@ CLASSES
      |      ----
      |      Response object from requests library. 202 OK
      |
-     |  connect_git_repo(self, workspace_id, organization, project, repository, branch, directory_name, git_provider_type)
+     |  connect_git_repo(self, workspace_id, organization, project, repository, branch, git_provider_type, directory_name=None)
      |      Connects the workspace to an Azure DevOps repository.
      |      #### Parameters
      |      ----
@@ -589,7 +589,39 @@ CLASSES
      |      Dict:
      |          A dictionary containing a item in the workspace.
      |
-     |  update_from_git(self, workspace_id, item_id, remoteCommitHash, conflictResolution, allowOverrideItems, workspaceHead)
+     |  get_my_git_credentials(self, workspace_id)
+     |      Returns the Git credentials for the specified workspace.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from Fabric URL
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dict with the source of how it's connected
+     |
+     |  initialize_git_connection(self, workspace_id)
+     |      Initializes the Git connection for the specified workspace.
+     |      #### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from Fabric URL
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 202 OK
+     |
+     |  list_workspace_relations(self, workspace_id)
+     |      Returns a list of workspaces that are connected to the same Git repository as the specified workspace.
+     |      #### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from Fabric URL
+     |      ### Returns
+     |      ----
+     |      Dict:
+     |          A dictionary containing a item in the workspace.
+     |
+     |  update_from_git(self, workspace_id, remoteCommitHash, item_id=None, conflictResolution=None, allowOverrideItems=True, workspaceHead=None)
      |      Updates the workspace with commits pushed to the connected branch.
      |      #### Parameters
      |      ----
@@ -612,6 +644,18 @@ CLASSES
      |      ----
      |      Response object from requests library. 202 OK
      |
+     |  update_my_git_credentials(self, workspace_id, connection_id)
+     |      Updates the Git credentials for the specified workspace.
+     |      ### Parameters
+     |      ----
+     |      workspace_id: str uuid
+     |          The workspace id. You can take it from Fabric URL
+     |      connection_id: str uuid
+     |          The connection id. You can get it from get connection requests or the manage connections at Fabric UI.
+     |      ### Returns
+     |      ----
+     |      Response object from requests library. 200 OK
+     |
      |  ----------------------------------------------------------------------
      |  Data descriptors defined here:
      |
@@ -633,6 +677,7 @@ CLASSES
      |      Args:
      |          token: String
      |              Bearer Token to use the Rest API
+     |
      |
      |  build_report_parts(self, semantic_model_workspace_id, item_path)
      |      Build the parts of report for the specified item.
@@ -736,6 +781,7 @@ CLASSES
      |      ----
      |      Dict:
      |          A dictionary containing all the items in the workspace.
+     |
      |
      |  simple_deploy_report(self, report_workspace_id, semantic_model_workspace_id, item_path)
      |      Deploys the semantic model for the specified item.

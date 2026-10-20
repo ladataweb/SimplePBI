@@ -291,6 +291,90 @@ To create a PowerBI item, the user must have the appropritate license. For more 
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
 
+    def build_item_parts_unstable(self, item_path):
+        """Build the parts of semantic model for the specified item.
+        #### Parameters
+        ----
+        item_path: str 
+            Theitem path until [name].ItemType folder like C:/Users/user/Desktop/[name].SemanticModel
+        ### Returns
+        ----
+        Dict with parts of the item
+        """ 
+        parts = []        
+        # Check if item type is semanticmodel or report
+        item_type = item_path.split("/")[-1].split(".")[-1].lower()
+        if item_type == "semanticmodel":
+            return self.build_semantic_model_parts(item_path)
+        elif item_type == "report":
+            return self.build_report_parts(item_path)
+        else:        
+            # Iterate through the files in the item_path
+            for root, dirs, files in os.walk(item_path):
+                if os.path.basename(root) == ".pbi":
+                    continue
+                for file in files:
+                    # Example of skip files with the name "item.*.json"
+                    # if file.startswith("item.") and file.endswith(".json"):
+                    #    continue
+    
+                    # Get the file path relative to the project folder
+                    file_path = os.path.relpath(os.path.join(root, file), item_path).replace("\\","/")
+    
+                    # Read the file contents
+                    with open(os.path.join(root, file), "rb") as f:
+                        file_contents = f.read()
+    
+                    # Base64-encode the file contents
+                    encoded_contents = base64.b64encode(file_contents).decode("utf-8")
+    
+                    # Add the file to the Parts array
+                    parts.append({
+                        "Path": file_path,
+                        "Payload": encoded_contents,
+                        "PayloadType": "InlineBase64"
+                    })
+            return parts
+        
+    def simple_deploy_item_unstable(self, workspace_id, item_path):
+        """Deploys the item for the specified item.
+        #### Parameters
+        ----
+        workspace_id: str uuid
+            The workspace id. You can take it from Fabric URL
+        item_path: str 
+            The item path until [name].ItemType folder like C:/Users/user/Desktop/[name].SemanticModel
+        ### Returns
+        ----
+        Response object from requests library. 202 OK
+        """
+        
+        item_name = item_path.split("/")[-1].split(".")[0]
+        item_type = item_path.split("/")[-1].split(".")[-1]
+
+        if item_name == "":
+            raise Exception("Make sure the path doesn't en in / or \\ at the end.")
+        else:
+            print("Item name: ", item_name)
+        parts = self.build_item_parts(item_path)
+
+        try:
+            # Get list of items
+            it = self.list_items(workspace_id)
+            id = [i['id'] for i in it['value'] if i['displayName']==item_name and i['type'].lower()== item_type.lower() ]
+            if id == []:
+                # Create item
+                res = self.create_item(workspace_id, item_name, item_type, None, parts)
+            else:
+                # Update item definition
+                print("Updating semantic model id {} in workspace id {}".format(id[0], workspace_id))
+                res = self.update_item_definition(workspace_id, id[0], parts)            
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
     def build_semantic_model_parts(self, item_path):
         """Build the parts of semantic model for the specified item.
         #### Parameters
@@ -551,6 +635,56 @@ class Git():
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
+     
+    def get_my_git_credentials(self, workspace_id):
+        """Returns the Git credentials for the specified workspace.
+        ### Parameters
+        ----
+        workspace_id: str uuid
+            The workspace id. You can take it from Fabric URL
+        ### Returns
+        ----
+        Dict:
+            A dict with the source of how it's connected
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/workspaces/{}/git/myGitCredentials".format(workspace_id)
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res.json()
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+
+    def update_my_git_credentials(self, workspace_id, connection_id):
+        """Updates the Git credentials for the specified workspace.
+        ### Parameters
+        ----
+        workspace_id: str uuid
+            The workspace id. You can take it from Fabric URL
+        connection_id: str uuid
+            The connection id. You can get it from get connection requests or the manage connections at Fabric UI.
+        ### Returns
+        ----
+        Response object from requests library. 200 OK
+        """
+        
+        try: 
+            url= "https://api.fabric.microsoft.com/v1/workspaces/{}/git/myGitCredentials".format(workspace_id)
+            body = {
+                "source":"ConfiguredConnection",
+                "connectionId": connection_id
+            }
+            headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}            
+            res = requests.patch(url, data = json.dumps(body), headers = headers)
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
             
     def commit_to_git(self, workspace_id, mode, comment, workspaceHead, items=None):
         """Commits the changes made in the workspace to the connected remote branch.
@@ -590,7 +724,7 @@ class Git():
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
             
-    def update_from_git(self, workspace_id, item_id, remoteCommitHash, conflictResolution, allowOverrideItems, workspaceHead):
+    def update_from_git(self, workspace_id, remoteCommitHash, item_id=None, conflictResolution=None, allowOverrideItems=True, workspaceHead=None):
         """Updates the workspace with commits pushed to the connected branch.
         #### Parameters
         ----
@@ -615,15 +749,21 @@ class Git():
         """
         
         try: 
-            url= "https://api.fabric.microsoft.com/v1/workspaces/{}/items/{}/git/updateFromGit".format(workspace_id, item_id)
+            if item_id == None:
+                url= "https://api.fabric.microsoft.com/v1/workspaces/{}/git/updateFromGit".format(workspace_id)
+            else:
+                url= "https://api.fabric.microsoft.com/v1/workspaces/{}/items/{}/git/updateFromGit".format(workspace_id, item_id)
             body = {
-                "workspaceHead": workspaceHead,
                 "remoteCommitHash": remoteCommitHash,
-                "conflictResolution": conflictResolution,
-                "options":{
+            }
+            if workspaceHead != None:
+                body["workspaceHead"]= workspaceHead
+            if conflictResolution != None:
+                body["conflictResolution"]= conflictResolution
+            if allowOverrideItems != None:
+                body["options"] = {
                     "allowOverrideItems": allowOverrideItems
                 }
-            }
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}            
             res = requests.post(url, data = json.dumps(body), headers = headers)
             res.raise_for_status()
@@ -634,7 +774,7 @@ class Git():
             print("Request exception: ", e)
 
     # Connect to git repo
-    def connect_git_repo(self, workspace_id, organization, project, repository, branch, directory_name, git_provider_type):
+    def connect_git_repo(self, workspace_id, organization, project, repository, branch, git_provider_type, directory_name = None):
         """Connects the workspace to an Azure DevOps repository.
         #### Parameters
         ----
@@ -664,11 +804,12 @@ class Git():
                     "organization": organization,
                     "project": project,
                     "repository": repository,
-                    "branch": branch,
-                    "directoryName": directory_name,
+                    "branch": branch,                    
                     "gitProviderType": git_provider_type
                     }
             }
+            if directory_name != None:
+                body["gitProviderDetails"]["directoryName"]= directory_name
             headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)}            
             res = requests.post(url, data = json.dumps(body), headers = headers)
             res.raise_for_status()
@@ -700,6 +841,55 @@ class Git():
             print("HTTP Error: ", ex, "\nText: ", ex.response.text)
         except requests.exceptions.RequestException as e:
             print("Request exception: ", e)
+
+    def list_workspace_relations(self, workspace_id):
+        """Returns a list of workspaces that are connected to the same Git repository as the specified workspace.
+        #### Parameters
+        ----
+        workspace_id: str uuid
+            The workspace id. You can take it from Fabric URL
+        ### Returns
+        ----
+        Dict:
+            A dictionary containing a item in the workspace.
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/workspaces/{}/git/workspaceRelations".format(workspace_id)
+            res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            data = res.json()
+            while 'continuationToken' in data and data['continuationToken'] != None:
+                url = "https://api.fabric.microsoft.com/v1/workspaces/{}/git/workspaceRelations?continuationToken={}".format(workspace_id, data['continuationToken'])
+                res = requests.get(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+                res.raise_for_status()
+                data.update(res.json())
+                data.pop('continuationToken')
+            return data
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
+    def initialize_git_connection(self, workspace_id):
+        """Initializes the Git connection for the specified workspace.
+        #### Parameters
+        ----
+        workspace_id: str uuid
+            The workspace id. You can take it from Fabric URL
+        ### Returns
+        ----
+        Response object from requests library. 202 OK
+        """
+        try:
+            url = "https://api.fabric.microsoft.com/v1/workspaces/{}/git/initializeConnection".format(workspace_id)
+            res = requests.post(url, headers={'Content-Type': 'application/json', "Authorization": "Bearer {}".format(self.token)})
+            res.raise_for_status()
+            return res
+        except requests.exceptions.HTTPError as ex:
+            print("HTTP Error: ", ex, "\nText: ", ex.response.text)
+        except requests.exceptions.RequestException as e:
+            print("Request exception: ", e)
+
                     
             
 class Scheduler():
